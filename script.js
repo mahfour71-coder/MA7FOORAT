@@ -1,29 +1,21 @@
 const productsData = [
   { name: "حصان خشبي", price: 50, img: "https://i.postimg.cc/4nMS61K7/photo.jpg", category: "ديكور" },
   { name: "كلمة خشبية", price: 50, img: "https://i.postimg.cc/6471s8Pp/photo-2.jpg", category: "هدايا" },
-  { name: "منتج خشبي", price: 50, img: "https://i.postimg.cc/pyyS5SdM/photo-3.jpg", category: "ديكور" }
+  { name: "منتج خشبي", price: 50, img: "https://i.postimg.cc/pyyS5SdM/photo-3.jpg", category: "ديكور" },
+  { name: "حصان خشبي صغير", price: 30, img: "https://i.postimg.cc/JzTt3MQy/photo.jpg", category: "هدايا" },
+  { name: "مكعب خشبي مزخرف", price: 40, img: "https://i.postimg.cc/NFw0GMQn/photo-4.jpg", category: "ديكور" },
+  { name: "ديكور خشبي بعقاب", price: 50, img: "https://i.postimg.cc/QxfjwSKw/photo.jpg", category: "هدايا" },
+  { name: "لوحة 'Everyday is More Better'", price: 60, img: "https://i.postimg.cc/mDW4C5Kz/photo-3.jpg", category: "ديكور" }
 ];
 
 function renderProducts(products) {
-  const container = document.getElementById('products');
-  container.innerHTML = `
-    <div class="filters" style="margin-bottom:10px;">
-      <label>فرز حسب: </label>
-      <select id="sort-products">
-        <option value="default">الافتراضي</option>
-        <option value="price-asc">السعر من الأقل للأعلى</option>
-        <option value="price-desc">السعر من الأعلى للأقل</option>
-      </select>
-      <label>الفئة: </label>
-      <select id="filter-category">
-        <option value="all">الكل</option>
-        <option value="ديكور">ديكور</option>
-        <option value="هدايا">هدايا</option>
-      </select>
-    </div>
-  `;
+  const container = document.querySelector('.products');
+  // امسح بس كروت المنتجات، مش الفلاتر
+  const productCards = container.querySelectorAll('.product-card');
+  productCards.forEach(card => card.remove());
+
   products.forEach(product => {
-    container.innerHTML += `
+    container.insertAdjacentHTML('beforeend', `
       <div class="product-card" data-name="${product.name}" data-price="${product.price}" data-category="${product.category}">
         <img src="${product.img}" alt="${product.name} مصنوع يدويًا" loading="lazy">
         <h3>${product.name}</h3>
@@ -33,26 +25,37 @@ function renderProducts(products) {
           <a href="#" class="btn order-now">اطلب الآن</a>
         </div>
       </div>
-    `;
+    `);
   });
 
   document.querySelectorAll('.add-to-cart').forEach(btn => {
     btn.addEventListener('click', addToCart);
   });
 
-  document.getElementById('sort-products').addEventListener('change', filterAndSortProducts);
-  document.getElementById('filter-category').addEventListener('change', filterAndSortProducts);
+  document.querySelectorAll('.order-now').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const name = e.target.closest('.product-card').dataset.name;
+      const price = e.target.closest('.product-card').dataset.price;
+      const message = `طلب منتج:\nالمنتج: ${name}\nالسعر: ${price} جنيه`;
+      const url = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    });
+  });
 }
 
 function filterAndSortProducts() {
   const sortValue = document.getElementById('sort-products').value;
   const filterValue = document.getElementById('filter-category').value;
+  const searchTerm = document.getElementById('search-products').value.trim();
 
   let filtered = [...productsData];
+  if (searchTerm) {
+    filtered = filtered.filter(product => product.name.toLowerCase().includes(searchTerm.toLowerCase()));
+  }
   if (filterValue !== 'all') {
     filtered = filtered.filter(product => product.category === filterValue);
   }
-
   if (sortValue === 'price-asc') {
     filtered.sort((a, b) => a.price - b.price);
   } else if (sortValue === 'price-desc') {
@@ -66,7 +69,12 @@ function addToCart(e) {
   e.preventDefault();
   const name = e.target.dataset.name;
   const price = Number(e.target.dataset.price);
-  cartData.push({ name, price });
+  const existingItem = cartData.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity = (existingItem.quantity || 1) + 1;
+  } else {
+    cartData.push({ name, price, quantity: 1 });
+  }
   renderCart();
   cart.classList.add('open');
   Swal.fire({
@@ -76,50 +84,6 @@ function addToCart(e) {
     timer: 1500
   });
 }
-
-// Hero Slider
-let slides = document.querySelectorAll('.hero-slide');
-let dots = document.querySelectorAll('.slider-dots .dot');
-let currentSlide = 0;
-let slideInterval = setInterval(nextSlide, 5000);
-
-function showSlide(index) {
-  slides.forEach(slide => slide.classList.remove('active'));
-  dots.forEach(dot => dot.classList.remove('active'));
-  slides[index].classList.add('active');
-  dots[index].classList.add('active');
-  currentSlide = index;
-}
-
-function nextSlide() {
-  currentSlide = (currentSlide + 1) % slides.length;
-  showSlide(currentSlide);
-}
-
-document.querySelector('.next').addEventListener('click', () => {
-  clearInterval(slideInterval);
-  nextSlide();
-  slideInterval = setInterval(nextSlide, 5000);
-});
-
-document.querySelector('.prev').addEventListener('click', () => {
-  clearInterval(slideInterval);
-  currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-  showSlide(currentSlide);
-  slideInterval = setInterval(nextSlide, 5000);
-});
-
-document.querySelectorAll('.slider-dots .dot').forEach(dot => {
-  dot.addEventListener('click', () => {
-    clearInterval(slideInterval);
-    currentSlide = Number(dot.dataset.slide);
-    showSlide(currentSlide);
-    slideInterval = setInterval(nextSlide, 5000);
-  });
-});
-
-document.querySelector('.hero').addEventListener('mouseenter', () => clearInterval(slideInterval));
-document.querySelector('.hero').addEventListener('mouseleave', () => slideInterval = setInterval(nextSlide, 5000));
 
 // Cart functionality
 const cartBtn = document.getElementById('cart-btn');
@@ -138,12 +102,13 @@ function renderCart() {
   cartItems.innerHTML = '';
   let total = 0;
   cartData.forEach((item, index) => {
-    total += item.price;
+    const itemTotal = item.price * (item.quantity || 1);
+    total += itemTotal;
     const li = document.createElement('li');
-    li.innerHTML = `${item.name} - ${item.price} جنيه <button class="remove" data-index="${index}">❌</button>`;
+    li.innerHTML = `${item.name} - ${item.price} جنيه x${item.quantity || 1} = ${itemTotal} جنيه <button class="remove" data-index="${index}">❌</button>`;
     cartItems.appendChild(li);
   });
-  cartCount.textContent = cartData.length;
+  cartCount.textContent = cartData.reduce((sum, item) => sum + (item.quantity || 1), 0);
   cartTotal.textContent = total;
   localStorage.setItem('mahfourCart', JSON.stringify(cartData));
 }
@@ -182,14 +147,6 @@ clearCartBtn.addEventListener('click', () => {
 cartBtn.addEventListener('click', () => cart.classList.add('open'));
 closeCart.addEventListener('click', () => cart.classList.remove('open'));
 
-// FAQ toggle
-document.querySelectorAll('.faq-item button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    let answer = btn.nextElementSibling;
-    answer.style.display = answer.style.display === 'block' ? 'none' : 'block';
-  });
-});
-
 // Sanitize input for security
 function sanitizeInput(input) {
   return input.replace(/[<>&]/g, '');
@@ -225,9 +182,9 @@ orderCartBtn.addEventListener('click', () => {
   if (locationLink) message += `رابط الموقع: ${locationLink}\n`;
   message += `\nالمنتجات المطلوبة:\n`;
   cartData.forEach(item => {
-    message += `- ${item.name} - ${item.price} جنيه\n`;
+    message += `- ${item.name} - ${item.price} جنيه x${item.quantity || 1}\n`;
   });
-  const total = cartData.reduce((sum, item) => sum + item.price, 0);
+  const total = cartData.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
   message += `\nالإجمالي: ${total} جنيه`;
 
   Swal.fire({
@@ -314,10 +271,10 @@ ${locationLink ? 'رابط الموقع: ' + locationLink : ''}
 `;
 
   cartData.forEach(item => {
-    printContent += `- ${item.name} - ${item.price} جنيه\n`;
+    printContent += `- ${item.name} - ${item.price} جنيه x${item.quantity || 1}\n`;
   });
 
-  const total = cartData.reduce((sum, item) => sum + item.price, 0);
+  const total = cartData.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
   printContent += `\nالإجمالي: ${total} جنيه`;
 
   const printWindow = window.open('', '', 'height=600,width=400');
@@ -343,3 +300,6 @@ ${locationLink ? 'رابط الموقع: ' + locationLink : ''}
 // Initialize
 renderProducts(productsData);
 renderCart();
+document.getElementById('search-products').addEventListener('input', filterAndSortProducts);
+document.getElementById('sort-products').addEventListener('change', filterAndSortProducts);
+document.getElementById('filter-category').addEventListener('change', filterAndSortProducts);
