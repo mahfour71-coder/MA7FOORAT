@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="متجر MAHFOUR_BRAND للمنتجات الخشبية المصنوعة يدويًا بجودة عالية في مصر">
+  <meta name="keywords" content="منتجات خشبية, هدايا, ديكور خشبي, MAHFOUR_BRAND">
+  <title>MAHFOUR_BRAND - متجر المنتجات الخشبية</title>
+  <link rel="preload" href="https://i.postimg.cc/4nMS61K7/photo.jpg" as="image">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">MAHFOUR_BRAND</div>
+    <nav>
+      <a href="#hero">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+      <a href="#about">عن البراند</a>
+      <a href="#blog">المدونة</a>
+      <a href="#contact">تواصل معنا</a>
+      <a href="#" id="cart-btn">السلة (<span id="cart-count">0</span>)</a>
+    </nav>
+    <div class="phone">📞 01033662370</div>
+  </header>
+
+  <section class="hero" id="hero">
+    <div class="hero-slide active" data-slide="0">
+      <picture>
+        <source srcset="https://i.postimg.cc/4nMS61K7/photo.webp" type="image/webp">
+        <img src="https://i.postimg.cc/4nMS61K7/photo.jpg" alt="حصان خشبي مصنوع يدويًا للديكور المنزلي" loading="lazy">
+      </picture>
+      <div class="hero-text">
+        <h1>MAHFOUR_BRAND</h1>
+        <p>منتجات خشبية مصنوعة يدويًا بجودة عالية</p>
+        <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
+        <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+      </div>
+    </div>
+    <div class="hero-slide" data-slide="1">
+      <picture>
+        <source srcset="https://i.postimg.cc/6471s8Pp/photo-2.webp" type="image/webp">
+        <img src="https://i.postimg.cc/6471s8Pp/photo-2.jpg" alt="كلمة خشبية مصنوعة يدويًا للديكور" loading="lazy">
+      </picture>
+      <div class="hero-text">
+        <h1>MAHFOUR_BRAND</h1>
+        <p>إبداعات خشبية تضيف لمسة فنية لمنزلك</p>
+        <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
+        <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+      </div>
+    </div>
+    <div class="hero-slide" data-slide="2">
+      <picture>
+        <source srcset="https://i.postimg.cc/pyyS5SdM/photo-3.webp" type="image/webp">
+        <img src="https://i.postimg.cc/pyyS5SdM/photo-3.jpg" alt="منتج خشبي مصنوع يدويًا بتصميم فريد" loading="lazy">
+      </picture>
+      <div class="hero-text">
+        <h1>MAHFOUR_BRAND</h1>
+        <p>اكتشف الجمال في التفاصيل الخشبية</p>
+        <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
+        <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
+      </div>
+    </div>
+    <button class="prev" aria-label="الصورة السابقة">‹</button>
+    <button class="next" aria-label="الصورة التالية">›</button>
+    <div class="slider-dots">
+      <span class="dot active" data-slide="0"></span>
+      <span class="dot" data-slide="1"></span>
+      <span class="dot" data-slide="2"></span>
+    </div>
+  </section>
+
+  <section class="products" id="products">
+    <div class="filters" style="margin-bottom:10px;">
+      <label>فرز حسب: </label>
+      <select id="sort-products">
+        <option value="default">الافتراضي</option>
+        <option value="price-asc">السعر من الأقل للأعلى</option>
+        <option value="price-desc">السعر من الأعلى للأقل</option>
+      </select>
+      <label>الفئة: </label>
+      <select id="filter-category">
+        <option value="all">الكل</option>
+        <option value="ديكور">ديكور</option>
+        <option value="هدايا">هدايا</option>
+      </select>
+    </div>
+  </section>
+
+  <aside class="cart" id="cart">
+    <h2>🛒 سلة مشترياتك</h2>
+    <button id="clear-cart" style="background:#ff4444;color:white;padding:8px;border-radius:5px;border:none;cursor:pointer;">مسح السلة</button>
+    <ul class="cart-items"></ul>
+    <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
+
+    <h3>بيانات العميل</h3>
+    <form id="order-form">
+      <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
+      <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
+      <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
+      <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
+      <button type="button" id="print-cart">🖨️ طباعة الفاتورة</button>
+    </form>
+
+    <button id="close-cart">إغلاق السلة</button>
+  </aside>
+
+  <!-- <section class="faq" id="faq">
+    <h2>الأسئلة الشائعة</h2>
+    <div class="faq-item">
+      <button>كيف يتم الشحن؟</button>
+      <div class="answer">الشحن يتم خلال 3-5 أيام عمل داخل القاهرة.</div>
+    </div>
+    <div class="faq-item">
+      <button>هل يمكنني إرجاع المنتج؟</button>
+      <div class="answer">نعم، يمكن إرجاع المنتج خلال 7 أيام إذا كان في حالته الأصلية.</div>
+    </div>
+  </section> -->
+
+  <footer>
+    <p>© 2025 MAHFOUR_BRAND. جميع الحقوق محفوظة.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
