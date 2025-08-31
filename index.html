@@ -12,8 +12,11 @@
 </head>
 <body>
   <header>
-    <div class="phone">📞 01033662370  للاستفسارات</div>
-    <nav>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="phone">📞 01033662370 للاستفسارات</div>
+    <nav id="nav-menu">
       <a href="#hero">الرئيسية</a>
       <a href="#products">المنتجات</a>
       <a href="https://wa.me/201033662370" target="_blank">تواصل معنا</a>
@@ -61,14 +64,14 @@
     <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
 
     <h3>بيانات العميل</h3>
-    <form id="order-form">
+    <div id="order-form">
       <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
       <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
       <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
       <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
       <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
       <button type="button" id="print-cart">🖨️ طباعة الفاتورة</button>
-    </form>
+    </div>
 
     <button id="close-cart">إغلاق السلة</button>
   </aside>
