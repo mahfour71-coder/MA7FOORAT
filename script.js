@@ -10,7 +10,6 @@ const productsData = [
 
 function renderProducts(products) {
   const container = document.querySelector('.products');
-  // امسح بس كروت المنتجات، مش الفلاتر
   const productCards = container.querySelectorAll('.product-card');
   productCards.forEach(card => card.remove());
 
@@ -85,7 +84,6 @@ function addToCart(e) {
   });
 }
 
-// Cart functionality
 const cartBtn = document.getElementById('cart-btn');
 const cart = document.getElementById('cart');
 const closeCart = document.getElementById('close-cart');
@@ -143,16 +141,13 @@ clearCartBtn.addEventListener('click', () => {
   });
 });
 
-// Open/close cart
 cartBtn.addEventListener('click', () => cart.classList.add('open'));
 closeCart.addEventListener('click', () => cart.classList.remove('open'));
 
-// Sanitize input for security
 function sanitizeInput(input) {
   return input.replace(/[<>&]/g, '');
 }
 
-// Order via WhatsApp
 orderCartBtn.addEventListener('click', () => {
   if (cartData.length === 0) {
     Swal.fire({
@@ -211,7 +206,6 @@ orderCartBtn.addEventListener('click', () => {
   });
 });
 
-// Print invoice
 printCartBtn.addEventListener('click', () => {
   if (cartData.length === 0) {
     Swal.fire({
@@ -297,9 +291,15 @@ ${locationLink ? 'رابط الموقع: ' + locationLink : ''}
   localStorage.setItem('mahfourOrders', JSON.stringify(allOrders));
 });
 
-// Initialize
 renderProducts(productsData);
 renderCart();
 document.getElementById('search-products').addEventListener('input', filterAndSortProducts);
 document.getElementById('sort-products').addEventListener('change', filterAndSortProducts);
 document.getElementById('filter-category').addEventListener('change', filterAndSortProducts);
+
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('#nav-menu');
+
+navToggle.addEventListener('click', () => {
+  navMenu.classList.toggle('open');
+});
