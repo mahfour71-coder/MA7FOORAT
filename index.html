@@ -3,37 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="متجر MAHFOUR_BRAND للمنتجات الخشبية المصنوعة يدويًا بجودة عالية في مصر">
-  <meta name="keywords" content="منتجات خشبية, هدايا, ديكور خشبي, MAHFOUR_BRAND">
-  <title>MAHFOUR_BRAND - متجر المنتجات الخشبية</title>
-  <link rel="preload" href="https://i.postimg.cc/VsbMYrWK/BRAND-LOGO.jpg" as="image">
+  <meta name="description" content="متجر محفور للمنتجات الخشبية المصنوعة يدويًا بجودة عالية في مصر">
+  <meta name="keywords" content="منتجات خشبية, هدايا, ديكور خشبي, محفور">
+  <title>محفور - متجر المنتجات الخشبية</title>
+  <link rel="preload" href="https://i.postimg.cc/Y0g5BXFw/IMG-20250902-WA0026.jpg" as="image">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
+    <div class="logo">محفور</div>
     <button class="nav-toggle" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
-    <div class="phone">📞 01033662370 للاستفسارات</div>
     <nav id="nav-menu">
       <a href="#hero">الرئيسية</a>
       <a href="#products">المنتجات</a>
       <a href="https://wa.me/201033662370" target="_blank">تواصل معنا</a>
       <a href="#" id="cart-btn">السلة (<span id="cart-count">0</span>)</a>
     </nav>
-    <div class="logo">MAHFOUR_BRAND</div>
+    <div class="contact-info">
+      <div class="vodafone-cash">💰 فودافون كاش: 01033662370</div>
+      <div class="phone"> 📞 للاستفسارات: 01033662370</div>
+    </div>
   </header>
 
   <section class="hero" id="hero">
     <div class="hero-content">
-      <picture>
-        <img src="https://i.postimg.cc/VsbMYrWK/BRAND-LOGO.jpg" alt="لوجو MAHFOUR_BRAND على خلفية خشبية" loading="lazy">
-      </picture>
+      <img src="https://i.postimg.cc/Y0g5BXFw/IMG-20250902-WA0026.jpg" alt="صورة الصفحة الرئيسية" class="hero-image">
       <div class="hero-text">
-        <h1>MAHFOUR_BRAND</h1>
+        <h1>محفور</h1>
         <p>منتجات خشبية مصنوعة يدويًا بجودة عالية</p>
-        <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
+        <a href="#products class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
         <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
       </div>
     </div>
@@ -46,23 +48,24 @@
       <select id="sort-products">
         <option value="default">الافتراضي</option>
         <option value="price-asc">السعر من الأقل للأعلى</option>
-        <option value="price-desc">السعر من الأعلى للأقل</option>
+        <option value="price-desc">السعر من الأعلى للأهم</option>
       </select>
       <label>الفئة: </label>
       <select id="filter-category">
         <option value="all">الكل</option>
         <option value="ديكور">ديكور</option>
-        <option value="هدايا">هدايا</option>
+        <option value="العاب">العاب</option>
+         <option value="ادوات منزلية">ادوات منزلية</option>
+          <option value="اكسسورات">اكسسوارات</option>
       </select>
     </div>
   </section>
 
   <aside class="cart" id="cart">
     <h2>🛒 سلة مشترياتك</h2>
-    <button id="clear-cart" style="background:#ff4444;color:white;padding:8px;border-radius:5px;border:none;cursor:pointer;">مسح السلة</button>
+    <button id="clear-cart">مسح السلة</button>
     <ul class="cart-items"></ul>
     <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
-
     <h3>بيانات العميل</h3>
     <div id="order-form">
       <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
@@ -70,20 +73,17 @@
       <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
       <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
       <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
-      <button type="button" id="print-cart">🖨️ طباعة الفاتورة</button>
     </div>
-
     <button id="close-cart">إغلاق السلة</button>
   </aside>
 
   <footer>
-    <p>© 2025 MAHFOUR_BRAND. جميع الحقوق محفوظة.</p>
+    <p>© 2025 محفور. جميع الحقوق محفوظة.</p>
     <p>created by Mohand Eldrandale web developer</p>
     <div class="social-links">
       <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
       <a href="https://instagram.com/yourpage" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
       <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
-      <a href="https://youtube.com/yourchannel" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
       <a href="https://wa.me/201033662370" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
     </div>
   </footer>
