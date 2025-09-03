@@ -166,27 +166,38 @@ header nav a:hover {
   display: inline-block;
   padding: 12px 25px;
   font-size: 18px;
-  background: #FF9800; /* Orange background for تسوق الآن */
+  background: #ff9800; /* From old code */
+  color: #ffffff;
+  border-radius: 6px;
+  margin: 5px;
+  transition: transform 0.3s, background 0.3s;
+  min-width: 150px;
+}
+
+.hero .hero-btn i {
+  margin-right: 8px; /* Added for icon spacing */
+}
+
+.hero .hero-btn:hover {
+  background: #e68900; /* From old code */
+  transform: scale(1.05);
+}
+
+.hero .whatsapp-btn {
+  display: inline-block;
+  padding: 12px 25px;
+  font-size: 18px;
+  background: #25D366;
   color: white;
   border-radius: 6px;
   margin: 5px;
   transition: transform 0.3s, background 0.3s;
   min-width: 150px;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Same shadow as WhatsApp button for consistency */
-}
-
-.hero .hero-btn:hover {
-  background: #d17d00; /* Slightly darker orange for hover */
-  transform: scale(1.05);
-}
-
-.hero .whatsapp-btn {
-  background: #25D366; /* Keep WhatsApp button green */
 }
 
 .hero .whatsapp-btn:hover {
-  background: #1DA851; /* Keep WhatsApp hover effect */
+  background: #1DA851;
+  transform: scale(1.05);
 }
 
 @keyframes fadeIn {
