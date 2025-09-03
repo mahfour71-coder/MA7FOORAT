@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="تفاصيل منتج من متجر محفور للمنتجات الخشبية المصنوعة يدويًا">
+  <title>تفاصيل المنتج - محفور</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .product-details {
+      padding: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .product-details h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      font-family: 'Amiri', serif;
+      text-align: center;
+    }
+    .product-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .product-gallery img {
+      width: 100%;
+      max-width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px cursors pointer;
+      transition: transform 0.3s;
+    }
+    .product-gallery img:hover {
+      transform: scale(1.05);
+    }
+    .product-description {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 20px;
+      text-align: right;
+    }
+    .product-price {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .product-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .quantity-control button {
+      background: #6d4c41;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      min-width: 30px;
+      min-height: 30px;
+      transition: background 0.3s;
+    }
+    .quantity-control button:hover {
+      background: #e68900;
+    }
+    .quantity-control span {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    @media (max-width: 768px) {
+      .product-details h2 {
+        font-size: 20px;
+      }
+      .product-gallery img {
+        max-width: 200px;
+        height: 150px;
+      }
+      .product-description {
+        font-size: 14px;
+      }
+      .product-price {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">محفور</div>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav id="nav-menu">
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#products">المنتجات</a>
+      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا</a>
+      <a href="#" id="cart-btn">السلة (<span id="cart-count">0</span>)</a>
+    </nav>
+    <div class="contact-info">
+      <div class="vodafone-cash">💰 فودافون كاش: 01033662370</div>
+      <div class="phone">📞 01033662370 للاستفسارات</div>
+    </div>
+  </header>
+
+  <section class="product-details">
+    <h2 id="product-name"></h2>
+    <div class="product-gallery" id="product-gallery"></div>
+    <p class="product-description" id="product-description"></p>
+    <p class="product-price" id="product-price"></p>
+    <div class="quantity-control" id="quantity-control">
+      <button class="qty-btn minus" data-id="product-quantity">-</button>
+      <span id="product-quantity">1</span>
+      <button class="qty-btn plus" data-id="product-quantity">+</button>
+    </div>
+    <div class="product-actions">
+      <a href="#" class="btn add-to-cart" id="add-to-cart-btn"><i class="fas fa-cart-plus"></i> أضف إلى السلة</a>
+      <a href="#" class="btn order-now" id="order-now-btn">اطلب الآن</a>
+    </div>
+  </section>
+
+  <aside class="cart" id="cart">
+    <h2>🛒 سلة مشترياتك</h2>
+    <button id="clear-cart">مسح السلة</button>
+    <ul class="cart-items"></ul>
+    <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
+    <h3>بيانات العميل</h3>
+    <div id="order-form">
+      <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
+      <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
+      <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
+      <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
+    </div>
+    <button id="close-cart">إغلاق السلة</button>
+  </aside>
+
+  <footer>
+    <p>© 2025 محفور. جميع الحقوق محفوظة.</p>
+    <p>created by Mohand Eldrandale web developer</p>
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://instagram.com/yourpage" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/201033662370" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="script.js"></script>
+</body>
+</html>
