@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="لوحة تحكم لإدارة المبيعات - محفورات">
+  <title>لوحة تحكم المبيعات - محفورات</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5"/>
+  <link rel="stylesheet" href="https://cdn.salla.network/fonts/sallaicons.css?v=2.0.5"/>
+  <link rel="stylesheet" href="sales-dashboard.css">
+</head>
+<body>
+  <header>
+    <div class="logo"><img src="https://i.postimg.cc/Jh9GmJML/photo-2025-09-07-07-59-17.jpg" alt="لوجو محفورات" class="brand-logo">محفورات</div>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
+    <nav id="nav-menu">
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#products">المنتجات</a>
+      <a href="orders.html">تتبع الطلبات</a>
+      <a href="sales-dashboard.html">لوحة تحكم المبيعات</a>
+      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا</a>
+    </nav>
+  </header>
+
+  <section class="login-section" id="login-section">
+    <h2>تسجيل الدخول</h2>
+    <div class="login-form">
+      <input type="password" id="admin-password" placeholder="كلمة المرور" required>
+      <button id="login-btn" class="btn">تسجيل الدخول</button>
+    </div>
+  </section>
+
+  <section class="sales-dashboard" id="sales-dashboard" style="display: none;">
+    <h2>لوحة تحكم المبيعات</h2>
+    <div class="stats">
+      <div class="stat-card">
+        <h3>إجمالي الطلبات</h3>
+        <p id="total-orders">0</p>
+      </div>
+      <div class="stat-card">
+        <h3>إجمالي المبيعات</h3>
+        <p id="total-sales">0 جنيه</p>
+      </div>
+      <div class="stat-card">
+        <h3>عدد العملاء</h3>
+        <p id="total-customers">0</p>
+      </div>
+    </div>
+    <div class="filters">
+      <input type="text" id="search-orders" placeholder="ابحث عن طلب (اسم العميل أو رقم الطلب)">
+      <label>فرز حسب التاريخ: </label>
+      <select id="sort-orders">
+        <option value="newest">الأحدث</option>
+        <option value="oldest">الأقدم</option>
+      </select>
+      <button id="export-orders" class="btn">تصدير كـ CSV</button>
+    </div>
+    <table class="sales-table">
+      <thead>
+        <tr>
+          <th>رقم الطلب</th>
+          <th>اسم العميل</th>
+          <th>العنوان</th>
+          <th>رقم الهاتف</th>
+          <th>المنتجات</th>
+          <th>الإجمالي</th>
+          <th>التاريخ</th>
+        </tr>
+      </thead>
+      <tbody id="sales-table-body"></tbody>
+    </table>
+  </section>
+
+  <footer>
+    <p>© 2025 محفورات. جميع الحقوق محفوظة.</p>
+    <p>created by Mohand Eldrandale web developer</p>
+    <div class="social-links">
+      <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/201033662370" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sales-dashboard.js" defer></script>
+</body>
+</html>
