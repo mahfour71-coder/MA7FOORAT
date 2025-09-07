@@ -15,7 +15,7 @@
 
 body {
   direction: rtl;
-  background: linear-gradient(to bottom, #452808, #1c0b02);
+  background: linear-gradient(to bottom, #7c5e42);
   color: #333;
   min-height: 100vh;
 }
@@ -232,7 +232,7 @@ header nav a:hover {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 15px;
   padding: 20px;
-  background-color: #271a13;
+  background-color: #7c5e42;
 }
 
 .filters {
