@@ -98,8 +98,18 @@ const productsData = [
     images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
     dimensions: "يختلف حسب الطلب"
   },
-  { 
+   { 
     id: 9, 
+    name: "ديكور خشبي علي شكل كف", 
+    price: 75, 
+    img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
+    category: "ديكور", 
+    details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
+    images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
+    dimensions: "يختلف حسب الطلب"
+  },
+  { 
+    id: 10, 
     name: "كوستر 'Everyday is More Better'", 
     price: 55, 
     img: "https://i.postimg.cc/bJV5mfTR/photo-2025-09-04-22-26-03.jpg", 
