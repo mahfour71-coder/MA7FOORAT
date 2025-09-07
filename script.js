@@ -11,7 +11,7 @@ const productsData = [
       "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
     ],
     dimensions: "20 × 30 سم",
-    video: "video_2025-09-07_05-54-41.mp4"
+    video: "https://files.catbox.moe/hlznb6.mp4"
   },
   { 
     id: 2, 
@@ -48,7 +48,7 @@ const productsData = [
     details: "حصان خشبي صغير مصنوع يدويًا، مثالي كهدية تذكارية.", 
     images: ["https://i.postimg.cc/900jZxJw/photo-2025-09-05-02-44-18.jpg"],
     dimensions: "يختلف حسب الطلب",
-    video:  ["video_2025-09-07_05-54-41.mp4"],
+    video:  ["https://files.catbox.moe/hlznb6.mp4"],
   },
   { 
     id: 5, 
