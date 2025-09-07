@@ -26,7 +26,7 @@ const productsData = [
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg"
     ],
     dimensions: "15 × 10 سم",
-    video: null
+    video:  "https://files.catbox.moe/hlznb6.mp4"
   },
   { 
     id: 3, 
