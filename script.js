@@ -10,7 +10,8 @@ const productsData = [
       "https://i.postimg.cc/2S37xLtg/photo-2025-09-04-22-32-00.jpg",
       "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
     ],
-    dimensions: "20 × 30 سم"
+    dimensions: "20 × 30 سم",
+    video: "https://streamable.com/cmo8hp"
   },
   { 
     id: 2, 
@@ -24,7 +25,8 @@ const productsData = [
       "https://i.postimg.cc/6471s8Pp/photo-2.jpg", 
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg"
     ],
-    dimensions: "15 × 10 سم"
+    dimensions: "15 × 10 سم",
+    video: null
   },
   { 
     id: 3, 
@@ -34,7 +36,8 @@ const productsData = [
     category: "اكسسورات", 
     details: "منتج خشبي متعدد الاستخدامات للديكور المنزلي، بأبعاد 15x15 سم.", 
     images: ["https://i.postimg.cc/pyyS5SdM/photo-3.jpg"],
-    dimensions: "15 × 15 سم"
+    dimensions: "15 × 15 سم",
+    video: null
   },
   { 
     id: 4, 
@@ -44,7 +47,8 @@ const productsData = [
     category: "العاب", 
     details: "حصان خشبي صغير مصنوع يدويًا، مثالي كهدية تذكارية.", 
     images: ["https://i.postimg.cc/900jZxJw/photo-2025-09-05-02-44-18.jpg"],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video:  ["video_2025-09-07_05-54-41.mp4"],
   },
   { 
     id: 5, 
@@ -58,7 +62,8 @@ const productsData = [
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg", 
       "https://i.postimg.cc/4nMS61K7/photo.jpg"
     ],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video: null
   },
   { 
     id: 6, 
@@ -72,7 +77,8 @@ const productsData = [
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg", 
       "https://i.postimg.cc/4nMS61K7/photo.jpg"
     ],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video: null
   },
   { 
     id: 7, 
@@ -86,7 +92,8 @@ const productsData = [
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg", 
       "https://i.postimg.cc/4nMS61K7/photo.jpg"
     ],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video: null
   },
   { 
     id: 8, 
@@ -96,7 +103,8 @@ const productsData = [
     category: "ديكور", 
     details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
     images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video: null
   },
    { 
     id: 9, 
@@ -106,7 +114,8 @@ const productsData = [
     category: "ديكور", 
     details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
     images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
-    dimensions: "يختلف حسب الطلب"
+    dimensions: "يختلف حسب الطلب",
+    video: null
   },
   { 
     id: 10, 
@@ -120,7 +129,8 @@ const productsData = [
       "https://i.postimg.cc/mDW4C5Kz/photo-3.jpg", 
       "https://i.postimg.cc/6471s8Pp/photo-2.jpg"
     ],
-    dimensions: "25 × 35 سم"
+    dimensions: "25 × 35 سم",
+    video: null
   }
 ];
 
@@ -471,6 +481,7 @@ function setupProductDetails() {
   const plusButton = document.querySelector('.qty-btn.plus');
   const addToCartButton = document.querySelector('.add-to-cart');
   const orderNowButton = document.querySelector('.order-now');
+  const videoContainer = document.querySelector('.video-container');
 
   if (productName) productName.textContent = product.name;
   if (productDescription) productDescription.textContent = product.details;
@@ -480,6 +491,17 @@ function setupProductDetails() {
   if (mainImage) {
     mainImage.src = product.img;
     mainImage.alt = product.name;
+  }
+
+  if (videoContainer && product.video) {
+    videoContainer.innerHTML = `
+      <video class="product-video" controls>
+        <source src="${product.video}" type="video/mp4">
+        متصفحك لا يدعم تشغيل الفيديو.
+      </video>
+    `;
+  } else if (videoContainer) {
+    videoContainer.style.display = 'none';
   }
 
   if (thumbnailsContainer) {
@@ -624,7 +646,6 @@ function setupProductDetails() {
 
   updateAverageRating();
 
-  // ميزة تكبير الصور (زوم) والتنقل
   const modal = document.getElementById('image-modal');
   const modalImg = document.getElementById('modal-image');
   const closeModal = document.querySelector('.close-modal');
@@ -689,7 +710,6 @@ function setupNavToggle() {
   }
 }
 
-// Initialize page-specific functionality
 document.addEventListener('DOMContentLoaded', () => {
   renderProducts(productsData);
   renderCart();
