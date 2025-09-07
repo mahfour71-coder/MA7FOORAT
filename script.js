@@ -16,7 +16,7 @@ const productsData = [
     id: 2, 
     name: "استاند تليفون", 
     price: 70, 
-    img: "https://i.postimg.cc/rmbkKrvc/photo-2025-09-04-22-35-04.jpg", 
+    img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
     category: "اكسسورات", 
     details: "كلمة خشبية مزخرفة، مثالية كهدية شخصية، مصنوعة من خشب الماهوجني.", 
     images: [
