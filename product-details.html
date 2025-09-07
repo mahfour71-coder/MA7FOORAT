@@ -7,28 +7,27 @@
   <title>تفاصيل المنتج - محفورات</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5"/>
+  <link rel="stylesheet" href="https://cdn.salla.network/fonts/sallaicons.css?v=2.0.5"/>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="logo">محفورات</div>
+    <div class="logo"><img src="https://i.postimg.cc/KcdkyV9p/photo.jpg" alt="لوجو محفورات" class="brand-logo">محفورات</div>
     <button class="nav-toggle" aria-label="Toggle navigation">
       <i class="fas fa-bars"></i>
     </button>
+     <a href="#" id="cart-btn"><i class="sicon-shopping-bag"></i> (<span id="cart-count">0</span>)</a>
     <nav id="nav-menu">
       <a href="index.html">الرئيسية</a>
       <a href="index.html#products">المنتجات</a>
-      <!-- <a href="orders.html">تتبع الطلبات</a> -->
       <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب </a>
-      <a href="#" id="cart-btn">السلة (<span id="cart-count">0</span>)</a>
+     
     </nav>
-    <!-- <div class="contact-info">
-      <div class="vodafone-cash">💰 فودافون كاش: 01033662370</div>
-      <div class="phone">📞 للاستفسارات: 01033662370</div>
-    </div> -->
   </header>
 
   <div class="product-details-container">
+    <!-- <a href="index.html" class="back-btn btn"><i class="fas fa-arrow-right"></i> عودة إلى الرئيسية</a> -->
     <div class="product-details-content">
       <div class="product-gallery">
         <img id="main-image" class="main-image" src="" alt="صورة المنتج الرئيسية">
@@ -66,9 +65,18 @@
         <div class="product-actions">
           <button class="btn add-to-cart"><i class="fas fa-cart-plus"></i> أضف إلى السلة</button>
           <button class="btn order-now"><i class="fas fa-bolt"></i> اطلب الآن</button>
+            <a href="index.html" class="back-btn btn"><i class="fas fa-arrow-right"></i> عودة إلى الرئيسية</a>
         </div>
       </div>
     </div>
+  </div>
+
+  <!-- Modal لتكبير الصور -->
+  <div id="image-modal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modal-image">
+    <a class="prev">&#10094;</a>
+    <a class="next">&#10095;</a>
   </div>
 
   <aside class="cart" id="cart">
