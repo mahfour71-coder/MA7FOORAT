@@ -166,7 +166,7 @@ header nav a:hover {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: #e9dac9;
   text-align: center;
   z-index: 2;
   animation: fadeIn 1s ease-in;
@@ -178,7 +178,7 @@ header nav a:hover {
   text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
   font-family: 'Amiri', serif;
   letter-spacing: 3px;
-  border-bottom: 3px solid #ffffff;
+  border-bottom: 3px solid #e9dac9  ;
   padding-bottom: 8px;
 }
 
