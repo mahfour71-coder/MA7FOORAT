@@ -11,7 +11,7 @@ const productsData = [
       "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
     ],
     dimensions: "20 × 30 سم",
-    video: "https://streamable.com/cmo8hp"
+    video: "video_2025-09-07_05-54-41.mp4"
   },
   { 
     id: 2, 
