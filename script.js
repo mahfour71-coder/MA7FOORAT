@@ -8,8 +8,7 @@ const productsData = [
     details: "حصان خشبي مصنوع يدويًا من خشب الزان، بأبعاد 20x30 سم، مثالي لتزيين المكاتب.", 
     images: [
       "https://i.postimg.cc/2S37xLtg/photo-2025-09-04-22-32-00.jpg",
-      "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg", 
-      // "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
+      "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
     ],
     dimensions: "20 × 30 سم"
   },
@@ -614,6 +613,60 @@ function setupProductDetails() {
   }
 
   updateAverageRating();
+
+  // ميزة تكبير الصور (زوم) والتنقل
+  const modal = document.getElementById('image-modal');
+  const modalImg = document.getElementById('modal-image');
+  const closeModal = document.querySelector('.close-modal');
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+  let currentImageIndex = 0;
+
+  function openModal(index) {
+    currentImageIndex = index;
+    modal.style.display = 'block';
+    modalImg.src = product.images[currentImageIndex];
+  }
+
+  if (closeModal) {
+    closeModal.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  }
+
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      currentImageIndex = (currentImageIndex - 1 + product.images.length) % product.images.length;
+      modalImg.src = product.images[currentImageIndex];
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      currentImageIndex = (currentImageIndex + 1) % product.images.length;
+      modalImg.src = product.images[currentImageIndex];
+    });
+  }
+
+  if (mainImage) {
+    mainImage.addEventListener('click', () => {
+      const currentSrc = mainImage.src;
+      const index = product.images.indexOf(currentSrc);
+      openModal(index !== -1 ? index : 0);
+    });
+  }
+
+  thumbnailsContainer.querySelectorAll('.thumbnail').forEach((thumbnail, index) => {
+    thumbnail.addEventListener('click', () => {
+      openModal(index);
+    });
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
 }
 
 function setupNavToggle() {
