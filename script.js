@@ -1,3 +1,5 @@
+const whatsappNumber = "201033662370"; // ضع الرقم الجديد هنا لو عايز تغيره
+
 const productsData = [
   { 
     id: 1, 
@@ -26,11 +28,11 @@ const productsData = [
       "https://i.postimg.cc/NFw0GMQn/photo-4.jpg"
     ],
     dimensions: "15 × 10 سم",
-    video:  "https://files.catbox.moe/hlznb6.mp4"
+    video: "https://files.catbox.moe/hlznb6.mp4"
   },
   { 
     id: 3, 
-    name: "ماديلية خشبية علي علامة مرسيدس", 
+    name: "ماديلية خشبية علي شكل علامة مرسيدس", 
     price: 35, 
     img: "https://i.postimg.cc/h4TDfCP5/photo-2025-09-04-22-37-25.jpg", 
     category: "اكسسورات", 
@@ -48,7 +50,7 @@ const productsData = [
     details: "حصان خشبي صغير مصنوع يدويًا، مثالي كهدية تذكارية.", 
     images: ["https://i.postimg.cc/900jZxJw/photo-2025-09-05-02-44-18.jpg"],
     dimensions: "يختلف حسب الطلب",
-    video:  ["https://files.catbox.moe/hlznb6.mp4"],
+    video: "https://files.catbox.moe/hlznb6.mp4" // تم تصحيح الـ array إلى string
   },
   { 
     id: 5, 
@@ -224,7 +226,7 @@ function renderProducts(products) {
           const { fullName, address, phoneNumber, locationLink } = result.value;
           let message = `طلب منتج:\nالمنتج: ${name}\nالسعر: ${price} جنيه\nالكمية: ${quantity}\nالاسم: ${fullName}\nالعنوان: ${address}\nرقم الهاتف: ${phoneNumber}\n`;
           if (locationLink) message += `رابط الموقع: ${locationLink}\n`;
-          const url = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
+          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
           window.open(url, '_blank');
           let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
           const orderNumber = orders.length + 1;
@@ -439,7 +441,7 @@ function setupCart() {
       }).then(result => {
         if (result.isConfirmed) {
           const orderNumber = (JSON.parse(localStorage.getItem('mahfourOrders')) || []).length + 1;
-          const url = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
+          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
           window.open(url, '_blank');
           let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
           orders.push({ orderNumber, message });
@@ -577,7 +579,7 @@ function setupProductDetails() {
           const { fullName, address, phoneNumber, locationLink } = result.value;
           let message = `طلب منتج:\nالمنتج: ${product.name}\nالسعر: ${product.price} جنيه\nالكمية: ${quantity}\nالاسم: ${fullName}\nالعنوان: ${address}\nرقم الهاتف: ${phoneNumber}\n`;
           if (locationLink) message += `رابط الموقع: ${locationLink}\n`;
-          const url = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
+          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
           window.open(url, '_blank');
           let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
           const orderNumber = orders.length + 1;
@@ -603,6 +605,19 @@ function setupProductDetails() {
   const stars = document.querySelectorAll('#rating-stars .fa-star');
   let currentRating = 0;
 
+  // إنشاء معرف عشوائي للمستخدم إذا لم يكن موجودًا
+  let userId = localStorage.getItem('userId');
+  if (!userId) {
+    userId = 'user_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('userId', userId);
+  }
+
+  // التحقق من التقييمات السابقة للمستخدم
+  let userRatings = JSON.parse(localStorage.getItem('mahfourUserRatings')) || {};
+  if (!userRatings[userId]) {
+    userRatings[userId] = {};
+  }
+
   function updateAverageRating() {
     const productRatings = ratings[product.id] || [];
     const average = productRatings.length > 0 ? productRatings.reduce((sum, r) => sum + r, 0) / productRatings.length : 0;
@@ -621,9 +636,23 @@ function setupProductDetails() {
       highlightStars(currentRating);
     });
     star.addEventListener('click', (e) => {
+      // التحقق إذا كان المستخدم قيّم المنتج من قبل
+      if (userRatings[userId][product.id]) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'لقد قيّمت هذا المنتج من قبل!',
+          text: 'يمكنك تقييم كل منتج مرة واحدة فقط.',
+          showConfirmButton: false,
+          timer: 2000
+        });
+        return;
+      }
+
       currentRating = parseInt(e.target.dataset.rating);
       ratings[product.id].push(currentRating);
+      userRatings[userId][product.id] = currentRating;
       localStorage.setItem('mahfourRatings', JSON.stringify(ratings));
+      localStorage.setItem('mahfourUserRatings', JSON.stringify(userRatings));
       updateAverageRating();
       Swal.fire({
         icon: 'success',
