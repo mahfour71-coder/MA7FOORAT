@@ -1,4 +1,4 @@
-const whatsappNumber = "201033662370"; // ضع الرقم الجديد هنا لو عايز تغيره
+const whatsappNumber = "+201033662370"; // إضافة الكود الدولي +20
 
 const productsData = [
   { 
@@ -50,7 +50,7 @@ const productsData = [
     details: "حصان خشبي صغير مصنوع يدويًا، مثالي كهدية تذكارية.", 
     images: ["https://i.postimg.cc/900jZxJw/photo-2025-09-05-02-44-18.jpg"],
     dimensions: "يختلف حسب الطلب",
-    video: "https://files.catbox.moe/hlznb6.mp4" // تم تصحيح الـ array إلى string
+    video: "https://files.catbox.moe/hlznb6.mp4"
   },
   { 
     id: 5, 
@@ -226,7 +226,8 @@ function renderProducts(products) {
           const { fullName, address, phoneNumber, locationLink } = result.value;
           let message = `طلب منتج:\nالمنتج: ${name}\nالسعر: ${price} جنيه\nالكمية: ${quantity}\nالاسم: ${fullName}\nالعنوان: ${address}\nرقم الهاتف: ${phoneNumber}\n`;
           if (locationLink) message += `رابط الموقع: ${locationLink}\n`;
-          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+          const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A'); // تنظيف إضافي للإنترات
+          const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
           window.open(url, '_blank');
           let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
           const orderNumber = orders.length + 1;
@@ -430,31 +431,21 @@ function setupCart() {
       });
       const total = cartData.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
       message += `\nالإجمالي: ${total} جنيه`;
-
+      const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A'); // تنظيف إضافي للإنترات
+      const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+      
+      window.open(url, '_blank');
+      let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+      const orderNumber = orders.length + 1;
+      orders.push({ orderNumber, message });
+      localStorage.setItem('mahfourOrders', JSON.stringify(orders));
+      cartData = [];
+      renderCart();
       Swal.fire({
-        icon: 'info',
-        title: 'تأكيد البيانات',
-        html: `<pre>${message}</pre>`,
-        showCancelButton: true,
-        confirmButtonText: 'إرسال عبر واتساب',
-        cancelButtonText: 'إلغاء'
-      }).then(result => {
-        if (result.isConfirmed) {
-          const orderNumber = (JSON.parse(localStorage.getItem('mahfourOrders')) || []).length + 1;
-          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-          window.open(url, '_blank');
-          let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
-          orders.push({ orderNumber, message });
-          localStorage.setItem('mahfourOrders', JSON.stringify(orders));
-          cartData = [];
-          renderCart();
-          Swal.fire({
-            icon: 'success',
-            title: `تم إرسال الطلب رقم ${orderNumber} عبر واتساب`,
-            showConfirmButton: false,
-            timer: 2000
-          });
-        }
+        icon: 'success',
+        title: `تم إرسال الطلب رقم ${orderNumber} عبر واتساب`,
+        showConfirmButton: false,
+        timer: 2000
       });
     });
   }
@@ -579,7 +570,8 @@ function setupProductDetails() {
           const { fullName, address, phoneNumber, locationLink } = result.value;
           let message = `طلب منتج:\nالمنتج: ${product.name}\nالسعر: ${product.price} جنيه\nالكمية: ${quantity}\nالاسم: ${fullName}\nالعنوان: ${address}\nرقم الهاتف: ${phoneNumber}\n`;
           if (locationLink) message += `رابط الموقع: ${locationLink}\n`;
-          const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+          const encodedMessage = encodeURIComponent(message).replace(/%0A/g, '%0D%0A'); // تنظيف إضافي للإنترات
+          const url = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
           window.open(url, '_blank');
           let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
           const orderNumber = orders.length + 1;
