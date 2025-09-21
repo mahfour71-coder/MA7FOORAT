@@ -18,7 +18,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "20 × 30 سم",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: true
+    available: false
   },
   { 
     id: 2, 
@@ -34,7 +34,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "15 × 10 سم",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: true
+    available: false
   },
   { 
     id: 3, 
@@ -58,7 +58,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     images: ["https://i.postimg.cc/900jZxJw/photo-2025-09-05-02-44-18.jpg"],
     dimensions: "يختلف حسب الطلب",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: true
+    available: false
   },
   { 
     id: 5, 
@@ -74,7 +74,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "يختلف حسب الطلب",
     video: null,
-    available: true
+    available: false
   },
   { 
     id: 6, 
@@ -90,7 +90,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "يختلف حسب الطلب",
     video: null,
-    available: true
+    available: false
   },
   { 
     id: 7, 
@@ -106,7 +106,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "يختلف حسب الطلب",
     video: null,
-    available: true
+    available: false
   },
   { 
     id: 8, 
@@ -118,7 +118,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
     dimensions: "يختلف حسب الطلب",
     video: null,
-    available: true
+    available: false
   },
   { 
     id: 9, 
@@ -130,7 +130,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
     dimensions: "يختلف حسب الطلب",
     video: null,
-    available: true
+    available: false
   },
   { 
     id: 10, 
@@ -146,7 +146,7 @@ let productsData = JSON.parse(localStorage.getItem('mahfourProducts')) || [
     ],
     dimensions: "25 × 35 سم",
     video: null,
-    available: true
+    available: false
   }
 ];
 
@@ -1157,3 +1157,4 @@ document.addEventListener('DOMContentLoaded', () => {
     if (adminContent) adminContent.style.display = 'none';
   }
 });
+
