@@ -306,6 +306,10 @@ header nav a:hover {
   border-radius: 6px;
 }
 
+.product-card .image-wrapper {
+  cursor: pointer;
+}
+
 .product-card h3 {
   font-size: 18px;
   margin: 10px 0;
@@ -328,7 +332,7 @@ header nav a:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  order: -1; /* يضمن ظهور quantity-control قبل زر أضف إلى السلة */
 }
 
 .product-card .quantity-control button {
@@ -348,9 +352,18 @@ header nav a:hover {
   background: #e68900;
 }
 
+.product-card .quantity-control button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .product-card .quantity-control span {
   font-size: 16px;
   font-weight: bold;
+  color: #452808;
+  min-width: 30px;
+  text-align: center;
 }
 
 .btn {
@@ -370,6 +383,12 @@ header nav a:hover {
 .btn:hover {
   background: #e68900;
   transform: translateY(-2px);
+}
+
+.btn:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .cart {
@@ -830,6 +849,12 @@ header nav a:hover {
   font-size: 24px;
   font-weight: bold;
   color: #452808;
+  margin-bottom: 5px;
+}
+
+.product-discount {
+  font-size: 20px;
+  color: #4CAF50;
   margin-bottom: 25px;
 }
 
@@ -858,12 +883,19 @@ header nav a:hover {
   background: #e68900;
 }
 
+.quantity-control button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 .quantity-control span {
   font-size: 20px;
   font-weight: bold;
   margin: 0 15px;
   min-width: 30px;
   text-align: center;
+  color: #452808;
 }
 
 .product-actions {
@@ -1016,6 +1048,22 @@ footer #admin-access-btn {
   z-index: 10;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   opacity: 0.9;
+}
+
+/* تصميم السعر الأصلي بخط عليه */
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 16px;
+  display: block;
+}
+
+/* تصميم السعر بعد الخصم */
+.discounted-price {
+  color: #4CAF50;
+  font-weight: bold;
+  font-size: 18px;
+  display: block;
 }
 
 /* تصميم كلاس unavailable للمنتج الغير متوفر */
@@ -1318,5 +1366,17 @@ footer #admin-access-btn {
   .unavailable-badge {
     font-size: 10px;
     padding: 4px 8px;
+  }
+
+  /* تعديل عداد الكمية للشاشات الصغيرة */
+  .product-card .quantity-control button {
+    min-width: 25px;
+    min-height: 25px;
+    font-size: 12px;
+  }
+
+  .product-card .quantity-control span {
+    font-size: 14px;
+    min-width: 25px;
   }
 }
