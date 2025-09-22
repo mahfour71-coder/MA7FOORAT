@@ -25,7 +25,7 @@ const productsDataDefault = [
     id: 2, 
     name: "استاند تليفون", 
     price: 65, 
-    discount: 25, // Added discount field
+    discount: 20, // Added discount field
     img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
     category: "اكسسورات", 
     details: "كلمة خشبية مزخرفة، مثالية كهدية شخصية، مصنوعة من خشب الماهوجني.", 
@@ -36,20 +36,20 @@ const productsDataDefault = [
     ],
     dimensions: "15 × 10 سم",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: tru
+    available: false
   },
   { 
     id: 3, 
     name: "ماديلية خشبية علي شكل علامة مرسيدس", 
     price: 35, 
-    discount: 0, // Added discount field
+    discount: 25, // Added discount field
     img: "https://i.postimg.cc/h4TDfCP5/photo-2025-09-04-22-37-25.jpg", 
     category: "اكسسورات", 
     details: "منتج خشبي متعدد الاستخدامات للديكور المنزلي، بأبعاد 15x15 سم.", 
     images: ["https://i.postimg.cc/pyyS5SdM/photo-3.jpg"],
     dimensions: "15 × 15 سم",
     video: null,
-    available: false
+    available: true
   },
   { 
     id: 4, 
@@ -161,7 +161,7 @@ const productsDataDefault = [
 ];
 
 // Version control for products data
-const DATA_VERSION = "1.2";
+const DATA_VERSION = "1.3";
 
 let productsData;
 
@@ -1298,4 +1298,5 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
+
 
