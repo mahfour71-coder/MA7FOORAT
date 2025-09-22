@@ -301,13 +301,19 @@ header nav a:hover {
 
 .product-card img {
   width: 100%;
-  height: 180px;
+  height: 100%;
+  aspect-ratio: 1/1;
   object-fit: cover;
   border-radius: 6px;
 }
 
 .product-card .image-wrapper {
-  cursor: pointer;
+  width: 100%;
+  aspect-ratio: 1/1;
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  max-height: 200px;
 }
 
 .product-card h3 {
@@ -332,7 +338,7 @@ header nav a:hover {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  order: -1; /* يضمن ظهور quantity-control قبل زر أضف إلى السلة */
+  order: -1;
 }
 
 .product-card .quantity-control button {
@@ -1310,7 +1316,20 @@ footer #admin-access-btn {
   }
 
   .product-card img {
-    height: 140px;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+
+  .product-card .image-wrapper {
+    width: 100%;
+    aspect-ratio: 1/1;
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    max-height: 160px;
   }
 
   .product-card h3 {
@@ -1362,13 +1381,11 @@ footer #admin-access-btn {
     max-width: 100%;
   }
 
-  /* تعديل الشارة للشاشات الصغيرة */
   .unavailable-badge {
     font-size: 10px;
     padding: 4px 8px;
   }
 
-  /* تعديل عداد الكمية للشاشات الصغيرة */
   .product-card .quantity-control button {
     min-width: 25px;
     min-height: 25px;
