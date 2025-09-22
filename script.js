@@ -25,7 +25,7 @@ const productsDataDefault = [
     id: 2, 
     name: "استاند تليفون", 
     price: 65, 
-    discount: 0, // Added discount field
+    discount: 25, // Added discount field
     img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
     category: "اكسسورات", 
     details: "كلمة خشبية مزخرفة، مثالية كهدية شخصية، مصنوعة من خشب الماهوجني.", 
@@ -36,7 +36,7 @@ const productsDataDefault = [
     ],
     dimensions: "15 × 10 سم",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: false
+    available: tru
   },
   { 
     id: 3, 
@@ -1298,3 +1298,4 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
+
