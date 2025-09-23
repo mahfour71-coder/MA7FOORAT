@@ -239,6 +239,7 @@ function verifyProductsPassword() {
     document.getElementById('products-management').style.display = 'block';
     document.getElementById('add-product-btn').style.display = 'block';
     renderProductsManagement();
+    setupManagementFilters();
     return true;
   } else {
     Swal.fire({
@@ -291,78 +292,6 @@ function renderProducts(products = productsData) {
     `;
     productsSection.appendChild(card);
   });
-
-  // Add event listeners for quantity controls
-  document.querySelectorAll('.qty-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      const id = e.target.dataset.id;
-      const product = productsData.find(p => p.id === parseInt(id));
-      if (!product.available) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'المنتج غير متوفر',
-          text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return;
-      }
-      const isPlus = e.target.classList.contains('plus');
-      const quantityElement = document.querySelector(`.product-quantity[data-id="${id}"]`);
-      if (!quantityElement) return;
-      let quantity = parseInt(quantityElement.textContent);
-      if (isPlus) {
-        quantity++;
-      } else {
-        quantity = Math.max(1, quantity - 1);
-      }
-      quantityElement.textContent = quantity;
-    });
-  });
-
-  // Add event listeners for add-to-cart and order-now buttons
-  document.querySelectorAll('.add-to-cart').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = parseInt(btn.dataset.id);
-      const product = productsData.find(p => p.id === id);
-      if (!product.available) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'المنتج غير متوفر',
-          text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return;
-      }
-      const name = btn.dataset.name;
-      const price = Number(btn.dataset.price);
-      const quantity = parseInt(document.querySelector(`.product-quantity[data-id="${id}"]`).textContent);
-      addToCart(id, quantity);
-    });
-  });
-
-  document.querySelectorAll('.order-now').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const id = parseInt(btn.dataset.id);
-      const product = productsData.find(p => p.id === id);
-      if (!product.available) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'المنتج غير متوفر',
-          text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
-          showConfirmButton: false,
-          timer: 2000
-        });
-        return;
-      }
-      const quantity = parseInt(document.querySelector(`.product-quantity[data-id="${id}"]`).textContent);
-      addToCart(id, quantity);
-      document.getElementById('cart').classList.add('open');
-    });
-  });
 }
 
 // Add to cart
@@ -388,7 +317,7 @@ function addToCart(productId, quantity = 1) {
     cartData.push({
       id: productId,
       name: product.name,
-      price: discountedPrice, // Use discounted price
+      price: discountedPrice,
       quantity: quantity,
       img: product.img
     });
@@ -432,7 +361,7 @@ function updateCart() {
       <span>${item.price.toFixed(2)} جنيه × ${item.quantity}</span>
       <div>
         <button class="qty-btn minus" data-id="${item.id}">-</button>
-        <span>${item.quantity}</span>
+        <span class="cart-quantity">${item.quantity}</span>
         <button class="qty-btn plus" data-id="${item.id}">+</button>
         <button class="remove" data-id="${item.id}">×</button>
       </div>
@@ -892,13 +821,13 @@ function setupRatingSystem(productId) {
 }
 
 // Render products management
-function renderProductsManagement() {
+function renderProductsManagement(products = productsData) {
   const productsGrid = document.getElementById('products-grid');
   if (!productsGrid) return;
 
   productsGrid.innerHTML = '';
 
-  productsData.forEach(product => {
+  products.forEach(product => {
     const discountedPrice = product.discount > 0 ? (product.price * (1 - product.discount / 100)).toFixed(2) : product.price;
     const priceDisplay = product.discount > 0 
       ? `<span class="original-price">${product.price} جنيه</span><br><span class="price">${discountedPrice} جنيه (خصم ${product.discount}%)</span>`
@@ -1047,6 +976,63 @@ function editProduct(productId) {
   document.getElementById('add-product-form').style.display = 'block';
 }
 
+// Search and filter products in management section
+function setupManagementFilters() {
+  const searchInput = document.getElementById('search-management-products');
+  const sortSelect = document.getElementById('sort-management-products');
+  const filterCategory = document.getElementById('filter-management-category');
+  const resetFilters = document.getElementById('reset-management-filters');
+
+  if (!searchInput || !sortSelect || !filterCategory || !resetFilters) return;
+
+  function applyManagementFilters() {
+    let filteredProducts = [...productsData];
+
+    // Search
+    const searchTerm = searchInput.value.trim().toLowerCase();
+    if (searchTerm) {
+      filteredProducts = filteredProducts.filter(product =>
+        product.name.toLowerCase().includes(searchTerm) ||
+        product.details.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Filter by category
+    const category = filterCategory.value;
+    if (category !== 'all') {
+      filteredProducts = filteredProducts.filter(product => product.category === category);
+    }
+
+    // Sort
+    const sortValue = sortSelect.value;
+    if (sortValue === 'price-asc') {
+      filteredProducts.sort((a, b) => {
+        const priceA = a.discount > 0 ? a.price * (1 - a.discount / 100) : a.price;
+        const priceB = b.discount > 0 ? b.price * (1 - b.discount / 100) : b.price;
+        return priceA - priceB;
+      });
+    } else if (sortValue === 'price-desc') {
+      filteredProducts.sort((a, b) => {
+        const priceA = a.discount > 0 ? a.price * (1 - a.discount / 100) : a.price;
+        const priceB = b.discount > 0 ? b.price * (1 - b.discount / 100) : b.price;
+        return priceB - priceA;
+      });
+    }
+
+    renderProductsManagement(filteredProducts);
+  }
+
+  searchInput.addEventListener('input', applyManagementFilters);
+  sortSelect.addEventListener('change', applyManagementFilters);
+  filterCategory.addEventListener('change', applyManagementFilters);
+  resetFilters.addEventListener('click', () => {
+    searchInput.value = '';
+    sortSelect.value = 'default';
+    filterCategory.value = 'all';
+    renderProductsManagement(productsData);
+  });
+}
+
 // Initialize
 function initialize() {
   initializeProducts();
@@ -1158,7 +1144,7 @@ function initialize() {
     }
   }
 
-  // Event delegation for product cards
+  // Event delegation for product cards and cart
   document.addEventListener('click', (e) => {
     const addToCartBtn = e.target.closest('.add-to-cart');
     const orderNowBtn = e.target.closest('.order-now');
@@ -1235,12 +1221,23 @@ function initialize() {
         });
         return;
       }
-      const quantityControl = minusBtn.parentElement;
-      const quantitySpan = quantityControl.querySelector('.quantity');
-      let quantity = parseInt(quantitySpan.textContent);
-      if (quantity > 1) {
-        quantity--;
-        quantitySpan.textContent = quantity;
+      // Check if the button is in the cart
+      const isInCart = minusBtn.closest('.cart-items');
+      if (isInCart) {
+        const cartItem = cartData.find(item => item.id === id);
+        if (cartItem && cartItem.quantity > 1) {
+          cartItem.quantity--;
+          localStorage.setItem('mahfourCart', JSON.stringify(cartData));
+          updateCart();
+        }
+      } else {
+        const quantityControl = minusBtn.parentElement;
+        const quantitySpan = quantityControl.querySelector('.quantity');
+        let quantity = parseInt(quantitySpan.textContent);
+        if (quantity > 1) {
+          quantity--;
+          quantitySpan.textContent = quantity;
+        }
       }
     }
 
@@ -1257,11 +1254,22 @@ function initialize() {
         });
         return;
       }
-      const quantityControl = plusBtn.parentElement;
-      const quantitySpan = quantityControl.querySelector('.quantity');
-      let quantity = parseInt(quantitySpan.textContent);
-      quantity++;
-      quantitySpan.textContent = quantity;
+      // Check if the button is in the cart
+      const isInCart = plusBtn.closest('.cart-items');
+      if (isInCart) {
+        const cartItem = cartData.find(item => item.id === id);
+        if (cartItem) {
+          cartItem.quantity++;
+          localStorage.setItem('mahfourCart', JSON.stringify(cartData));
+          updateCart();
+        }
+      } else {
+        const quantityControl = plusBtn.parentElement;
+        const quantitySpan = quantityControl.querySelector('.quantity');
+        let quantity = parseInt(quantitySpan.textContent);
+        quantity++;
+        quantitySpan.textContent = quantity;
+      }
     }
 
     if (removeBtn) {
@@ -1298,5 +1306,3 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
-
-
