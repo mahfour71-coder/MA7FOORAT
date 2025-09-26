@@ -36,7 +36,7 @@ const productsDataDefault = [
     ],
     dimensions: "15 × 10 سم",
     video: "https://files.catbox.moe/hlznb6.mp4",
-    available: false
+    available: true
   },
   { 
     id: 3, 
@@ -161,7 +161,7 @@ const productsDataDefault = [
 ];
 
 // Version control for products data
-const DATA_VERSION = "1.2";
+const DATA_VERSION = "1.3";
 
 let productsData;
 
@@ -1306,5 +1306,6 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
+
 
 
