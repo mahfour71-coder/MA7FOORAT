@@ -7,10 +7,10 @@ const PRODUCTS_PASSWORD = "MOHAND2009MOHAND1907MO09UA07";
 const productsDataDefault = [
   { 
     id: 1, 
-    name: "ماديلية خشبية علي شكل حصان", 
-    price: 30, 
+    name: "علبه مناديل ", 
+    price: 200, 
     discount: 30, // Added discount field
-    img: "https://i.postimg.cc/2S37xLtg/photo-2025-09-04-22-32-00.jpg", 
+    img: "https://i.postimg.cc/rw5xjP4V/photo-2025-09-27-02-33-52.jpg", 
     category: "اكسسورات", 
     details: "حصان خشبي مصنوع يدويًا من خشب الزان، بأبعاد 20x30 سم، مثالي لتزيين المكاتب.", 
     images: [
@@ -1306,3 +1306,4 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
+
