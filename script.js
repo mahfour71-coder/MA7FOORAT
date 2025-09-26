@@ -161,7 +161,7 @@ const productsDataDefault = [
 ];
 
 // Version control for products data
-const DATA_VERSION = "1.3";
+const DATA_VERSION = "1.2";
 
 let productsData;
 
@@ -1306,4 +1306,5 @@ function initialize() {
 
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
+
 
