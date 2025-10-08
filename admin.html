@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة الإدارة - محفورات</title>
-  <link rel="icon" href="https://i.postimg.cc/Jh9GmJML/photo-2025-09-07-07-59-17.jpg" type="image/x-icon">
+  <meta name="description" content="لوحة تحكم إدارة متجر MAHFOOR CNC">
+  <title>لوحة التحكم - MAHFOOR CNC</title>
+  <link rel="icon" href="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5"/>
@@ -14,10 +15,10 @@
 <body>
   <div id="password-modal" class="password-modal">
     <div class="password-modal-content">
-      <h2><i class="fas fa-lock"></i> تسجيل الدخول إلى لوحة الإدارة</h2>
+      <h2><i class="fas fa-lock"></i> إدخال كلمة المرور</h2>
       <div class="password-input-wrapper">
-        <i class="fas fa-key"></i>
-        <input type="password" id="password-input" placeholder="أدخل كلمة المرور" required>
+        <i class="fas fa-lock"></i>
+        <input type="password" id="password-input" placeholder="أدخل كلمة المرور">
       </div>
       <button id="verify-password" class="btn">تحقق</button>
     </div>
@@ -25,10 +26,10 @@
 
   <div id="products-password-modal" class="password-modal" style="display: none;">
     <div class="password-modal-content">
-      <h2><i class="fas fa-lock"></i> تسجيل الدخول إلى إدارة المنتجات</h2>
+      <h2><i class="fas fa-lock"></i> كلمة مرور إدارة المنتجات</h2>
       <div class="password-input-wrapper">
-        <i class="fas fa-key"></i>
-        <input type="password" id="products-password-input" placeholder="أدخل كلمة المرور الخاصة بإدارة المنتجات" required>
+        <i class="fas fa-lock"></i>
+        <input type="password" id="products-password-input" placeholder="أدخل كلمة المرور">
       </div>
       <button id="verify-products-password" class="btn">تحقق</button>
     </div>
@@ -36,10 +37,6 @@
 
   <div id="admin-content" style="display: none;">
     <header>
-      <div class="logo">
-        <img src="https://i.postimg.cc/Jh9GmJML/photo-2025-09-07-07-59-17.jpg" alt="لوجو محفورات" class="brand-logo">محفورات
-        <a href="#" id="cart-btn"><i class="sicon-shopping-bag"></i> (<span id="cart-count">0</span>)</a>
-      </div>
       <button class="nav-toggle" aria-label="Toggle navigation">
         <i class="fas fa-bars"></i>
       </button>
@@ -47,78 +44,114 @@
         <a href="index.html">الرئيسية</a>
         <a href="index.html#products">المنتجات</a>
         <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
-        <a href="admin.html">إدارة</a>
       </nav>
+      <div class="logo">
+        <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
+      </div>
     </header>
+
+    <!-- قسم الإحصائيات الجديد -->
+    <section class="stats">
+      <h2><i class="fas fa-chart-line"></i> إحصائيات المتجر</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-shopping-cart stat-icon"></i>
+          <h3>عدد الطلبات</h3>
+          <p id="total-orders">0</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-money-bill-wave stat-icon"></i>
+          <h3>إجمالي المبيعات</h3>
+          <p id="total-sales">0 جنيه</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-star stat-icon"></i>
+          <h3>المنتج الأكثر طلبًا</h3>
+          <p id="top-product">لا يوجد</p>
+        </div>
+      </div>
+    </section>
 
     <section class="orders-section">
       <h2>إدارة الطلبات</h2>
       <div class="orders-controls">
-        <input type="text" id="search-orders" placeholder="ابحث برقم الطلب أو اسم العميل...">
-        <button id="clear-orders" class="btn">مسح الطلبات</button>
+        <input type="text" id="search-orders" placeholder="ابحث عن طلب...">
+        <button id="clear-orders" class="btn"><i class="fas fa-trash"></i> مسح جميع الطلبات</button>
       </div>
-      <button id="manage-products-btn" class="btn">إدارة المنتجات</button>
-      <h3>الطلبات السابقة</h3>
-      <table id="orders-table" class="orders-table">
+      <table class="orders-table">
         <thead>
           <tr>
             <th>رقم الطلب</th>
             <th>التاريخ</th>
             <th>تفاصيل الطلب</th>
-            <th>إجراءات</th>
+            <th>الإجراءات</th>
           </tr>
         </thead>
         <tbody id="orders-list"></tbody>
       </table>
     </section>
 
+    <button id="manage-products-btn" class="btn">إدارة المنتجات</button>
+
     <section id="products-management" class="products-management" style="display: none;">
       <h3>إدارة المنتجات</h3>
-      <button id="add-product-btn" class="btn">إضافة منتج جديد</button>
-      <div id="add-product-form" style="display: none;">
-        <h4>إضافة/تعديل منتج</h4>
+      <div class="filters">
+        <h3><i class="fas fa-filter"></i> تصفية المنتجات</h3>
+        <div class="filter-group">
+          <label for="search-management-products"><i class="fas fa-search"></i> البحث:</label>
+          <input type="text" id="search-management-products" placeholder="ابحث عن منتج...">
+        </div>
+        <div class="filter-group">
+          <label for="sort-management-products"><i class="fas fa-sort"></i> فرز حسب:</label>
+          <select id="sort-management-products">
+            <option value="default">الافتراضي</option>
+            <option value="price-asc">السعر من الأقل للأعلى</option>
+            <option value="price-desc">السعر من الأعلى للأقل</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="filter-management-category"><i class="fas fa-tags"></i> الفئة:</label>
+          <select id="filter-management-category">
+            <option value="all">الكل</option>
+            <option value="ديكور">ديكور</option>
+            <option value="العاب">العاب</option>
+            <option value="ادوات منزلية">ادوات منزلية</option>
+            <option value="اكسسورات">اكسسوارات</option>
+          </select>
+        </div>
+        <button id="reset-management-filters" class="btn"><i class="fas fa-sync-alt"></i> إعادة تعيين</button>
+      </div>
+      <button id="add-product-btn" class="btn" style="display: none;">إضافة منتج جديد</button>
+      <form id="add-product-form" style="display: none;">
         <input type="hidden" id="edit-product-id">
-        <input type="text" id="product-name-input" placeholder="اسم المنتج" required>
-        <input type="number" id="product-price-input" placeholder="السعر" required min="0">
-        <input type="number" id="product-discount-input" placeholder="نسبة الخصم (%)" min="0" max="100">
-        <input type="text" id="product-img-input" placeholder="رابط الصورة الرئيسية" required>
-        <input type="text" id="product-category-input" placeholder="الفئة" required>
-        <textarea id="product-details-input" placeholder="تفاصيل المنتج" required></textarea>
-        <input type="text" id="product-dimensions-input" placeholder="الأبعاد">
-        <input type="text" id="product-images-input" placeholder="روابط الصور الإضافية مفصولة بفواصل">
+        <input type="text" id="product-code-input" placeholder="كود المنتج">
+        <input type="text" id="product-name-input" placeholder="اسم المنتج">
+        <input type="number" id="product-price-input" placeholder="السعر">
+        <input type="number" id="product-discount-input" placeholder="نسبة الخصم (اختياري)">
+        <input type="text" id="product-img-input" placeholder="رابط الصورة الرئيسية">
+        <select id="product-category-input">
+          <option value="ديكور">ديكور</option>
+          <option value="العاب">العاب</option>
+          <option value="ادوات منزلية">ادوات منزلية</option>
+          <option value="اكسسورات">اكسسوارات</option>
+        </select>
+        <textarea id="product-details-input" placeholder="تفاصيل المنتج"></textarea>
+        <input type="text" id="product-dimensions-input" placeholder="الأبعاد (اختياري)">
+        <input type="text" id="product-images-input" placeholder="روابط الصور الإضافية (مفصولة بفواصل)">
         <input type="text" id="product-video-input" placeholder="رابط الفيديو (اختياري)">
         <select id="product-available-input">
           <option value="true">متوفر</option>
           <option value="false">غير متوفر</option>
         </select>
-        <button id="save-product" class="btn">حفظ المنتج</button>
-        <button id="cancel-edit" class="btn">إلغاء</button>
-      </div>
-      <div id="products-grid" class="products-management-grid">
-        <!-- المنتجات هتظهر هنا كـ cards -->
-      </div>
+        <button type="button" id="save-product" class="btn">حفظ المنتج</button>
+        <button type="button" id="cancel-edit" class="btn">إلغاء</button>
+      </form>
+      <div id="products-grid" class="products-management-grid"></div>
     </section>
 
-    <aside class="cart" id="cart">
-      <h2>🛒 سلة مشترياتك</h2>
-      <button id="clear-cart">مسح السلة</button>
-      <ul class="cart-items"></ul>
-      <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
-      <h3>بيانات العميل</h3>
-      <div id="order-form">
-        <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
-        <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
-        <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
-        <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
-        <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
-      </div>
-      <button id="close-cart">إغلاق السلة</button>
-    </aside>
-
     <footer>
-      <p><a href="admin.html" id="admin-access-btn">©</a> 2025 محفورات. جميع الحقوق محفوظة.</p>
+      <p><a href="#" id="admin-access-btn">©</a> 2025 MAHFOOR CNC. جميع الحقوق محفوظة.</p>
       <p>created by Mohand Eldrandale web developer</p>
-      رقم للتواصل 01033662370
       <div class="social-links">
         <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
         <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
