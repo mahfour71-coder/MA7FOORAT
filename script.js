@@ -1,61 +1,118 @@
 const whatsappNumber = "+201033662370";
 
-const ADMIN_PASSWORD = "123456789";
+const ADMIN_PASSWORD = "123";
 const PRODUCTS_PASSWORD = "MOHAND2009MOHAND1907MO09UA07";
 
 // Define productsData with version control
 const productsDataDefault = [
   { 
     id: 1, 
-    name: "علبه مناديل خشب ", 
-    price: 210, 
-    discount: 30, // Added discount field
-    img: "https://i.postimg.cc/rw5xjP4V/photo-2025-09-27-02-33-52.jpg", 
-    category: "اكسسورات", 
-    details: "حصان خشبي مصنوع يدويًا من خشب الزان، بأبعاد 20x30 سم، مثالي لتزيين المكاتب.", 
+    code: "101",
+    name: " علب مناديل خشبية", 
+    price: 165, 
+    discount: 0, 
+    img: "https://i.postimg.cc/W4nRLDKp/photo.jpg", 
+    category: "ادوات منزلية", 
+    details: "علب مناديل خشبية", 
     images: [
-      "https://i.postimg.cc/2S37xLtg/photo-2025-09-04-22-32-00.jpg",
-      "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
+      "https://i.postimg.cc/ydgThtFH/photo.jpg",
+      "https://i.postimg.cc/pXGY7Pqb/photo.jpg",
+      "https://i.postimg.cc/WbW6KsSK/photo-2.jpg",
+      "https://i.postimg.cc/wj1cYnbr/photo.jpg",
+      "https://i.postimg.cc/jdgQ9RZr/photo-2.jpg",
+      "https://i.postimg.cc/SNT75mDb/photo-4.jpg",
+      "https://i.postimg.cc/bNCHMq3h/photo-5.jpg",
+      "https://i.postimg.cc/90FRcqJm/photo.jpg",
+      "https://i.postimg.cc/Zn79nKMb/photo.jpg",
+      "https://i.postimg.cc/tJS1JCMp/photo-2.jpg",
+      "https://i.postimg.cc/FzWfzsBh/photo-3.jpg",
+      "https://i.postimg.cc/WzWDzbH2/photo-4.jpg",
+      "https://i.postimg.cc/nrRsrcP7/photo.jpg",
+      "https://i.postimg.cc/mkXck25k/photo-2.jpg",
+      "https://i.postimg.cc/wMftMTG7/photo-3.jpg",
+      "https://i.postimg.cc/qqbtqM5t/photo-4.jpg",
+      "https://i.postimg.cc/66Y4YY5m/photo.jpg",
+      "https://i.postimg.cc/fy23yTr7/photo-2.jpg",
+      "https://i.postimg.cc/SRTXRNv7/photo-3.jpg",
+      "https://i.postimg.cc/j2gW2dF4/photo-4.jpg",
+      "https://i.postimg.cc/gcNLNNkt/photo-5.jpg",
+      "https://i.postimg.cc/sfwGwwDk/photo.jpg",
+      "https://i.postimg.cc/xjtNttT7/photo-2.jpg",
+      "https://i.postimg.cc/3rn0nnJz/photo-3.jpg",
+      "https://i.postimg.cc/bY3S33wX/photo.jpg",
+      "https://i.postimg.cc/h4pQpptW/photo.jpg",
+      "https://i.postimg.cc/W4nRLDKp/photo.jpg"
+
+
     ],
     dimensions: "20 × 30 سم",
-    video: "https://files.catbox.moe/hlznb6.mp4",
+    video: null,
     available: true
   },
   { 
     id: 2, 
-    name: "استاند تليفون", 
+    code: "202",
+    name: " حامل موبايل", 
     price: 65, 
-    discount: 20, // Added discount field
-    img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
+    discount: 0, 
+    img: "https://i.postimg.cc/d1PvR7XP/photo-4.jpg", 
     category: "اكسسورات", 
-    details: "كلمة خشبية مزخرفة، مثالية كهدية شخصية، مصنوعة من خشب الماهوجني.", 
+    details: " حامل موبايل وتابلت  ", 
     images: [
-      "https://i.postimg.cc/rmbkKrvc/photo-2025-09-04-22-35-04.jpg",
-      "https://i.postimg.cc/6471s8Pp/photo-2.jpg", 
-      "https://i.postimg.cc/NFw0GMQn/photo-4.jpg"
+      "https://i.postimg.cc/QM6xpxD9/photo.jpg",
+      "https://i.postimg.cc/N0rBr8db/photo.jpg", 
+      "https://i.postimg.cc/fb0D0783/photo-2.jpg",
+      "https://i.postimg.cc/1zNsN0vc/photo-3.jpg",
+      "https://i.postimg.cc/SsFqLXPr/photo.jpg",
+      "https://i.postimg.cc/CKfSfCcs/photo-2.jpg",
+      "https://i.postimg.cc/8CrNrdZ4/photo-3.jpg",
+      "https://i.postimg.cc/yd4BhJGT/photo-4.jpg",
+      "https://i.postimg.cc/j50K6W1c/photo-5.jpg",
+      "https://i.postimg.cc/xCDYGkZg/photo-6.jpg",
+      "https://i.postimg.cc/W3GV5NLc/photo.jpg",
+      "https://i.postimg.cc/JnVm3yF9/photo-2.jpg",
+      "https://i.postimg.cc/bJc80G57/photo-3.jpg",
+      "https://i.postimg.cc/d1PvR7XP/photo-4.jpg",
+      "https://i.postimg.cc/nzbZKs5t/photo-5.jpg",
+      "https://i.postimg.cc/Y967drKw/photo-6.jpg",
+      "https://i.postimg.cc/ydmKL14W/photo.jpg",
+      "https://i.postimg.cc/50d15HGN/photo-2.jpg",
+      "https://i.postimg.cc/FRyvTr5v/photo-3.jpg",
+      "https://i.postimg.cc/50BJs4d4/photo-4.jpg",
+      "https://i.postimg.cc/7634KH8Z/photo-5.jpg",
+      "https://i.postimg.cc/26QY0kR5/photo-6.jpg",
+      "https://i.postimg.cc/rm1TfVX5/photo.jpg",
+      "https://i.postimg.cc/W3GV5NLc/photo.jpg"
     ],
     dimensions: "15 × 10 سم",
-    video: "https://files.catbox.moe/hlznb6.mp4",
+    video: null,
     available: true
   },
   { 
     id: 3, 
-    name: "ماديلية خشبية علي شكل علامة مرسيدس", 
-    price: 35, 
-    discount: 25, // Added discount field
-    img: "https://i.postimg.cc/h4TDfCP5/photo-2025-09-04-22-37-25.jpg", 
-    category: "اكسسورات", 
-    details: "منتج خشبي متعدد الاستخدامات للديكور المنزلي، بأبعاد 15x15 سم.", 
-    images: ["https://i.postimg.cc/pyyS5SdM/photo-3.jpg"],
+    code: "301",
+    name: "مقلمة", 
+    price: 55, 
+    discount: 0, 
+    img: "https://i.postimg.cc/NFV7zcwj/photo.jpg", 
+    category: "ادوات مكتبية", 
+    details: "  مقلمة اطفال ", 
+    images: ["https://i.postimg.cc/FRLjkc4h/photo.jpg",
+      "https://i.postimg.cc/KcJZgYZt/photo.jpg",
+      "https://i.postimg.cc/QxCjgrtF/photo.jpg",
+      "https://i.postimg.cc/15Xy0Ztf/photo-3.jpg",
+      "https://i.postimg.cc/NFV7zcwj/photo.jpg"
+    ],
     dimensions: "15 × 15 سم",
     video: null,
     available: true
   },
   { 
     id: 4, 
+    code: "XO004",
     name: "لعبه x.o", 
     price: 99, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/gj9TCqCw/photo.jpg", 
     category: "العاب", 
     details: "حصان خشبي صغير مصنوع يدويًا، مثالي كهدية تذكارية.", 
@@ -66,9 +123,10 @@ const productsDataDefault = [
   },
   { 
     id: 5, 
+    code: "CS005",
     name: "كوستر", 
     price: 30, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/1zwCpNns/photo-2025-09-04-22-39-53.jpg", 
     category: "ادوات منزلية", 
     details: "مكعب خشبي مزخرف بتصميم فريد، مصنوع من خشب الصنوبر.", 
@@ -83,9 +141,10 @@ const productsDataDefault = [
   },
   { 
     id: 6, 
+    code: "CS006",
     name: "كوستر", 
     price: 30, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/rsfwL0Yx/photo-2025-09-05-02-41-16.jpg", 
     category: "ادوات منزلية", 
     details: "مكعب خشبي مزخرف بتصميم فريد، مصنوع من خشب الصنوبر.", 
@@ -100,9 +159,10 @@ const productsDataDefault = [
   },
   { 
     id: 7, 
+    code: "CS007",
     name: "كوستر", 
     price: 30, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/pdKVL162/photo-2025-09-05-02-42-09.jpg", 
     category: "ادوات منزلية", 
     details: "مكعب خشبي مزخرف بتصميم فريد، مصنوع من خشب الصنوبر.", 
@@ -117,9 +177,10 @@ const productsDataDefault = [
   },
   { 
     id: 8, 
+    code: "DC008",
     name: "ديكور خشبي علي شكل كف", 
     price: 75, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/0ND2gZ3m/photo-2025-09-04-22-20-43.jpg", 
     category: "ديكور", 
     details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
@@ -130,9 +191,10 @@ const productsDataDefault = [
   },
   { 
     id: 9, 
+    code: "DC009",
     name: "ديكور خشبي علي شكل كف", 
     price: 75, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
     category: "ديكور", 
     details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
@@ -143,16 +205,17 @@ const productsDataDefault = [
   },
   { 
     id: 10, 
+    code: "CS010",
     name: "كوستر 'Everyday is More Better'", 
     price: 55, 
-    discount: 0, // Added discount field
+    discount: 0, 
     img: "https://i.postimg.cc/bJV5mfTR/photo-2025-09-04-22-26-03.jpg", 
     category: "ادوات منزلية", 
     details: "لوحة خشبية تحمل عبارة ملهمة، بأبعاد 25x35 سم.", 
     images: [
       "https://i.postimg.cc/bJV5mfTR/photo-2025-09-04-22-26-03.jpg",
-      "https://i.postimg.cc/mDW4C5Kz/photo-3.jpg", 
-      "https://i.postimg.cc/6471s8Pp/photo-2.jpg"
+      "https://postimg.cc/gallery/WFMk9kS", 
+      "https://i.postimg.cc//photo-2.jpg"
     ],
     dimensions: "25 × 35 سم",
     video: null,
@@ -161,7 +224,7 @@ const productsDataDefault = [
 ];
 
 // Version control for products data
-const DATA_VERSION = "1.2";
+const DATA_VERSION = "1.3";
 
 let productsData;
 
@@ -201,6 +264,7 @@ function verifyPassword() {
     document.getElementById('password-modal').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
     renderOrders();
+    updateStats(); // تعديل جديد: تحديث الإحصائيات بعد الدخول
     renderProductsManagement();
     return true;
   } else {
@@ -292,6 +356,12 @@ function renderProducts(products = productsData) {
     `;
     productsSection.appendChild(card);
   });
+
+  // Update product count
+  const productCount = document.getElementById('product-count');
+  if (productCount) {
+    productCount.textContent = products.length;
+  }
 }
 
 // Add to cart
@@ -317,6 +387,7 @@ function addToCart(productId, quantity = 1) {
     cartData.push({
       id: productId,
       name: product.name,
+      code: product.code,
       price: discountedPrice,
       quantity: quantity,
       img: product.img
@@ -357,7 +428,7 @@ function updateCart() {
     const li = document.createElement('li');
     li.innerHTML = `
       <img src="${item.img}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
-      <span class="item-name" data-id="${item.id}">${item.name}</span>
+      <span class="item-name" data-id="${item.id}">${item.name} (${item.code})</span>
       <span>${item.price.toFixed(2)} جنيه × ${item.quantity}</span>
       <div>
         <button class="qty-btn minus" data-id="${item.id}">-</button>
@@ -431,10 +502,10 @@ function orderViaWhatsApp() {
     return;
   }
 
-  let message = `*طلب جديد من متجر محفورات*\n\n`;
+  let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
   message += `*الاسم:* ${fullName}\n`;
   message += `*العنوان:* ${address}\n`;
-  if (locationLink) message += `*رابط الموقع:* ${locationLink}\n`;
+  if (locationLink) message += `* لوكيشن استلام الاوردر:* ${locationLink}\n`;
   message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
   message += `*المنتجات:*\n`;
 
@@ -444,7 +515,7 @@ function orderViaWhatsApp() {
     if (product) {
       const itemTotal = item.price * item.quantity;
       total += itemTotal;
-      message += `- ${item.name}: ${item.quantity} × ${item.price.toFixed(2)} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
+      message += `- ${item.name}\n  كود المنتج: ${item.code}\n  ${item.quantity} × ${item.price.toFixed(2)} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
     }
   });
 
@@ -467,6 +538,91 @@ function orderViaWhatsApp() {
   cartData = [];
   localStorage.setItem('mahfourCart', JSON.stringify(cartData));
   updateCart();
+
+  window.open(whatsappUrl, '_blank');
+  Swal.fire({
+    icon: 'success',
+    title: 'تم إرسال الطلب',
+    text: 'سيتم توجيهك إلى واتساب لتأكيد الطلب.',
+    showConfirmButton: false,
+    timer: 2000
+  });
+}
+
+// Order now via WhatsApp (for single product)
+function orderNowViaWhatsApp(productId, quantity) {
+  const product = productsData.find(p => p.id === productId);
+  if (!product || !product.available) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'المنتج غير متوفر',
+      text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return;
+  }
+
+  const fullName = document.getElementById('order-now-full-name').value.trim();
+  const address = document.getElementById('order-now-address').value.trim();
+  const locationLink = document.getElementById('order-now-location-link').value.trim();
+  const phoneNumber = document.getElementById('order-now-phone-number').value.trim();
+
+  if (!fullName || !address || !phoneNumber) {
+    Swal.fire({
+      icon: 'error',
+      title: 'بيانات غير مكتملة',
+      text: 'يرجى ملء جميع الحقول المطلوبة.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return;
+  }
+
+  if (!/^\d{11}$/.test(phoneNumber)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'رقم هاتف غير صحيح',
+      text: 'يرجى إدخال رقم هاتف مكون من 11 رقمًا.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return;
+  }
+
+  const discountedPrice = product.discount > 0 ? (product.price * (1 - product.discount / 100)).toFixed(2) : product.price;
+  const itemTotal = discountedPrice * quantity;
+
+  let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
+  message += `*الاسم:* ${fullName}\n`;
+  message += `*العنوان:* ${address}\n`;
+  if (locationLink) message += `* لوكيشن استلام الاوردر:* ${locationLink}\n`;
+  message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
+  message += `*المنتج:* ${product.name}\n`;
+  message += `كود المنتج: ${product.code}\n`;
+  message += `- ${quantity} × ${discountedPrice} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
+  message += `\n*الإجمالي:* ${itemTotal.toFixed(2)} جنيه`;
+
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+  const order = {
+    id: Date.now(),
+    date: new Date().toLocaleString('ar-EG'),
+    details: message,
+    status: 'قيد الانتظار'
+  };
+
+  let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+  orders.push(order);
+  localStorage.setItem('mahfourOrders', JSON.stringify(orders));
+
+  document.getElementById('order-now-modal').style.display = 'none';
+  document.getElementById('order-now-full-name').value = '';
+  document.getElementById('order-now-address').value = '';
+  document.getElementById('order-now-location-link').value = '';
+  document.getElementById('order-now-phone-number').value = '';
+  document.getElementById('order-product-name').textContent = '';
 
   window.open(whatsappUrl, '_blank');
   Swal.fire({
@@ -517,6 +673,7 @@ function clearOrders() {
     if (result.isConfirmed) {
       localStorage.setItem('mahfourOrders', JSON.stringify([]));
       renderOrders();
+      updateStats(); // تعديل جديد: تحديث الإحصائيات بعد المسح
       Swal.fire({
         icon: 'success',
         title: 'تم حذف الطلبات',
@@ -544,7 +701,8 @@ function setupFilters() {
     if (searchTerm) {
       filteredProducts = filteredProducts.filter(product =>
         product.name.toLowerCase().includes(searchTerm) ||
-        product.details.toLowerCase().includes(searchTerm)
+        product.details.toLowerCase().includes(searchTerm) ||
+        product.code.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -695,10 +853,39 @@ function setupProductDetails() {
       });
       return;
     }
-    addToCart(product.id, quantity);
-    document.getElementById('cart').classList.add('open');
-    quantity = 1;
-    quantitySpan.textContent = quantity;
+    document.getElementById('order-now-modal').style.display = 'flex';
+    const orderProductName = document.getElementById('order-product-name');
+    if (orderProductName) {
+      orderProductName.textContent = `${product.name} (${product.code})`;
+    }
+    const submitOrderNowBtn = document.getElementById('submit-order-now');
+    const closeOrderNowBtn = document.getElementById('close-order-now');
+
+    submitOrderNowBtn.onclick = () => {
+      orderNowViaWhatsApp(product.id, quantity);
+      quantity = 1;
+      quantitySpan.textContent = quantity;
+    };
+    closeOrderNowBtn.onclick = () => {
+      document.getElementById('order-now-modal').style.display = 'none';
+      document.getElementById('order-now-full-name').value = '';
+      document.getElementById('order-now-address').value = '';
+      document.getElementById('order-now-location-link').value = '';
+      document.getElementById('order-now-phone-number').value = '';
+      if (orderProductName) {
+        orderProductName.textContent = '';
+      }
+      quantity = 1;
+      quantitySpan.textContent = quantity;
+    };
+
+    document.getElementById('order-now-phone-number').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        orderNowViaWhatsApp(product.id, quantity);
+        quantity = 1;
+        quantitySpan.textContent = quantity;
+      }
+    });
   });
 
   setupImageGallery(product.images);
@@ -840,7 +1027,7 @@ function renderProductsManagement(products = productsData) {
         <img src="${product.img}" alt="${product.name}" loading="lazy">
       </div>
       <div class="card-content">
-        <h4>${product.name}</h4>
+        <h4>${product.name} (${product.code})</h4>
         <p class="category">${product.category}</p>
         <p>${priceDisplay}</p>
         <p class="availability">
@@ -861,6 +1048,7 @@ function renderProductsManagement(products = productsData) {
 // Save product
 function saveProduct() {
   const id = document.getElementById('edit-product-id').value || Date.now();
+  const code = document.getElementById('product-code-input').value.trim();
   const name = document.getElementById('product-name-input').value.trim();
   const price = parseFloat(document.getElementById('product-price-input').value);
   const discount = parseFloat(document.getElementById('product-discount-input').value) || 0;
@@ -872,11 +1060,11 @@ function saveProduct() {
   const video = document.getElementById('product-video-input').value.trim();
   const available = document.getElementById('product-available-input').value === 'true';
 
-  if (!name || !price || !img || !category || !details) {
+  if (!name || !price || !img || !category || !details || !code) {
     Swal.fire({
       icon: 'error',
       title: 'بيانات غير مكتملة',
-      text: 'يرجى ملء جميع الحقول المطلوبة.',
+      text: 'يرجى ملء جميع الحقول المطلوبة بما في ذلك كود المنتج.',
       showConfirmButton: false,
       timer: 2000
     });
@@ -885,6 +1073,7 @@ function saveProduct() {
 
   const product = {
     id: parseInt(id),
+    code,
     name,
     price,
     discount,
@@ -920,6 +1109,7 @@ function saveProduct() {
 // Clear product form
 function clearProductForm() {
   document.getElementById('edit-product-id').value = '';
+  document.getElementById('product-code-input').value = '';
   document.getElementById('product-name-input').value = '';
   document.getElementById('product-price-input').value = '';
   document.getElementById('product-discount-input').value = '';
@@ -963,6 +1153,7 @@ function editProduct(productId) {
   if (!product) return;
 
   document.getElementById('edit-product-id').value = product.id;
+  document.getElementById('product-code-input').value = product.code;
   document.getElementById('product-name-input').value = product.name;
   document.getElementById('product-price-input').value = product.price;
   document.getElementById('product-discount-input').value = product.discount;
@@ -993,7 +1184,8 @@ function setupManagementFilters() {
     if (searchTerm) {
       filteredProducts = filteredProducts.filter(product =>
         product.name.toLowerCase().includes(searchTerm) ||
-        product.details.toLowerCase().includes(searchTerm)
+        product.details.toLowerCase().includes(searchTerm) ||
+        product.code.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -1195,9 +1387,36 @@ function initialize() {
       const quantityControl = orderNowBtn.parentElement.querySelector('.quantity-control');
       const quantitySpan = quantityControl.querySelector('.quantity');
       const quantity = parseInt(quantitySpan.textContent);
-      addToCart(productId, quantity);
-      document.getElementById('cart').classList.add('open');
-      quantitySpan.textContent = '1';
+      document.getElementById('order-now-modal').style.display = 'flex';
+      const orderProductName = document.getElementById('order-product-name');
+      if (orderProductName) {
+        orderProductName.textContent = `${product.name} (${product.code})`;
+      }
+      const submitOrderNowBtn = document.getElementById('submit-order-now');
+      const closeOrderNowBtn = document.getElementById('close-order-now');
+
+      submitOrderNowBtn.onclick = () => {
+        orderNowViaWhatsApp(productId, quantity);
+        quantitySpan.textContent = '1';
+      };
+      closeOrderNowBtn.onclick = () => {
+        document.getElementById('order-now-modal').style.display = 'none';
+        document.getElementById('order-now-full-name').value = '';
+        document.getElementById('order-now-address').value = '';
+        document.getElementById('order-now-location-link').value = '';
+        document.getElementById('order-now-phone-number').value = '';
+        if (orderProductName) {
+          orderProductName.textContent = '';
+        }
+        quantitySpan.textContent = '1';
+      };
+
+      document.getElementById('order-now-phone-number').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          orderNowViaWhatsApp(productId, quantity);
+          quantitySpan.textContent = '1';
+        }
+      });
     }
 
     if (imageWrapper) {
@@ -1290,6 +1509,7 @@ function initialize() {
       orders = orders.filter(order => order.id !== orderId);
       localStorage.setItem('mahfourOrders', JSON.stringify(orders));
       renderOrders();
+      updateStats(); // تعديل جديد: تحديث الإحصائيات بعد حذف طلب
     }
 
     if (editProductBtn) {
@@ -1304,9 +1524,51 @@ function initialize() {
   });
 }
 
+// دالة جديدة لتحديث الإحصائيات
+function updateStats() {
+  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+  document.getElementById('total-orders').textContent = orders.length;
+
+  let totalSales = 0;
+  const productCounts = {};
+
+  orders.forEach(order => {
+    // حساب إجمالي المبيعات من سطر الإجمالي
+    const totalMatch = order.details.match(/\*الإجمالي:\* ([\d.]+) جنيه/);
+    if (totalMatch) {
+      totalSales += parseFloat(totalMatch[1]);
+    }
+
+    // حساب عدد الطلبات لكل منتج (للمنتج الأكثر مبيعًا)
+    const lines = order.details.split('\n');
+    let currentCode = null;
+    lines.forEach(line => {
+      const stripped = line.trim();
+      if (stripped.includes('كود المنتج:')) {
+        currentCode = stripped.split(':')[1].trim();
+      } else if (/^-?\s*(\d+) ×/.test(stripped)) {
+        const qtyMatch = stripped.match(/^-?\s*(\d+) × ([\d.]+) جنيه = ([\d.]+) جنيه/);
+        if (qtyMatch && currentCode) {
+          const qty = parseInt(qtyMatch[1]);
+          productCounts[currentCode] = (productCounts[currentCode] || 0) + qty;
+          currentCode = null;
+        }
+      }
+    });
+  });
+
+  document.getElementById('total-sales').textContent = totalSales.toFixed(2) + ' جنيه';
+
+  let topProductName = 'لا يوجد';
+  if (Object.keys(productCounts).length > 0) {
+    const topCode = Object.keys(productCounts).reduce((a, b) => productCounts[a] > productCounts[b] ? a : b);
+    const topProduct = productsData.find(p => p.code === topCode);
+    if (topProduct) {
+      topProductName = topProduct.name;
+    }
+  }
+  document.getElementById('top-product').textContent = topProductName;
+}
+
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
-
-
-
-
