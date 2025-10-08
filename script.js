@@ -1,6 +1,4 @@
 const whatsappNumber = "+201033662370";
-
-const ADMIN_PASSWORD = "123";
 const PRODUCTS_PASSWORD = "MOHAND2009MOHAND1907MO09UA07";
 
 // Define productsData with version control
@@ -1569,6 +1567,6 @@ function updateStats() {
   }
   document.getElementById('top-product').textContent = topProductName;
 }
-
+const ADMIN_PASSWORD = "22/7/2009";
 // Start the application
 document.addEventListener('DOMContentLoaded', initialize);
