@@ -912,104 +912,47 @@ function sendNewOrderWhatsAppNotification(order) {
   }
 }
 
-// Order now (for single product) - saves to Firebase Realtime Database
-function orderNow(productId, quantity) {
-  const product = productsData.find(p => p.id === productId);
-  if (!product || !product.available) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'المنتج غير متوفر',
-      text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
-      showConfirmButton: false,
-      timer: 2000
-    });
+function submitOrderNow() {
+  const fullName = document.getElementById('order-now-full-name')?.value.trim() || '';
+  const phone = document.getElementById('order-now-phone-number')?.value.trim() || '';
+  const address = document.getElementById('order-now-address')?.value.trim() || '';
+  const locationLink = document.getElementById('order-now-location-link')?.value.trim() || '';
+
+  if (!fullName || !phone || !address || cart.length === 0) {
+    Swal.fire('خطأ', 'يرجى ملء جميع الحقول وإضافة منتجات للسلة', 'error');
     return;
   }
 
-  const fullName = document.getElementById('order-now-full-name').value.trim();
-  const address = document.getElementById('order-now-address').value.trim();
-  const locationLink = document.getElementById('order-now-location-link').value.trim();
-  const phoneNumber = document.getElementById('order-now-phone-number').value.trim();
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
-  if (!fullName || !address || !phoneNumber) {
-    Swal.fire({
-      icon: 'error',
-      title: 'بيانات غير مكتملة',
-      text: 'يرجى ملء جميع الحقول المطلوبة.',
-      showConfirmButton: false,
-      timer: 2000
-    });
-    return;
-  }
-
-  if (!/^\d{11}$/.test(phoneNumber)) {
-    Swal.fire({
-      icon: 'error',
-      title: 'رقم هاتف غير صحيح',
-      text: 'يرجى إدخال رقم هاتف مكون من 11 رقمًا.',
-      showConfirmButton: false,
-      timer: 2000
-    });
-    return;
-  }
-
-  const discountedPrice = product.discount > 0 ? (product.price * (1 - product.discount / 100)).toFixed(2) : product.price;
-  const itemTotal = discountedPrice * quantity;
-
-  let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
-  message += `*الاسم:* ${fullName}\n`;
-  message += `*العنوان:* ${address}\n`;
-  if (locationLink) message += `* لوكيشن استلام الاوردر:* ${locationLink}\n`;
-  message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
-  message += `*المنتج:* ${product.name}\n`;
-  message += `كود المنتج: ${product.code}\n`;
-  message += `- ${quantity} × ${discountedPrice} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
-  message += `\n*الإجمالي:* ${itemTotal.toFixed(2)} جنيه`;
-
-  const order = {
-    id: Date.now(),
+  const orderData = {
     date: new Date().toLocaleString('ar-EG'),
-    ts: Date.now(),
-    details: message,
-    status: 'قيد الانتظار'
+    customerName: fullName,
+    customerPhone: phone,
+    customerAddress: address + (locationLink ? ' | لوكيشن: ' + locationLink : ''),
+    products: cart.map(p => ({ name: p.name, price: p.price, quantity: p.quantity })),
+    total: total,
+    status: 'جديد',
+    timestamp: Date.now()
   };
 
-  pushOrderToRealtime(order)
+  db.ref('orders').push(orderData)
     .then(() => {
-      try { sendNewOrderWhatsAppNotification(order); } catch (e) { console.warn('sendNewOrderWhatsAppNotification failed', e); }
-      try { updateStats(); } catch (e) { console.warn('updateStats failed', e); }
-      try { if (typeof renderNewOrders === 'function') renderNewOrders(); } catch (e) { console.warn('renderNewOrders failed', e); }
-      try {
-        const points = Math.round(itemTotal);
-        const phone = phoneNumber;
-        const customerName = fullName || '';
-        if (points > 0) {
-          const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
-          pending.push({ orderId: order.id, phone, name: customerName, points, amount: itemTotal.toFixed(2), date: order.date });
-          localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
-        }
-      } catch (e) {
-        console.warn('Failed to save pending points', e);
-      }
       Swal.fire({
         icon: 'success',
         title: 'تم إرسال الطلب بنجاح!',
-        text: 'شكراً لك، سيتم التواصل معك قريباً',
+        text: 'شكرًا لك، سيتم التواصل معك قريبًا',
         timer: 3500,
         timerProgressBar: true
       });
-      document.querySelector('#order-now-form, #order-form, form')?.reset();
-      if (typeof closeOrderModal === 'function') closeOrderModal();
-      const modal = document.getElementById('order-now-modal');
-      if (modal) modal.remove();
+      cart = [];
+      localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
+      updateCartCount();
+      document.getElementById('order-now-modal')?.remove();
     })
-    .catch((error) => {
-      console.error("Firebase Error:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'حدث خطأ مؤقت',
-        text: 'الطلب اتحفظ فعلاً، حاول تاني بعد قليل',
-      });
+    .catch(err => {
+      console.error("Firebase Error:", err);
+      Swal.fire('خطأ', 'حدث خطأ مؤقت، حاول تاني بعد قليل', 'error');
     });
 }
 
@@ -1649,7 +1592,7 @@ function setupProductDetails() {
     const submitOrderNowBtn = document.getElementById('submit-order-now');
     const closeOrderNowBtn = document.getElementById('close-order-now');
     submitOrderNowBtn.onclick = () => {
-      orderNow(product.id, quantity);
+      submitOrderNow();
       quantity = 1;
       quantitySpan.textContent = quantity;
     };
@@ -1667,7 +1610,7 @@ function setupProductDetails() {
     };
     document.getElementById('order-now-phone-number').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        orderNow(product.id, quantity);
+        submitOrderNow();
         quantity = 1;
         quantitySpan.textContent = quantity;
       }
@@ -3906,7 +3849,7 @@ function initialize() {
       const submitOrderNowBtn = document.getElementById('submit-order-now');
       const closeOrderNowBtn = document.getElementById('close-order-now');
       submitOrderNowBtn.onclick = () => {
-        orderNow(productId, quantity);
+        submitOrderNow();
         quantitySpan.textContent = '1';
       };
       closeOrderNowBtn.onclick = () => {
@@ -4023,3 +3966,19 @@ function showAdminSection(sectionId) {
     renderPointsBalances();
   }
 }
+
+// جلب وعرض الطلبات في صفحة admin.html تلقائيًا
+if (window.location.pathname.includes('admin.html')) {
+  db.ref('orders').on('value', snapshot => {
+    const orders = [];
+    snapshot.forEach(child => {
+      orders.push({ id: child.key, ...child.val() });
+    });
+    ordersCache = orders.reverse();
+    try { renderNewOrders(); } catch(e) {}
+    try { renderOrders(ordersCache); } catch(e) {}
+  });
+}
+
+// ربط زر تأكيد الطلب
+document.getElementById('submit-order-now')?.addEventListener('click', submitOrderNow);
