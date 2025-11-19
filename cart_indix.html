@@ -395,8 +395,14 @@
         </div>
     </div>
 
-    <script src="firebase-init.js"></script>
-    <script src="script.js"></script> <!-- تم إضافة ملف السكريبت الرئيسي -->
+    
+    
+    
+    
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="firebase-init.js"></script>
+<script src="script.js"></script> <!-- تم إضافة ملف السكريبت الرئيسي -->
     <script>
         // تخزين السلة في localStorage
         let cart = JSON.parse(localStorage.getItem('mahfoor_cart')) || [];
@@ -576,37 +582,37 @@
             }
             pushOrderToRealtime(order)
                 .then(() => {
-                    // Send WhatsApp notification for new order
-                    try { 
-                        if (typeof sendNewOrderWhatsAppNotification === 'function') {
-                            sendNewOrderWhatsAppNotification(order);
-                        }
-                    } catch (e) { 
-                        console.warn('sendNewOrderWhatsAppNotification failed', e); 
-                    }
+            // Send WhatsApp notification for new order
+            try { 
+                if (typeof sendNewOrderWhatsAppNotification === 'function') {
+                    sendNewOrderWhatsAppNotification(order);
+                }
+            } catch (e) { 
+                console.warn('sendNewOrderWhatsAppNotification failed', e); 
+            }
 
-                    // حفظ النقاط المعلقة
-                    try {
-                        const points = Math.round(total);
-                        if (points > 0) {
-                            const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
-                            pending.push({ orderId: order.id, phone: phoneNumber, name: fullName, points, amount: total.toFixed(2), date: order.date });
-                            localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
-                        }
-                    } catch (e) {
-                        console.warn('Failed to save pending points', e);
-                    }
+            // حفظ النقاط المعلقة
+            try {
+                const points = Math.round(total);
+                if (points > 0) {
+                    const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
+                    pending.push({ orderId: order.id, phone: phoneNumber, name: fullName, points, amount: total.toFixed(2), date: order.date });
+                    localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
+                }
+            } catch (e) {
+                console.warn('Failed to save pending points', e);
+            }
 
-                    // إفراغ السلة بعد حفظ الطلب
-                    cart = [];
-                    localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
-                    renderCart();
+            // إفراغ السلة بعد حفظ الطلب
+            cart = [];
+            localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
+            renderCart();
 
                     // إغلاق النافذة
-                    document.getElementById('checkout-modal').style.display = 'none';
+            document.getElementById('checkout-modal').style.display = 'none';
 
-                    Swal.fire({
-                        icon: 'success',
+            Swal.fire({
+                icon: 'success',
                         title: 'تم إرسال الطلب بنجاح!',
                         text: 'شكراً لك، سيتم التواصل معك قريباً',
                         timer: 3500,
@@ -624,7 +630,7 @@
                         title: 'حدث خطأ مؤقت',
                         text: 'الطلب اتحفظ فعلاً، حاول تاني بعد قليل',
                     });
-                });
+            });
         });
 
         // ربط حقل الهاتف بنظام النقاط
