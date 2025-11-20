@@ -18,19 +18,14 @@
       <i class="fas fa-bars"></i>
     </button>
     <nav id="nav-menu">
-      <a href="index.html" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
-      <a href="index.html#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#products">المنتجات</a>
+      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
     </nav>
     <div class="logo">
-      <a href="index.html" style="display: contents;">
-        <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">
-        <span>MAHFOOR CNC</span>
-      </a>
+      <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
+      <a href="#" id="cart-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
     </div>
-    <div class="header-icons">
-            <a href="favorites.html" id="favorites-btn" aria-label="المفضلة" title="المفضلة"><i class="fas fa-heart"></i> <span id="favorites-count" class="badge-count">0</span></a>
-            <a href="index.html" id="cart-btn" aria-label="السلة" title="السلة"><i class="fas fa-shopping-bag"></i> <span id="cart-count" class="badge-count">0</span></a>
-        </div>
   </header>
 
   <div class="product-details-container">
@@ -47,6 +42,8 @@
           <h3 class="specs-title">مواصفات المنتج:</h3>
           <ul class="specs-list">
             <li><span>الأبعاد:</span> <span id="product-dimensions"></span></li>
+            <!-- <li><span>الخامة:</span> <span id="product-material">خشب طبيعي عالي الجودة</span></li> -->
+            <!-- <li><span>التصنيع:</span> <span id="product-craft">صناعة يدوية مصرية</span></li> -->
             <li><span>الفئة:</span> <span id="product-category"></span></li>
           </ul>
         </div>
@@ -54,27 +51,14 @@
         <p id="product-discount" class="product-discount"></p>
         <div class="rating-section">
           <h3>تقييم المنتج</h3>
-          <div class="stars" id="rating-stars" aria-label="اختر تقييم المنتج">
+          <div class="stars" id="rating-stars">
             <i class="fa fa-star" data-rating="1"></i>
             <i class="fa fa-star" data-rating="2"></i>
             <i class="fa fa-star" data-rating="3"></i>
             <i class="fa fa-star" data-rating="4"></i>
             <i class="fa fa-star" data-rating="5"></i>
           </div>
-          <p id="average-rating" class="rating-summary">متوسط التقييم: 0 من 5 (0 تقييمات)</p>
-          <div class="rating-form">
-            <textarea id="rating-comment" rows="3" maxlength="600" placeholder="أخبرنا عن تجربتك مع المنتج..."></textarea>
-            <div class="rating-actions">
-              <span id="rating-hint">اختر عدد النجوم ثم اكتب تعليقك.</span>
-              <button class="btn" id="submit-rating" type="button"><i class="fas fa-paper-plane"></i> إرسال التقييم</button>
-            </div>
-          </div>
-          <div class="reviews-wrapper">
-            <h4><i class="fas fa-comments"></i> آراء العملاء</h4>
-            <div id="reviews-list" class="reviews-list">
-              <div class="review-empty">لم يتم تسجيل أي تقييم بعد.</div>
-            </div>
-          </div>
+          <p id="average-rating">متوسط التقييم: 0 نجوم (0 تقييمات)</p>
         </div>
         <div class="quantity-control">
           <button class="qty-btn minus">-</button>
@@ -84,16 +68,6 @@
         <div class="product-actions">
           <button class="btn add-to-cart"><i class="fas fa-cart-plus"></i> أضف إلى السلة</button>
           <button class="btn order-now"><i class="fas fa-bolt"></i> اطلب الآن</button>
-          <button class="btn add-to-favorites"><i class="fas fa-heart"></i> أضف إلى المفضلة</button>
-          <div class="share-dropdown">
-            <button class="btn share-toggle" type="button"><i class="fas fa-share-alt"></i> شارك المنتج</button>
-            <div class="share-menu" role="menu" hidden>
-              <button type="button" class="share-menu-item" data-channel="native"><i class="fas fa-share-alt"></i> مشاركة</button>
-              <button type="button" class="share-menu-item" data-channel="facebook"><i class="fab fa-facebook"></i> فيسبوك</button>
-              <button type="button" class="share-menu-item" data-channel="instagram"><i class="fab fa-instagram"></i> انستجرام</button>
-              <button type="button" class="share-menu-item" data-channel="copy"><i class="fas fa-copy"></i> نسخ الرابط</button>
-            </div>
-          </div>
           <a href="index.html" class="back-btn btn"><i class="fas fa-arrow-right"></i> عودة إلى الرئيسية</a>
         </div>
       </div>
@@ -115,20 +89,36 @@
         <input type="text" id="order-now-address" placeholder="العنوان بالتفصيل" required>
         <input type="text" id="order-now-location-link" placeholder="لوكيشن استلام الاوردر (اختياري)">
         <input type="text" id="order-now-phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
-        <button type="button" id="submit-order-now" class="btn">تأكيد الطلب</button>
+        <button type="button" id="submit-order-now" class="btn">إرسال الطلب عبر واتساب</button>
         <button type="button" id="close-order-now" class="btn">إلغاء</button>
       </div>
     </div>
   </div>
 
+  <aside class="cart" id="cart">
+    <h2>🛒 سلة مشترياتك</h2>
+    <button id="clear-cart">مسح السلة</button>
+    <ul class="cart-items"></ul>
+    <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
+    <h3>بيانات العميل</h3>
+    <div id="order-form">
+      <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
+      <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
+      <input type="text" id="location-link" placeholder="لوكيشن استلام الاوردر (اختياري)">
+      <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
+    </div>
+    <button id="close-cart">إغلاق السلة</button>
+  </aside>
+
   <footer>
     <p><a href="admin.html" id="admin-access-btn">©</a> 2025 MAHFOOR CNC. جميع الحقوق محفوظة.</p>
     <p>created by Mohand Eldrandale web developer</p>
     <div class="social-links">
-      <a href="https://www.facebook.com/Mahfour.CNC" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon tiktok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/201033662370" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/201033662370" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
     </div>
   </footer>
 

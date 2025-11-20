@@ -7,49 +7,37 @@
   <meta name="keywords" content="منتجات خشبية, هدايا, ديكور خشبي, محفورات">
   <title>MAHFOOR CNC - متجر المنتجات الخشبية</title>
   <link rel="icon" href="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" type="image/x-icon">
-  <!-- Preload critical resources -->
   <link rel="preload" href="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" as="image">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" as="style">
-  <link rel="preload" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5" as="style">
-  <link rel="preload" href="style.css" as="style">
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5"/>
   <link rel="stylesheet" href="https://cdn.salla.network/fonts/sallaicons.css?v=2.0.5"/>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)">
 </head>
 <body>
   <header>
+    <button class="nav-toggle" aria-label="Toggle navigation">
+      <i class="fas fa-bars"></i>
+    </button>
     <nav id="nav-menu">
-      <a href="#hero" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
-      <a href="#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
+      <a href="#hero">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
     </nav>
     <div class="logo">
-      <a href="index.html" style="display: contents;">
-        <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo" loading="eager" decoding="async">
-        <span>MAHFOOR CNC</span>
-      </a>
+      <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
+      <a href="#" id="cart-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
     </div>
-    <div class="header-left">
-      <button class="nav-toggle"><i class="fas fa-ellipsis-v"></i></button>
-    </div>
-    <div class="header-icons">
-            <a href="#" id="favorites-btn" aria-label="المفضلة" title="المفضلة"><i class="fas fa-heart"></i> <span id="favorites-count" class="badge-count">0</span></a>
-            <a href="#" id="cart-btn" aria-label="السلة" title="السلة"><i class="fas fa-shopping-bag"></i> <span id="cart-count" class="badge-count">0</span></a>
-        </div>
   </header>
 
   <section class="hero" id="hero">
     <div class="hero-content">
-      <img src="https://i.postimg.cc/3rGxjd7y/guner-deliaga-sahiner-er-QFYD-na8-Y-unsplash.jpg" alt="صورة الصفحة الرئيسية" class="hero-image" loading="eager" decoding="async">
+      <img src="https://i.postimg.cc/3rGxjd7y/guner-deliaga-sahiner-er-QFYD-na8-Y-unsplash.jpg" alt="صورة الصفحة الرئيسية" class="hero-image">
       <div class="hero-text">
         <h1>MAHFOOR CNC</h1>
-        <p>Nature Tells Your Story</p>
-        <div class="hero-buttons">
-          <a href="#products" class="hero-btn"><i class="fas fa-compass"></i> استكشف منتجاتنا</a>
-        </div>
+        <p>Nature Tells Your Story  </p>
+        <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
+        <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
       </div>
     </div>
   </section>
@@ -76,29 +64,9 @@
           <option value="ديكور">ديكور</option>
           <option value="العاب">العاب</option>
           <option value="ادوات منزلية">ادوات منزلية</option>
+                    <option value=" ادوات مكتبية"> ادوات مكتبية</option>
           <option value="اكسسورات">اكسسوارات</option>
         </select>
-      </div>
-      <div class="filter-group price-filter">
-        <label><i class="fas fa-money-bill-wave"></i> نطاق السعر:</label>
-        <div class="price-range-inputs">
-          <div class="price-field">
-            <span>من</span>
-            <input type="number" id="filter-price-min" min="0" placeholder="0">
-          </div>
-          <div class="price-field">
-            <span>إلى</span>
-            <input type="number" id="filter-price-max" min="0" placeholder="أعلى سعر">
-          </div>
-        </div>
-        <small class="filter-hint">السعر محسوب بعد الخصم (إن وجد)</small>
-      </div>
-      <div class="filter-group availability-filter">
-        <label class="availability-toggle">
-          <input type="checkbox" id="filter-availability">
-          <span class="toggle-indicator"></span>
-          <span class="toggle-text">عرض المنتجات المتوفرة فقط</span>
-        </label>
       </div>
       <button id="reset-filters" class="btn"><i class="fas fa-sync-alt"></i> إعادة تعيين</button>
       <div class="filter-count">عدد المنتجات: <span id="product-count">0</span></div>
@@ -116,30 +84,41 @@
         <input type="text" id="order-now-address" placeholder="العنوان بالتفصيل" required>
         <input type="text" id="order-now-location-link" placeholder=" لوكيشن استلام الاوردر (اختياري)">
         <input type="text" id="order-now-phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
-        <button type="button" id="submit-order-now" class="btn">تأكيد الطلب</button>
+        <button type="button" id="submit-order-now" class="btn">إرسال الطلب عبر واتساب</button>
         <button type="button" id="close-order-now" class="btn">إلغاء</button>
       </div>
     </div>
   </div>
 
+  <aside class="cart" id="cart">
+    <h2>🛒 سلة مشترياتك</h2>
+    <button id="clear-cart">مسح السلة</button>
+    <ul class="cart-items"></ul>
+    <p class="total">الإجمالي: <span id="cart-total">0</span> جنيه</p>
+    <h3>بيانات العميل</h3>
+    <div id="order-form">
+      <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
+      <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
+      <input type="text" id="location-link" placeholder=" لوكيشن استلام الاوردر (اختياري)">
+      <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
+    </div>
+    <button id="close-cart">إغلاق السلة</button>
+  </aside>
+
   <footer>
-    
     <p><a href="admin.html" id="admin-access-btn">©</a> 2025 MAHFOOR CNC. جميع الحقوق محفوظة.</p>
     <p>created by Mohand Eldrandale web developer</p>
     رقم للتواصل 01033662370
     <div class="social-links">
-      <a href="https://www.facebook.com/Mahfour.CNC" target="_blank" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon tiktok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/201033662370" target="_blank" class="social-icon whatsapp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/ma7foorat_cnc?igsh=cXE4OHJ5Nmw3NTFy" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@mahfour0?is_from_webapp=1&sender_device=pc" target="_blank" class="social-icon"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/201033662370" target="_blank" class="social-icon"><i class="fab fa-whatsapp"></i></a>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="script.js" defer></script>
-
-  <!-- زر العودة للأعلى -->
-  <button id="back-to-top-btn" title="العودة للأعلى"><i class="fas fa-arrow-up"></i></button>
-
 </body>
 </html>

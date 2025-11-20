@@ -1,106 +1,55 @@
 const whatsappNumber = "+201033662370";
+
+const ADMIN_PASSWORD = "123";
 const PRODUCTS_PASSWORD = "MOHAND2009MOHAND1907MO09UA07";
-const ADMIN_PASSWORD = "22/7/2009";
 
 // Define productsData with version control
 const productsDataDefault = [
   { 
     id: 1, 
     code: "101",
-    name: " علب مناديل خشبية", 
-    price: 165, 
-    discount: 0, 
-    img: "https://i.postimg.cc/W4nRLDKp/photo.jpg", 
-    category: "ادوات منزلية", 
-    details: "علب مناديل خشبية", 
+    name: "ماديلية خشبية علي شكل حصان", 
+    price: 30, 
+    discount: 30, 
+    img: "https://i.postimg.cc/rw5xjP4V/photo-2025-09-27-02-33-52.jpg", 
+    category: "اكسسورات", 
+    details: "حصان خشبي مصنوع يدويًا من خشب الزان، بأبعاد 20x30 سم، مثالي لتزيين المكاتب.", 
     images: [
-      "https://i.postimg.cc/ydgThtFH/photo.jpg",
-      "https://i.postimg.cc/pXGY7Pqb/photo.jpg",
-      "https://i.postimg.cc/WbW6KsSK/photo-2.jpg",
-      "https://i.postimg.cc/wj1cYnbr/photo.jpg",
-      "https://i.postimg.cc/jdgQ9RZr/photo-2.jpg",
-      "https://i.postimg.cc/SNT75mDb/photo-4.jpg",
-      "https://i.postimg.cc/bNCHMq3h/photo-5.jpg",
-      "https://i.postimg.cc/90FRcqJm/photo.jpg",
-      "https://i.postimg.cc/Zn79nKMb/photo.jpg",
-      "https://i.postimg.cc/tJS1JCMp/photo-2.jpg",
-      "https://i.postimg.cc/FzWfzsBh/photo-3.jpg",
-      "https://i.postimg.cc/WzWDzbH2/photo-4.jpg",
-      "https://i.postimg.cc/nrRsrcP7/photo.jpg",
-      "https://i.postimg.cc/mkXck25k/photo-2.jpg",
-      "https://i.postimg.cc/wMftMTG7/photo-3.jpg",
-      "https://i.postimg.cc/qqbtqM5t/photo-4.jpg",
-      "https://i.postimg.cc/66Y4YY5m/photo.jpg",
-      "https://i.postimg.cc/fy23yTr7/photo-2.jpg",
-      "https://i.postimg.cc/SRTXRNv7/photo-3.jpg",
-      "https://i.postimg.cc/j2gW2dF4/photo-4.jpg",
-      "https://i.postimg.cc/gcNLNNkt/photo-5.jpg",
-      "https://i.postimg.cc/sfwGwwDk/photo.jpg",
-      "https://i.postimg.cc/xjtNttT7/photo-2.jpg",
-      "https://i.postimg.cc/3rn0nnJz/photo-3.jpg",
-      "https://i.postimg.cc/bY3S33wX/photo.jpg",
-      "https://i.postimg.cc/h4pQpptW/photo.jpg",
-      "https://i.postimg.cc/W4nRLDKp/photo.jpg"
+      "https://i.postimg.cc/2S37xLtg/photo-2025-09-04-22-32-00.jpg",
+      "https://i.postimg.cc/SRcLVncp/photo-2025-09-05-06-59-02.jpg"
     ],
     dimensions: "20 × 30 سم",
-    video: null,
+    video: "https://files.catbox.moe/hlznb6.mp4",
     available: true
   },
   { 
     id: 2, 
     code: "202",
-    name: " حامل موبايل", 
+    name: "استاند تليفون", 
     price: 65, 
-    discount: 0, 
-    img: "https://i.postimg.cc/d1PvR7XP/photo-4.jpg", 
+    discount: 20, 
+    img: "https://i.postimg.cc/GmGkyMfN/photo-2025-09-07-05-29-55.jpg", 
     category: "اكسسورات", 
-    details: " حامل موبايل وتابلت  ", 
+    details: "كلمة خشبية مزخرفة، مثالية كهدية شخصية، مصنوعة من خشب الماهوجني.", 
     images: [
-      "https://i.postimg.cc/QM6xpxD9/photo.jpg",
-      "https://i.postimg.cc/N0rBr8db/photo.jpg", 
-      "https://i.postimg.cc/fb0D0783/photo-2.jpg",
-      "https://i.postimg.cc/1zNsN0vc/photo-3.jpg",
-      "https://i.postimg.cc/SsFqLXPr/photo.jpg",
-      "https://i.postimg.cc/CKfSfCcs/photo-2.jpg",
-      "https://i.postimg.cc/8CrNrdZ4/photo-3.jpg",
-      "https://i.postimg.cc/yd4BhJGT/photo-4.jpg",
-      "https://i.postimg.cc/j50K6W1c/photo-5.jpg",
-      "https://i.postimg.cc/xCDYGkZg/photo-6.jpg",
-      "https://i.postimg.cc/W3GV5NLc/photo.jpg",
-      "https://i.postimg.cc/JnVm3yF9/photo-2.jpg",
-      "https://i.postimg.cc/bJc80G57/photo-3.jpg",
-      "https://i.postimg.cc/d1PvR7XP/photo-4.jpg",
-      "https://i.postimg.cc/nzbZKs5t/photo-5.jpg",
-      "https://i.postimg.cc/Y967drKw/photo-6.jpg",
-      "https://i.postimg.cc/ydmKL14W/photo.jpg",
-      "https://i.postimg.cc/50d15HGN/photo-2.jpg",
-      "https://i.postimg.cc/FRyvTr5v/photo-3.jpg",
-      "https://i.postimg.cc/50BJs4d4/photo-4.jpg",
-      "https://i.postimg.cc/7634KH8Z/photo-5.jpg",
-      "https://i.postimg.cc/26QY0kR5/photo-6.jpg",
-      "https://i.postimg.cc/rm1TfVX5/photo.jpg",
-      "https://i.postimg.cc/W3GV5NLc/photo.jpg"
+      "https://i.postimg.cc/rmbkKrvc/photo-2025-09-04-22-35-04.jpg",
+      "https://i.postimg.cc/6471s8Pp/photo-2.jpg", 
+      "https://i.postimg.cc/NFw0GMQn/photo-4.jpg"
     ],
     dimensions: "15 × 10 سم",
-    video: null,
-    available: true
+    video: "https://files.catbox.moe/hlznb6.mp4",
+    available: false
   },
   { 
     id: 3, 
     code: "301",
-    name: "مقلمة", 
-    price: 55, 
-    discount: 0, 
-    img: "https://i.postimg.cc/NFV7zcwj/photo.jpg", 
-    category: "ادوات مكتبية", 
-    details: "  مقلمة اطفال ", 
-    images: [
-      "https://i.postimg.cc/FRLjkc4h/photo.jpg",
-      "https://i.postimg.cc/KcJZgYZt/photo.jpg",
-      "https://i.postimg.cc/QxCjgrtF/photo.jpg",
-      "https://i.postimg.cc/15Xy0Ztf/photo-3.jpg",
-      "https://i.postimg.cc/NFV7zcwj/photo.jpg"
-    ],
+    name: "ماديلية خشبية علي شكل علامة مرسيدس", 
+    price: 35, 
+    discount: 25, 
+    img: "https://i.postimg.cc/h4TDfCP5/photo-2025-09-04-22-37-25.jpg", 
+    category: "اكسسورات", 
+    details: "منتج خشبي متعدد الاستخدامات للديكور المنزلي، بأبعاد 15x15 سم.", 
+    images: ["https://i.postimg.cc/pyyS5SdM/photo-3.jpg"],
     dimensions: "15 × 15 سم",
     video: null,
     available: true
@@ -212,8 +161,8 @@ const productsDataDefault = [
     details: "لوحة خشبية تحمل عبارة ملهمة، بأبعاد 25x35 سم.", 
     images: [
       "https://i.postimg.cc/bJV5mfTR/photo-2025-09-04-22-26-03.jpg",
-      "https://postimg.cc/gallery/WFMk9kS", 
-      "https://i.postimg.cc//photo-2.jpg"
+      "https://i.postimg.cc/mDW4C5Kz/photo-3.jpg", 
+      "https://i.postimg.cc/6471s8Pp/photo-2.jpg"
     ],
     dimensions: "25 × 35 سم",
     video: null,
@@ -222,7 +171,7 @@ const productsDataDefault = [
 ];
 
 // Version control for products data
-const DATA_VERSION = "1.3";
+const DATA_VERSION = "1.2";
 
 let productsData;
 
@@ -262,7 +211,6 @@ function verifyPassword() {
     document.getElementById('password-modal').style.display = 'none';
     document.getElementById('admin-content').style.display = 'block';
     renderOrders();
-    updateStats();
     renderProductsManagement();
     return true;
   } else {
@@ -276,11 +224,6 @@ function verifyPassword() {
     passwordInput.value = '';
     return false;
   }
-}
-
-// Return to home page
-function returnToHome() {
-  window.location.href = 'index.html';
 }
 
 // Verify products management password
@@ -676,7 +619,6 @@ function clearOrders() {
     if (result.isConfirmed) {
       localStorage.setItem('mahfourOrders', JSON.stringify([]));
       renderOrders();
-      updateStats();
       Swal.fire({
         icon: 'success',
         title: 'تم حذف الطلبات',
@@ -1276,7 +1218,6 @@ function initialize() {
   // Admin page specific
   if (window.location.pathname.includes('admin.html')) {
     const verifyPasswordBtn = document.getElementById('verify-password');
-    const returnToHomeBtn = document.getElementById('return-to-home');
     const manageProductsBtn = document.getElementById('manage-products-btn');
     const verifyProductsPasswordBtn = document.getElementById('verify-products-password');
     const addProductBtn = document.getElementById('add-product-btn');
@@ -1290,10 +1231,6 @@ function initialize() {
       document.getElementById('password-input').addEventListener('keypress', (e) => {
         if (e.key === 'Enter') verifyPassword();
       });
-    }
-
-    if (returnToHomeBtn) {
-      returnToHomeBtn.addEventListener('click', returnToHome);
     }
 
     if (manageProductsBtn) {
@@ -1517,7 +1454,6 @@ function initialize() {
       orders = orders.filter(order => order.id !== orderId);
       localStorage.setItem('mahfourOrders', JSON.stringify(orders));
       renderOrders();
-      updateStats();
     }
 
     if (editProductBtn) {
@@ -1530,52 +1466,6 @@ function initialize() {
       deleteProduct(productId);
     }
   });
-}
-
-// Update stats
-function updateStats() {
-  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
-  document.getElementById('total-orders').textContent = orders.length;
-
-  let totalSales = 0;
-  const productCounts = {};
-
-  orders.forEach(order => {
-    // حساب إجمالي المبيعات من سطر الإجمالي
-    const totalMatch = order.details.match(/\*الإجمالي:\* ([\d.]+) جنيه/);
-    if (totalMatch) {
-      totalSales += parseFloat(totalMatch[1]);
-    }
-
-    // حساب عدد الطلبات لكل منتج (للمنتج الأكثر مبيعًا)
-    const lines = order.details.split('\n');
-    let currentCode = null;
-    lines.forEach(line => {
-      const stripped = line.trim();
-      if (stripped.includes('كود المنتج:')) {
-        currentCode = stripped.split(':')[1].trim();
-      } else if (/^-?\s*(\d+) ×/.test(stripped)) {
-        const qtyMatch = stripped.match(/^-?\s*(\d+) × ([\d.]+) جنيه = ([\d.]+) جنيه/);
-        if (qtyMatch && currentCode) {
-          const qty = parseInt(qtyMatch[1]);
-          productCounts[currentCode] = (productCounts[currentCode] || 0) + qty;
-          currentCode = null;
-        }
-      }
-    });
-  });
-
-  document.getElementById('total-sales').textContent = totalSales.toFixed(2) + ' جنيه';
-
-  let topProductName = 'لا يوجد';
-  if (Object.keys(productCounts).length > 0) {
-    const topCode = Object.keys(productCounts).reduce((a, b) => productCounts[a] > productCounts[b] ? a : b);
-    const topProduct = productsData.find(p => p.code === topCode);
-    if (topProduct) {
-      topProductName = topProduct.name;
-    }
-  }
-  document.getElementById('top-product').textContent = topProductName;
 }
 
 // Start the application
