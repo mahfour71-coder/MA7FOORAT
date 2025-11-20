@@ -18,14 +18,15 @@
       <i class="fas fa-bars"></i>
     </button>
     <nav id="nav-menu">
-      <a href="index.html">الرئيسية</a>
-      <a href="index.html#products">المنتجات</a>
-      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
+      <a href="index.html" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
+      <a href="index.html#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
+  <a href="https://wa.me/201033662370" target="_blank" aria-label="تواصل عبر واتساب" title="واتساب" class="nav-whatsapp"><i class="fab fa-whatsapp"></i></a>
     </nav>
     <div class="logo">
-      <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
-      <a href="#" id="cart-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
-    </div>
+  <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
+  <a href="#" id="cart-btn"><i class="fas fa-cart-shopping"></i> <span id="cart-count">0</span></a>
+  <a href="#" id="favorites-btn"><i class="fas fa-star"></i> <span id="favorites-count">0</span></a>
+</div>
   </header>
 
   <div class="product-details-container">
@@ -42,8 +43,6 @@
           <h3 class="specs-title">مواصفات المنتج:</h3>
           <ul class="specs-list">
             <li><span>الأبعاد:</span> <span id="product-dimensions"></span></li>
-            <!-- <li><span>الخامة:</span> <span id="product-material">خشب طبيعي عالي الجودة</span></li> -->
-            <!-- <li><span>التصنيع:</span> <span id="product-craft">صناعة يدوية مصرية</span></li> -->
             <li><span>الفئة:</span> <span id="product-category"></span></li>
           </ul>
         </div>
@@ -68,6 +67,7 @@
         <div class="product-actions">
           <button class="btn add-to-cart"><i class="fas fa-cart-plus"></i> أضف إلى السلة</button>
           <button class="btn order-now"><i class="fas fa-bolt"></i> اطلب الآن</button>
+          <button class="btn add-to-favorites"><i class="fas fa-heart"></i> أضف إلى المفضلة</button>
           <a href="index.html" class="back-btn btn"><i class="fas fa-arrow-right"></i> عودة إلى الرئيسية</a>
         </div>
       </div>
@@ -104,11 +104,19 @@
     <div id="order-form">
       <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
       <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
-      <input type="text" id="location-link" placeholder="لوكيشن استلام الاوردر (اختياري)">
+      <input type="text" id="location-link" placeholder=" لوكيشن استلام الاوردر (اختياري)">
       <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <p id="customer-points" class="customer-points">رصيد النقاط: -</p>
       <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
     </div>
     <button id="close-cart">إغلاق السلة</button>
+  </aside>
+
+  <aside class="favorites" id="favorites">
+    <h2>🩶 قائمة المفضلة</h2>
+    <button id="clear-favorites">مسح المفضلة</button>
+    <ul class="favorites-items"></ul>
+    <button id="close-favorites">إغلاق المفضلة</button>
   </aside>
 
   <footer>

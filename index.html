@@ -20,14 +20,21 @@
       <i class="fas fa-bars"></i>
     </button>
     <nav id="nav-menu">
-      <a href="#hero">الرئيسية</a>
-      <a href="#products">المنتجات</a>
-      <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
+      <a href="#hero" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
+      <a href="#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
+  <a href="https://wa.me/201033662370" target="_blank" aria-label="تواصل عبر واتساب" title="واتساب" class="nav-whatsapp"><i class="fab fa-whatsapp"></i></a>
     </nav>
     <div class="logo">
-      <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
-      <a href="#" id="cart-btn"><i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span></a>
-    </div>
+  <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
+  <a href="#" id="cart-btn">
+    <i class="fas fa-shopping-bag"></i>
+    <span id="cart-count">0</span>
+  </a>
+  <a href="#" id="favorites-btn">
+    <i class="fas fa-heart"></i>
+    <span id="favorites-count">0</span>
+  </a>
+</div>
   </header>
 
   <section class="hero" id="hero">
@@ -35,7 +42,7 @@
       <img src="https://i.postimg.cc/3rGxjd7y/guner-deliaga-sahiner-er-QFYD-na8-Y-unsplash.jpg" alt="صورة الصفحة الرئيسية" class="hero-image">
       <div class="hero-text">
         <h1>MAHFOOR CNC</h1>
-        <p>Nature Tells Your Story  </p>
+        <p>Nature Tells Your Story</p>
         <a href="#products" class="hero-btn"><i class="fas fa-shopping-cart"></i> تسوق الآن</a>
         <a href="https://wa.me/201033662370" class="hero-btn whatsapp-btn"><i class="fab fa-whatsapp"></i> تواصل عبر واتساب</a>
       </div>
@@ -64,17 +71,25 @@
           <option value="ديكور">ديكور</option>
           <option value="العاب">العاب</option>
           <option value="ادوات منزلية">ادوات منزلية</option>
-                    <option value=" ادوات مكتبية"> ادوات مكتبية</option>
           <option value="اكسسورات">اكسسوارات</option>
         </select>
       </div>
       <button id="reset-filters" class="btn"><i class="fas fa-sync-alt"></i> إعادة تعيين</button>
-      <div class="filter-count">عدد المنتجات: <span id="product-count">0</span></div>
+      <div class="filter-count">عدد المنتجات
+
+: <span id="product-count">0</span></div>
     </aside>
     <section class="products" id="products">
       <!-- المنتجات هتتعرض هنا ديناميكيًا -->
     </section>
   </div>
+
+  <section class="favorites" id="favorites">
+    <h2>🩶 قائمة المفضلة</h2>
+    <button id="clear-favorites">مسح المفضلة</button>
+    <ul class="favorites-items"></ul>
+    <button id="close-favorites">إغلاق المفضلة</button>
+  </section>
 
   <div id="order-now-modal" class="password-modal" style="display: none;">
     <div class="password-modal-content">
@@ -101,6 +116,7 @@
       <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
       <input type="text" id="location-link" placeholder=" لوكيشن استلام الاوردر (اختياري)">
       <input type="text" id="phone-number" placeholder="رقم الهاتف" required pattern="\d{11}">
+      <p id="customer-points" class="customer-points">رصيد النقاط: -</p>
       <button type="button" id="order-cart">إرسال الطلب عبر واتساب</button>
     </div>
     <button id="close-cart">إغلاق السلة</button>

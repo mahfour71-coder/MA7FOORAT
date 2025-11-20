@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="لوحة تحكم إدارة متجر MAHFOOR CNC">
+  <meta name="description" content="لوحة تحكم متجر MAHFOOR CNC">
   <title>لوحة التحكم - MAHFOOR CNC</title>
   <link rel="icon" href="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" type="image/x-icon">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -15,24 +15,13 @@
 <body>
   <div id="password-modal" class="password-modal">
     <div class="password-modal-content">
-      <h2><i class="fas fa-lock"></i> إدخال كلمة المرور</h2>
+      <h2><i class="fas fa-lock"></i> الدخول إلى لوحة التحكم</h2>
       <div class="password-input-wrapper">
         <i class="fas fa-lock"></i>
-        <input type="password" id="password-input" placeholder="أدخل كلمة المرور">
+        <input type="password" id="password-input" placeholder="أدخل كلمة المرور" required>
       </div>
-      <button id="verify-password" class="btn">تحقق</button>
-       <button id="return-to-home" class="btn">الرجوع للرئيسية</button>
-    </div>
-  </div>
-
-  <div id="products-password-modal" class="password-modal" style="display: none;">
-    <div class="password-modal-content">
-      <h2><i class="fas fa-lock"></i> كلمة مرور إدارة المنتجات</h2>
-      <div class="password-input-wrapper">
-        <i class="fas fa-lock"></i>
-        <input type="password" id="products-password-input" placeholder="أدخل كلمة المرور">
-      </div>
-      <button id="verify-products-password" class="btn">تحقق</button>
+      <button class="btn" id="verify-password"><i class="fas fa-sign-in-alt"></i> تحقق</button>
+      <button class="btn" id="return-to-home"><i class="fas fa-home"></i> العودة للرئيسية</button>
     </div>
   </div>
 
@@ -42,116 +31,99 @@
         <i class="fas fa-bars"></i>
       </button>
       <nav id="nav-menu">
-        <a href="index.html">الرئيسية</a>
-        <a href="index.html#products">المنتجات</a>
-        <a href="https://wa.me/201033662370" target="_blank">تواصل معنا عبر الواتساب</a>
+        <a href="index.html" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
+        <a href="index.html#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
+  <a href="https://wa.me/201033662370" target="_blank" aria-label="تواصل عبر واتساب" title="واتساب" class="nav-whatsapp"><i class="fab fa-whatsapp"></i></a>
       </nav>
       <div class="logo">
         <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
       </div>
     </header>
 
-    <!-- قسم الإحصائيات الجديد -->
-    <section class="stats">
-      <h2><i class="fas fa-chart-line"></i> إحصائيات المتجر</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <i class="fas fa-shopping-cart stat-icon"></i>
-          <h3>عدد الطلبات</h3>
-          <p id="total-orders">0</p>
+    <section class="orders-section">
+      <h2><i class="fas fa-shopping-bag"></i> إدارة الطلبات</h2>
+      <div id="stats-panel" class="stats-panel" style="margin-bottom:16px; display:flex; gap:12px; flex-wrap:wrap;">
+        <div class="stat-card stat-orders" style="padding:12px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); min-width:160px;">
+          <div class="stat-title">إجمالي الطلبات</div>
+          <div id="total-orders" class="stat-value">0</div>
         </div>
-        <div class="stat-card">
-          <i class="fas fa-money-bill-wave stat-icon"></i>
-          <h3>إجمالي المبيعات</h3>
-          <p id="total-sales">0 جنيه</p>
+        <div class="stat-card stat-sales" style="padding:12px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); min-width:200px;">
+          <div class="stat-title">إجمالي المبيعات</div>
+          <div id="total-sales" class="stat-value">0 جنيه</div>
         </div>
-        <div class="stat-card">
-          <i class="fas fa-star stat-icon"></i>
-          <h3>المنتج الأكثر طلبًا</h3>
-          <p id="top-product">لا يوجد</p>
+        <div class="stat-card stat-top-product" style="padding:12px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); min-width:240px;">
+          <div class="stat-title">المنتج الأكثر طلبًا</div>
+          <div id="top-product" class="stat-value">لا يوجد</div>
+        </div>
+        <div class="stat-card stat-top-list" style="padding:12px; background:#fff; border-radius:8px; box-shadow:0 1px 3px rgba(0,0,0,0.08); min-width:320px;">
+          <div class="stat-title">أهم 5 منتجات</div>
+          <ol id="top-products-list" style="margin:6px 0 0 0; padding-left:18px;"></ol>
+        </div>
+        <div class="stat-card chart-card" style="padding:12px; background:#fff; border-radius:8px; box-shadow:0 1px 6px rgba(0,0,0,0.08); min-width:320px; width:100%;">
+          <div class="stat-title">مخطط أعلى المنتجات</div>
+          <div style="width:100%; padding-top:8px;">
+            <canvas id="top-products-chart" height="160"></canvas>
+          </div>
         </div>
       </div>
-    </section>
-
-    <section class="orders-section">
-      <h2>إدارة الطلبات</h2>
       <div class="orders-controls">
         <input type="text" id="search-orders" placeholder="ابحث عن طلب...">
-        <button id="clear-orders" class="btn"><i class="fas fa-trash"></i> مسح جميع الطلبات</button>
+        <button class="btn" id="toggle-orders-btn"><i class="fas fa-chevron-down"></i> عرض/إخفاء السجل</button>
+        <button class="btn" id="clear-all-orders-btn"><i class="fas fa-trash-alt"></i> مسح جميع الطلبات</button>
+        <button class="btn" id="open-points-admin" style="margin-inline-start:8px;"><i class="fas fa-coins"></i> لوحة النقاط</button>
+        <div style="display:flex; gap:8px; margin-inline-start:auto;">
+          <button class="btn" id="export-xlsx-btn"><i class="fas fa-file-excel"></i> تصدير إكسيل</button>
+          <button class="btn" id="export-pdf-btn"><i class="fas fa-file-pdf"></i> تصدير PDF</button>
+        </div>
       </div>
-      <table class="orders-table">
+      <div id="orders-wrap" class="admin-products-wrap collapsed" style="overflow:hidden; transition:max-height 350ms ease;">
+        <table class="orders-table">
         <thead>
           <tr>
             <th>رقم الطلب</th>
-            <th>التاريخ</th>
-            <th>تفاصيل الطلب</th>
+            <th>اسم العميل</th>
+            <th>المنتجات</th>
+            <th>الإجمالي</th>
+            <th>الحالة</th>
             <th>الإجراءات</th>
           </tr>
         </thead>
         <tbody id="orders-list"></tbody>
-      </table>
-    </section>
-
-    <button id="manage-products-btn" class="btn">إدارة المنتجات</button>
-
-    <section id="products-management" class="products-management" style="display: none;">
-      <h3>إدارة المنتجات</h3>
-      <div class="filters">
-        <h3><i class="fas fa-filter"></i> تصفية المنتجات</h3>
-        <div class="filter-group">
-          <label for="search-management-products"><i class="fas fa-search"></i> البحث:</label>
-          <input type="text" id="search-management-products" placeholder="ابحث عن منتج...">
-        </div>
-        <div class="filter-group">
-          <label for="sort-management-products"><i class="fas fa-sort"></i> فرز حسب:</label>
-          <select id="sort-management-products">
-            <option value="default">الافتراضي</option>
-            <option value="price-asc">السعر من الأقل للأعلى</option>
-            <option value="price-desc">السعر من الأعلى للأقل</option>
-          </select>
-        </div>
-        <div class="filter-group">
-          <label for="filter-management-category"><i class="fas fa-tags"></i> الفئة:</label>
-          <select id="filter-management-category">
-            <option value="all">الكل</option>
-            <option value="ديكور">ديكور</option>
-            <option value="العاب">العاب</option>
-            <option value="ادوات منزلية">ادوات منزلية</option>
-            <option value="اكسسورات">اكسسوارات</option>
-          </select>
-        </div>
-        <button id="reset-management-filters" class="btn"><i class="fas fa-sync-alt"></i> إعادة تعيين</button>
+        </table>
       </div>
-      <button id="add-product-btn" class="btn" style="display: none;">إضافة منتج جديد</button>
-      <form id="add-product-form" style="display: none;">
-        <input type="hidden" id="edit-product-id">
-        <input type="text" id="product-code-input" placeholder="كود المنتج">
-        <input type="text" id="product-name-input" placeholder="اسم المنتج">
-        <input type="number" id="product-price-input" placeholder="السعر">
-        <input type="number" id="product-discount-input" placeholder="نسبة الخصم (اختياري)">
-        <input type="text" id="product-img-input" placeholder="رابط الصورة الرئيسية">
-        <select id="product-category-input">
-          <option value="ديكور">ديكور</option>
-          <option value="العاب">العاب</option>
-          <option value="ادوات منزلية">ادوات منزلية</option>
-          <option value="اكسسورات">اكسسوارات</option>
-        </select>
-        <textarea id="product-details-input" placeholder="تفاصيل المنتج"></textarea>
-        <input type="text" id="product-dimensions-input" placeholder="الأبعاد (اختياري)">
-        <input type="text" id="product-images-input" placeholder="روابط الصور الإضافية (مفصولة بفواصل)">
-        <input type="text" id="product-video-input" placeholder="رابط الفيديو (اختياري)">
-        <select id="product-available-input">
-          <option value="true">متوفر</option>
-          <option value="false">غير متوفر</option>
-        </select>
-        <button type="button" id="save-product" class="btn">حفظ المنتج</button>
-        <button type="button" id="cancel-edit" class="btn">إلغاء</button>
-      </form>
-      <div id="products-grid" class="products-management-grid"></div>
+      <!-- Points pending list (hidden by default, toggled via admin button) -->
+      <div id="points-admin-panel" style="display:none; margin-top:16px; background:#fff; padding:12px; border-radius:8px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+        <h3 style="margin-top:0;">نقاط العملاء (قيد الانتظار)</h3>
+        <p style="margin:6px 0 12px 0;">قانون التحويل: كل 1 جنيه = 1 نقطة. كل 100 نقطة = 3 جنيه.</p>
+        <div id="pending-points-list" style="max-height:260px; overflow:auto; border:1px solid #eee; padding:8px; border-radius:6px;">
+          <!-- Filled by JS -->
+        </div>
+        <div style="margin-top:8px; display:flex; gap:8px;">
+          <button id="confirm-selected-points" class="btn success">تأكيد النقاط المحددة</button>
+          <button id="refresh-points-list" class="btn">تحديث القائمة</button>
+        </div>
+        <h4 style="margin-top:12px;">أرصدة النقاط للعملاء</h4>
+        <div id="points-balances" style="max-height:200px; overflow:auto; border:1px solid #fafafa; padding:8px; border-radius:6px;">
+          <!-- Filled by JS -->
+        </div>
+      </div>
     </section>
+
+    <section class="admin-products-section">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+        <h2 style="margin:0;"><i class="fas fa-box-open"></i> قائمة المنتجات (لوحة التحكم)</h2>
+        <button id="toggle-admin-products" class="btn" style="min-width:160px;"><i class="fas fa-chevron-down"></i> عرض/إخفاء المنتجات</button>
+      </div>
+      <div id="admin-products-wrap" class="admin-products-wrap" style="max-height:0; overflow:hidden; transition:max-height 350ms ease;">
+        <p style="text-align:center; color:#5a3921; margin:12px 0;">قائمة بكل المنتجات الحالية والمضافة مستقبلًا مع إحصائيات المبيعات (شهريًا &amp; إجمالي)</p>
+        <div id="admin-products-grid" class="admin-products-grid"></div>
+      </div>
+    </section>
+
+    <!-- Removed products management UI per request. The admin now focuses on orders only. -->
 
     <footer>
-      <p><a href="#" id="admin-access-btn">©</a> 2025 MAHFOOR CNC. جميع الحقوق محفوظة.</p>
+      <p><a href="index.html">©</a> 2025 MAHFOOR CNC. جميع الحقوق محفوظة.</p>
       <p>created by Mohand Eldrandale web developer</p>
       <div class="social-links">
         <a href="https://www.facebook.com/profile.php?id=61579586090483&mibextid=ZbWKwL" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
@@ -163,6 +135,14 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- XLSX (SheetJS) for Excel export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- jsPDF and autotable for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+  <!-- html2pdf (uses html2canvas + jsPDF) for better Arabic rendering from DOM -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js"></script>
   <script src="script.js" defer></script>
 </body>
 </html>
