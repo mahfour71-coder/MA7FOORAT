@@ -346,7 +346,7 @@
             </div>
 
             <div class="action-buttons">
-                <button class="btn checkout-btn">إكمال الشراء عبر واتساب</button>
+                <button class="btn checkout-btn">  اكمال الشراء  </button>
                 <button class="btn continue-shopping" onclick="window.location.href='index.html'">متابعة التسوق</button>
                 <button class="btn clear-cart-btn" onclick="clearCartWithConfirmation()">مسح السلة</button>
             </div>
@@ -385,7 +385,7 @@
                 </div>
                 <div class="checkout-actions">
                     <button type="button" id="submit-checkout" class="btn submit-btn">
-                        <i class="fab fa-whatsapp"></i> إرسال الطلب عبر واتساب
+                        <i class="fas fa-check"></i> تأكيد الطلب
                     </button>
                     <button type="button" id="close-checkout" class="btn cancel-btn">
                         <i class="fas fa-times"></i> إلغاء
@@ -568,6 +568,14 @@
             let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
             orders.push(order);
             localStorage.setItem('mahfourOrders', JSON.stringify(orders));
+            // Send WhatsApp notification for new order
+            try { 
+                if (typeof sendNewOrderWhatsAppNotification === 'function') {
+                    sendNewOrderWhatsAppNotification(order);
+                }
+            } catch (e) { 
+                console.warn('sendNewOrderWhatsAppNotification failed', e); 
+            }
 
             // حفظ النقاط المعلقة
             try {
@@ -581,10 +589,7 @@
                 console.warn('Failed to save pending points', e);
             }
 
-            const whatsappURL = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
-            window.open(whatsappURL, '_blank');
-
-            // إفراغ السلة بعد إرسال الطلب
+            // إفراغ السلة بعد حفظ الطلب
             cart = [];
             localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
             renderCart();
@@ -593,10 +598,11 @@
             document.getElementById('checkout-modal').style.display = 'none';
             Swal.fire({
                 icon: 'success',
-                title: 'تم إرسال الطلب بنجاح!',
-                text: 'سيتم توجيهك إلى واتساب لتأكيد طلبك. شكرًا لك!',
+                title: 'تم حفظ الطلب بنجاح!',
+                text: 'تم حفظ طلبك في النظام. سنتواصل معك قريبًا. شكرًا لك!',
                 timer: 3000,
-                showConfirmButton: false
+                showConfirmButton: true,
+                confirmButtonText: 'حسناً'
             });
         });
 
@@ -757,7 +763,5 @@
         }
     </script>
 
-    <!-- زر العودة للأعلى -->
-    <button id="back-to-top-btn" title="العودة للأعلى"><i class="fas fa-arrow-up"></i></button>
 </body>
 </html>
