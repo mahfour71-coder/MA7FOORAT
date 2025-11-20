@@ -636,7 +636,7 @@ function addToCart(productId, quantity = 1) {
   const discountedPrice = product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price;
   const existingItem = cartData.find(item => item.id === productId);
   if (existingItem) {
-    existingItem.quantity += quantity;
+    existingItem.qty += quantity;
   } else {
     cartData.push({
       id: productId,
@@ -986,6 +986,14 @@ function setupProductDetails() {
     ? `<span class="original-price">${product.price} جنيه</span><span class="discounted-price">${discountedPrice} جنيه</span>`
     : `<span>${product.price} جنيه</span>`;
   const isInFavorites = favoritesData.some(fav => fav.id === product.id);
+
+  // --- إضافة حاوية لنافذة التكبير ---
+  const gallery = document.querySelector('.product-gallery');
+  const zoomResult = document.createElement('div');
+  zoomResult.id = 'zoom-result';
+  zoomResult.className = 'img-zoom-result';
+  if (gallery) gallery.appendChild(zoomResult);
+
   document.getElementById('product-name').textContent = product.name;
   document.getElementById('product-description').textContent = product.details;
   document.getElementById('product-price').innerHTML = priceDisplay;
@@ -1113,6 +1121,9 @@ function setupProductDetails() {
   });
   setupImageGallery(product.images);
   setupRatingSystem(product.id);
+
+  // --- تفعيل خاصية التكبير ---
+  enableImageZoom('main-image', 'zoom-result');
 }
 
 // Setup image gallery
@@ -1603,17 +1614,22 @@ function renderAdminProducts() {
     const s = stats[code] || { totalQty: 0, totalRevenue: 0, monthlyQty: 0, monthlyRevenue: 0 };
     const card = document.createElement('div');
     card.className = 'admin-product-card';
+    const price = prod.discount > 0 ? (prod.price * (1 - prod.discount / 100)).toFixed(2) : prod.price;
+    const availabilityClass = prod.available ? 'available' : 'unavailable';
+    const availabilityText = prod.available ? 'متوفر' : 'غير متوفر';
+
     card.innerHTML = `
-      <img src="${prod.img}" alt="${prod.name}">
+      <div class="image-wrapper" style="height: 200px; overflow: hidden;"><img src="${prod.img}" alt="${prod.name}" style="width: 100%; height: 100%; object-fit: cover;"></div>
       <div class="admin-product-info">
-        <h4>${prod.name} <small style="color:#999; font-weight:600;">(${prod.code})</small></h4>
-        <div class="admin-product-meta">${prod.details || ''}</div>
-        <div class="admin-product-stats">
-          <div class="admin-stat">الموجود: ${prod.available ? 'متوفر' : 'غير متوفر'}</div>
-          <div class="admin-stat">سعر الوحدة: ${prod.price} جنيه</div>
-          <div class="admin-stat">خلال هذا الشهر: ${s.monthlyQty || 0} قطعة — ${s.monthlyRevenue ? s.monthlyRevenue.toFixed(2) : '0'} ج</div>
-          <div class="admin-stat">إجمالي المبيعات: ${s.totalQty || 0} قطعة — ${s.totalRevenue ? s.totalRevenue.toFixed(2) : '0'} ج</div>
+        <h4 style="padding: 15px 15px 0; margin: 0; color: var(--admin-primary);">${prod.name} <small style="color:#999; font-weight:600;">(${prod.code})</small></h4>
+        <div class="admin-product-meta" style="padding: 5px 15px 15px; color: var(--admin-text-light); font-size: 0.9em;">
+          <span class="availability-badge ${availabilityClass}" style="background: ${prod.available ? '#27ae60' : '#e74c3c'}; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.8em;">${availabilityText}</span>
+          - <strong>${price} جنيه</strong>
         </div>
+      </div>
+      <div class="admin-product-stats">
+        <div class="admin-stat"><strong>خلال هذا الشهر:</strong> ${s.monthlyQty || 0} قطعة — ${s.monthlyRevenue ? s.monthlyRevenue.toFixed(2) : '0'} ج</div>
+        <div class="admin-stat"><strong>إجمالي المبيعات:</strong> ${s.totalQty || 0} قطعة — ${s.totalRevenue ? s.totalRevenue.toFixed(2) : '0'} ج</div>
       </div>
     `;
     grid.appendChild(card);
@@ -1752,6 +1768,49 @@ function openPointsAdminPanel() {
   }
 }
 
+// --- وظيفة زر العودة للأعلى ---
+function setupBackToTopButton() {
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+  if (!backToTopBtn) return;
+
+  window.onscroll = function() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  };
+
+  backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// --- وظيفة إخفاء الهيدر عند التمرير ---
+function setupHeaderScroll() {
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  let lastScrollTop = 0;
+  const headerHeight = header.offsetHeight;
+
+  window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop && scrollTop > headerHeight) {
+      // Scroll Down
+      header.classList.add('header-hidden');
+    } else {
+      // Scroll Up
+      header.classList.remove('header-hidden');
+    }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  }, false);
+}
+
 // Initialize
 function initialize() {
   initializeProducts();
@@ -1760,6 +1819,8 @@ function initialize() {
   updateCartCount();
   updateFavoritesCount();
   setupFilters();
+  setupBackToTopButton(); // تفعيل زر العودة للأعلى
+  setupHeaderScroll(); // تفعيل إخفاء الهيدر
   const cartBtn = document.getElementById('cart-btn');
   const favoritesBtn = document.getElementById('favorites-btn');
   const navToggle = document.querySelector('.nav-toggle');
@@ -1785,7 +1846,7 @@ function initialize() {
   if (favoritesBtn) {
     favoritesBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      window.location.href = 'favorites.html';
+      window.location.href = 'favorites.html'; // توجيه المستخدم لصفحة المفضلة الجديدة
     });
   }
   if (navToggle && navMenu) {
@@ -1945,7 +2006,8 @@ function initialize() {
       const quantitySpan = quantityControl.querySelector('.product-quantity');
       const quantity = parseInt(quantitySpan.textContent);
       addToCart(productId, quantity);
-      quantitySpan.textContent = '1';
+      quantitySpan.textContent = '1'; // إعادة تعيين العداد إلى 1 بعد الإضافة
+      return; // تمت إضافة هذا السطر لمنع تنفيذ الكود التالي بالخطأ
     }
     if (orderNowBtn) {
       const productId = parseInt(orderNowBtn.dataset.id);
@@ -2015,6 +2077,21 @@ function initialize() {
       let quantity = parseInt(quantitySpan.textContent);
       quantity++;
       quantitySpan.textContent = quantity;
+    }
+    if (minusBtn) {
+      const productId = parseInt(minusBtn.dataset.id);
+      const product = productsData.find(p => p.id === productId);
+      if (!product.available) {
+        // No need for alert here as it's handled by other buttons
+        return;
+      }
+      const parent = minusBtn.closest('.quantity-control') || minusBtn.closest('li');
+      const quantitySpan = parent.querySelector('.product-quantity');
+      let quantity = parseInt(quantitySpan.textContent);
+      if (quantity > 1) {
+        quantity--;
+        quantitySpan.textContent = quantity;
+      }
     }
     if (removeBtn) {
     }

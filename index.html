@@ -13,28 +13,34 @@
   <link rel="stylesheet" href="https://cdn.salla.network/fonts/dubai.css?v=2.0.5"/>
   <link rel="stylesheet" href="https://cdn.salla.network/fonts/sallaicons.css?v=2.0.5"/>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)">
 </head>
 <body>
   <header>
-    <button class="nav-toggle" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
     <nav id="nav-menu">
       <a href="#hero" aria-label="الرئيسية" title="الرئيسية"><i class="fas fa-home"></i></a>
       <a href="#products" aria-label="المنتجات" title="المنتجات"><i class="fas fa-box-open"></i></a>
   <a href="https://wa.me/201033662370" target="_blank" aria-label="تواصل عبر واتساب" title="واتساب" class="nav-whatsapp"><i class="fab fa-whatsapp"></i></a>
     </nav>
     <div class="logo">
-  <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">MAHFOOR CNC
-  <a href="#" id="cart-btn">
-    <i class="fas fa-shopping-bag"></i>
-    <span id="cart-count">0</span>
-  </a>
-  <a href="#" id="favorites-btn">
-    <i class="fas fa-heart"></i>
-    <span id="favorites-count">0</span>
-  </a>
-</div>
+      <a href="index.html" style="display: contents;">
+        <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="لوجو MAHFOOR CNC" class="brand-logo">
+        <span>MAHFOOR CNC</span>
+      </a>
+    </div>
+    <div class="header-left">
+      <button class="nav-toggle"><i class="fas fa-ellipsis-v"></i></button>
+    </div>
+    <div class="header-icons">
+      <a href="#" id="favorites-btn">
+        <i class="fas fa-heart"></i>
+        <span id="favorites-count">0</span>
+      </a>
+      <a href="#" id="cart-btn">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="cart-count">0</span>
+      </a>
+    </div>
   </header>
 
   <section class="hero" id="hero">
@@ -112,5 +118,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="script.js" defer></script>
+
+  <!-- زر العودة للأعلى -->
+  <button id="back-to-top-btn" title="العودة للأعلى"><i class="fas fa-arrow-up"></i></button>
 </body>
 </html>
