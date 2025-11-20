@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>سلة المشتريات - MAHFOOR CNC</title>
     <!-- خطوط عربية أنيقة من Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="mobile.css" media="(max-width: 768px)">
     <style>
         :root {
             --wood-dark: #7c5e42;      /* اللون البني الرئيسي من الموقع */
@@ -251,20 +249,6 @@
             color: white;
         }
 
-        /* زر مسح السلة */
-        .clear-cart-btn {
-            background: #D9534F; /* لون أحمر للخطر */
-            color: white;
-            order: 3; /* لوضعه في النهاية */
-            flex: 0.5; /* لجعله أصغر من الأزرار الأخرى */
-        }
-
-        .clear-cart-btn:hover {
-            background: #c9302c;
-            box-shadow: 0 8px 20px rgba(217, 83, 79, 0.4);
-        }
-
-
         /* رسالة السلة الفارغة */
         .empty-cart {
             text-align: center;
@@ -303,6 +287,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .item-image {
+                margin: 0 0 15px 0;
+            }
+            .action-buttons {
+                flex-direction: column;
+            }
+            .header-bar h1 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-content {
+                padding: 20px;
+            }
+            .quantity-controls {
+                margin: 10px auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -346,56 +355,12 @@
             </div>
 
             <div class="action-buttons">
-                <button class="btn checkout-btn">  اكمال الشراء  </button>
+                <button class="btn checkout-btn">إكمال الشراء عبر واتساب</button>
                 <button class="btn continue-shopping" onclick="window.location.href='index.html'">متابعة التسوق</button>
-                <button class="btn clear-cart-btn" onclick="clearCartWithConfirmation()">مسح السلة</button>
             </div>
         </div>
     </div>
 
-    <!-- نافذة إدخال بيانات العميل -->
-    <div id="checkout-modal" class="checkout-modal-overlay" style="display: none;">
-        <div class="checkout-modal-content">
-            <div class="checkout-header">
-                <img src="https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg" alt="Logo">
-                <h2>بيانات الشحن</h2>
-            </div>
-            <p class="checkout-subtitle">
-                يرجى إدخال بياناتك لإتمام عملية الشراء.
-            </p>
-            <div id="checkout-form">
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="full-name" placeholder="الاسم الثلاثي" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <input type="text" id="address" placeholder="العنوان بالتفصيل" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-link"></i>
-                    <input type="text" id="location-link" placeholder="رابط الموقع (اختياري)">
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-phone"></i>
-                    <input type="tel" id="phone-number" placeholder="رقم الهاتف (11 رقم)" required pattern="\d{11}">
-                </div>
-                <div class="customer-points" id="customer-points">
-                    <i class="fas fa-coins"></i> رصيد النقاط: <span>-</span>
-                </div>
-                <div class="checkout-actions">
-                    <button type="button" id="submit-checkout" class="btn submit-btn">
-                        <i class="fas fa-check"></i> تأكيد الطلب
-                    </button>
-                    <button type="button" id="close-checkout" class="btn cancel-btn">
-                        <i class="fas fa-times"></i> إلغاء
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script> <!-- تم إضافة ملف السكريبت الرئيسي -->
     <script>
         // تخزين السلة في localStorage
         let cart = JSON.parse(localStorage.getItem('mahfoor_cart')) || [];
@@ -443,7 +408,7 @@
                             <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
                         </div>
                     </div>
-                    <button class="remove-btn" onclick="removeItem(${index})" title="إزالة المنتج"><i class="fas fa-trash-alt"></i></button>
+                    <button class="remove-btn" onclick="removeItem(${index})">×</button>
                 `;
                 cartItems.appendChild(div);
             });
@@ -476,30 +441,11 @@
 
         // حذف منتج
         function removeItem(index) {
-            Swal.fire({
-                title: 'هل أنت متأكد؟',
-                text: "سيتم حذف هذا المنتج من السلة!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#7c5e42',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'نعم، احذفه!',
-                cancelButtonText: 'إلغاء'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    cart.splice(index, 1);
-                    localStorage.setItem('mahfoor_cart', JSON.stringify(cart)); // حفظ التغيير مباشرة
-                    renderCart();
-                    Swal.fire(
-                        'تم الحذف!',
-                        'تم حذف المنتج من السلة.',
-                        'success'
-                    )
-                }
-            })
+            cart.splice(index, 1);
+            renderCart();
         }
 
-        // هذه الدالة لم تعد ضرورية هنا
+        // إضافة منتج (استدعِ هذه الدالة من صفحة المنتج)
         window.addToCart = function(name, price, image) {
             const existing = cart.find(item => item.name === name && item.image === image);
             if (existing) {
@@ -512,221 +458,23 @@
             renderCart();
         };
 
-        // فتح نافذة إدخال البيانات عند الضغط على إكمال الشراء
+        // إكمال الشراء عبر واتساب
         document.querySelector('.checkout-btn').addEventListener('click', () => {
             if (cart.length === 0) {
-                Swal.fire('السلة فارغة!', 'لا يمكنك إكمال الشراء والسلة فارغة.', 'info');
-                return;
-            }
-            document.getElementById('checkout-modal').style.display = 'grid';
-        });
-
-        // إغلاق النافذة
-        document.getElementById('close-checkout').addEventListener('click', () => {
-            document.getElementById('checkout-modal').style.display = 'none';
-        });
-
-        // إرسال الطلب بعد ملء البيانات
-        document.getElementById('submit-checkout').addEventListener('click', () => {
-            const fullName = document.getElementById('full-name').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const locationLink = document.getElementById('location-link').value.trim();
-            const phoneNumber = document.getElementById('phone-number').value.trim();
-
-            if (!fullName || !address || !phoneNumber) {
-                Swal.fire('بيانات غير مكتملة', 'يرجى ملء حقول الاسم والعنوان ورقم الهاتف.', 'error');
-                return;
-            }
-
-            if (!/^\d{11}$/.test(phoneNumber)) {
-                Swal.fire('رقم هاتف غير صحيح', 'يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقمًا.', 'error');
+                alert('السلة فارغة!');
                 return;
             }
 
             const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
-            let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
-            message += `*الاسم:* ${fullName}\n`;
-            message += `*العنوان:* ${address}\n`;
-            if (locationLink) message += `*رابط الموقع:* ${locationLink}\n`;
-            message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
-            message += `*المنتجات:*\n`;
-
+            let message = `طلب جديد من MAHFOOR CNC\n\n`;
             cart.forEach(item => {
-                message += `- ${item.qty} × ${item.name} (${item.price.toFixed(2)} جنيه) = ${(item.price * item.qty).toFixed(2)} جنيه\n`;
+                message += `• ${item.name}\n  الكمية: ${item.qty} × ${item.price} جنيه = ${(item.price * item.qty).toFixed(2)} جنيه\n\n`;
             });
+            message += `الإجمالي: ${total.toFixed(2)} جنيه\nالشحن: مجاني`;
 
-            message += `\n*الإجمالي:* ${total.toFixed(2)} جنيه`;
-
-            // حفظ الطلب في لوحة التحكم
-            const order = {
-                id: Date.now(),
-                date: new Date().toLocaleString('ar-EG'),
-                ts: Date.now(),
-                details: message,
-                status: 'قيد الانتظار'
-            };
-            let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
-            orders.push(order);
-            localStorage.setItem('mahfourOrders', JSON.stringify(orders));
-            // Send WhatsApp notification for new order
-            try { 
-                if (typeof sendNewOrderWhatsAppNotification === 'function') {
-                    sendNewOrderWhatsAppNotification(order);
-                }
-            } catch (e) { 
-                console.warn('sendNewOrderWhatsAppNotification failed', e); 
-            }
-
-            // حفظ النقاط المعلقة
-            try {
-                const points = Math.round(total);
-                if (points > 0) {
-                    const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
-                    pending.push({ orderId: order.id, phone: phoneNumber, name: fullName, points, amount: total.toFixed(2), date: order.date });
-                    localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
-                }
-            } catch (e) {
-                console.warn('Failed to save pending points', e);
-            }
-
-            // إفراغ السلة بعد حفظ الطلب
-            cart = [];
-            localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
-            renderCart();
-
-            // إغلاق النافذة وإظهار رسالة نجاح
-            document.getElementById('checkout-modal').style.display = 'none';
-            Swal.fire({
-                icon: 'success',
-                title: 'تم حفظ الطلب بنجاح!',
-                text: 'تم حفظ طلبك في النظام. سنتواصل معك قريبًا. شكرًا لك!',
-                timer: 3000,
-                showConfirmButton: true,
-                confirmButtonText: 'حسناً'
-            });
+            const whatsappURL = `https://wa.me/201033662370?text=${encodeURIComponent(message)}`;
+            window.open(whatsappURL, '_blank');
         });
-
-        // ربط حقل الهاتف بنظام النقاط
-        const phoneInput = document.getElementById('phone-number');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', (e) => {
-                if (typeof showCustomerPoints === 'function') {
-                    showCustomerPoints(e.target.value.trim());
-                }
-            });
-        }
-
-        /* تنسيقات النافذة المنبثقة الجديدة */
-        const style = document.createElement('style');
-        style.innerHTML = `
-            .checkout-modal-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.6);
-                backdrop-filter: blur(5px);
-                display: grid;
-                place-items: center;
-                z-index: 1002;
-                animation: fadeIn 0.3s ease;
-            }
-            .checkout-modal-content {
-                background: var(--white);
-                border-radius: 16px;
-                width: 90%;
-                max-width: 450px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-                border: 1px solid var(--wood-light);
-                animation: slideUp 0.4s ease-out;
-            }
-            .checkout-header {
-                background: linear-gradient(135deg, var(--wood-dark) 0%, #6d4c41 100%);
-                color: white;
-                padding: 15px 20px;
-                border-radius: 16px 16px 0 0;
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            .checkout-header img {
-                width: 45px;
-                height: 45px;
-                border-radius: 50%;
-                border: 2px solid var(--wood-light);
-            }
-            .checkout-header h2 {
-                margin: 0;
-                font-size: 1.4em;
-                font-family: 'Amiri', serif;
-            }
-            .checkout-subtitle {
-                font-size: 0.95em;
-                color: #555;
-                padding: 15px 25px 0;
-                text-align: center;
-            }
-            #checkout-form {
-                padding: 20px 25px 25px;
-                display: flex;
-                flex-direction: column;
-                gap: 15px;
-            }
-            .input-group {
-                position: relative;
-            }
-            .input-group i {
-                position: absolute;
-                right: 15px;
-                top: 50%;
-                transform: translateY(-50%);
-                color: var(--wood-dark);
-                opacity: 0.7;
-            }
-            #checkout-form input {
-                width: 100%;
-                padding: 12px 45px 12px 15px;
-                border-radius: 8px;
-                border: 1px solid var(--wood-light);
-                font-size: 1em;
-                background: var(--cream-bg);
-                transition: all 0.3s ease;
-            }
-            #checkout-form input:focus {
-                outline: none;
-                border-color: var(--wood-dark);
-                box-shadow: 0 0 0 3px rgba(124, 94, 66, 0.2);
-            }
-            .customer-points {
-                text-align: right;
-                font-size: 0.9em;
-                color: var(--wood-dark);
-                font-weight: 600;
-                background: #fdfaf7;
-                padding: 8px 12px;
-                border-radius: 6px;
-            }
-            .checkout-actions {
-                display: flex;
-                gap: 12px;
-                margin-top: 10px;
-            }
-            .checkout-actions .btn {
-                flex: 1;
-            }
-            .submit-btn {
-                background: var(--nature-green);
-                color: white;
-            }
-            .cancel-btn {
-                background: #777;
-                color: white;
-            }
-            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-            @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        `;
-        document.head.appendChild(style);
 
         // تحميل السلة عند فتح الصفحة
         document.addEventListener('DOMContentLoaded', () => {
@@ -734,34 +482,5 @@
             // يمكنك هنا استدعاء دالة لتحديث عدد المنتجات في أيقونة السلة في رأس الموقع
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // مسح السلة بالكامل
-        function clearCartWithConfirmation() {
-            if (cart.length === 0) return;
-            Swal.fire({
-                title: 'هل أنت متأكد؟',
-                text: "سيتم حذف جميع المنتجات من السلة!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'نعم، امسح الكل!',
-                cancelButtonText: 'إلغاء'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    cart = [];
-                    localStorage.setItem('mahfoor_cart', JSON.stringify(cart)); // حفظ التغيير
-                    renderCart();
-                    Swal.fire(
-                        'تم المسح!',
-                        'أصبحت سلة مشترياتك فارغة الآن.',
-                        'success'
-                    )
-                }
-            })
-        }
-    </script>
-
 </body>
 </html>
