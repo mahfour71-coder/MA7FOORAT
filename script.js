@@ -7,101 +7,6 @@ const PRODUCTS_PASSWORD = "MOHAND2009MOHAND1907MO09UA07";
 const BRAND_NAME = 'MAHFOOR CNC';
 const BRAND_LOGO_URL = 'https://i.postimg.cc/4NSrnTbt/photo-2025-09-26-07-00-26.jpg';
 
-if (typeof db === 'undefined') {
-  console.error("خطأ: Firebase غير متصل! تأكد من تحميل firebase-init.js قبل script.js");
-}
-
-const FIREBASE_ORDERS_PATH = 'orders';
-let ordersCache = [];
-let ordersListenerAttached = false;
-let ordersRefInstance = null;
-
-function hasRealtimeDb() {
-  return typeof db !== 'undefined' && db && typeof db.ref === 'function';
-}
-
-function getOrdersCache() {
-  return Array.isArray(ordersCache) ? ordersCache : [];
-}
-
-function handleOrdersDataChange() {
-  try { renderNewOrders(); } catch (err) { /* ignore on non-admin pages */ }
-  try {
-    const searchTerm = document.getElementById('search-orders')?.value?.trim().toLowerCase();
-    if (searchTerm) {
-      const filtered = getOrdersCache().filter(order => {
-        const details = (order.details || '').toLowerCase();
-        const status = (order.status || '').toLowerCase();
-        const idMatch = order.id?.toString().includes(searchTerm);
-        return idMatch || details.includes(searchTerm) || status.includes(searchTerm);
-      });
-      renderOrders(filtered);
-    } else {
-      renderOrders();
-    }
-  } catch (err) { /* ignore */ }
-  try {
-    const currentPeriod = document.getElementById('stats-period')?.value || 'all';
-    updateStats(currentPeriod);
-  } catch (err) { /* ignore */ }
-  try { renderAdminProducts(); } catch (err) { /* ignore */ }
-}
-
-function initOrdersRealtimeListener() {
-  if (ordersListenerAttached) return;
-  if (!hasRealtimeDb()) {
-    setTimeout(initOrdersRealtimeListener, 800);
-    return;
-  }
-  ordersRefInstance = db.ref(FIREBASE_ORDERS_PATH);
-  ordersRefInstance.on('value', (snapshot) => {
-    const data = snapshot.val() || {};
-    const parsed = Object.entries(data).map(([key, value]) => ({
-      ...value,
-      firebaseKey: key
-    }));
-    parsed.sort((a, b) => {
-      const aTs = Number(a.ts || a.id || 0);
-      const bTs = Number(b.ts || b.id || 0);
-      return bTs - aTs;
-    });
-    ordersCache = parsed;
-    handleOrdersDataChange();
-  }, (error) => {
-    console.error('Failed to listen for orders:', error);
-  });
-  ordersListenerAttached = true;
-}
-
-function pushOrderToRealtime(order) {
-  if (!hasRealtimeDb()) {
-    return Promise.reject(new Error('Firebase Realtime Database is not available'));
-  }
-  const payload = { ...order };
-  if (!payload.ts) {
-    payload.ts = Date.now();
-  }
-  return db.ref(FIREBASE_ORDERS_PATH).push(payload);
-}
-
-function updateOrderStatusInRealtime(orderId, status) {
-  if (!hasRealtimeDb()) {
-    return Promise.reject(new Error('Firebase Realtime Database is not available'));
-  }
-  const target = getOrdersCache().find(order => Number(order.id) === Number(orderId));
-  if (!target || !target.firebaseKey) {
-    return Promise.reject(new Error('Order not found'));
-  }
-  return db.ref(`${FIREBASE_ORDERS_PATH}/${target.firebaseKey}`).update({ status });
-}
-
-function removeAllOrdersFromRealtime() {
-  if (!hasRealtimeDb()) {
-    return Promise.reject(new Error('Firebase Realtime Database is not available'));
-  }
-  return db.ref(FIREBASE_ORDERS_PATH).remove();
-}
-
 // Define productsData with version control
 const productsDataDefault = [
   { 
@@ -333,12 +238,40 @@ const productsDataDefault = [
     video: null,
     available: true
   },
+  { 
+    id: 12, 
+    code: "DC009",
+    name: "صانية", 
+    price: 250, 
+    discount: 0, 
+    img: "https://i.postimg.cc/KjnrSKN9/6f3797fb-668f-4b86-b18c-9f677c9649a1.png", 
+    category: "ديكور", 
+    details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
+    images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
+    dimensions: "يختلف حسب الطلب",
+    video: null,
+    available: true
+  },
+  { 
+    id: 13, 
+    code: "DC009",
+    name: "اباجورة", 
+    price: 450, 
+    discount: 0, 
+    img: "https://i.postimg.cc/Pxn0mDPJ/22.png", 
+    category: "ديكور", 
+    details: "ديكور خشبي بتصميم عقاب، مثالي لعشاق الديكورات الفريدة.", 
+    images: ["https://i.postimg.cc/QxfjwSKw/photo.jpg"],
+    dimensions: "يختلف حسب الطلب",
+    video: null,
+    available: true
+  },
 ];
 let activeShareDropdown = null;
 let shareDocumentListenerAdded = false;
 // Build flattened rows for orders export
 function buildOrderRows() {
-  const orders = getOrdersCache();
+  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const rows = [];
   orders.forEach(order => {
     // extract products from details
@@ -535,7 +468,7 @@ async function exportOrdersToPDF() {
   html2pdf().set(opt).from(container).save();
 }
 // Version control for products data لازم اعدله للتحديث
-const DATA_VERSION = "1.4";
+const DATA_VERSION = "1.3";
 let productsData;
 let cartData = [];
 let favoritesData = [];
@@ -912,53 +845,108 @@ function sendNewOrderWhatsAppNotification(order) {
   }
 }
 
-function submitOrderNow() {
-  const fullName = document.getElementById('order-now-full-name')?.value.trim() || '';
-  const phone = document.getElementById('order-now-phone-number')?.value.trim() || '';
-  const address = document.getElementById('order-now-address')?.value.trim() || '';
-  const locationLink = document.getElementById('order-now-location-link')?.value.trim() || '';
-
-  if (!fullName || !phone || !address || cartData.length === 0) {
-    Swal.fire('خطأ', 'يرجى ملء جميع الحقول وإضافة منتجات للسلة', 'error');
+// Order now (for single product) - saves to localStorage directly
+function orderNow(productId, quantity) {
+  const product = productsData.find(p => p.id === productId);
+  if (!product || !product.available) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'المنتج غير متوفر',
+      text: 'هذا المنتج غير متوفر حاليًا، سيتوفر في أقرب وقت.',
+      showConfirmButton: false,
+      timer: 2000
+    });
     return;
   }
 
-  const total = cartData.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  const fullName = document.getElementById('order-now-full-name').value.trim();
+  const address = document.getElementById('order-now-address').value.trim();
+  const locationLink = document.getElementById('order-now-location-link').value.trim();
+  const phoneNumber = document.getElementById('order-now-phone-number').value.trim();
 
-  const orderData = {
+  if (!fullName || !address || !phoneNumber) {
+    Swal.fire({
+      icon: 'error',
+      title: 'بيانات غير مكتملة',
+      text: 'يرجى ملء جميع الحقول المطلوبة.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return;
+  }
+
+  if (!/^\d{11}$/.test(phoneNumber)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'رقم هاتف غير صحيح',
+      text: 'يرجى إدخال رقم هاتف مكون من 11 رقمًا.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+    return;
+  }
+
+  const discountedPrice = product.discount > 0 ? (product.price * (1 - product.discount / 100)).toFixed(2) : product.price;
+  const itemTotal = discountedPrice * quantity;
+
+  let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
+  message += `*الاسم:* ${fullName}\n`;
+  message += `*العنوان:* ${address}\n`;
+  if (locationLink) message += `* لوكيشن استلام الاوردر:* ${locationLink}\n`;
+  message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
+  message += `*المنتج:* ${product.name}\n`;
+  message += `كود المنتج: ${product.code}\n`;
+  message += `- ${quantity} × ${discountedPrice} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
+  message += `\n*الإجمالي:* ${itemTotal.toFixed(2)} جنيه`;
+
+  const order = {
+    id: Date.now(),
     date: new Date().toLocaleString('ar-EG'),
-    customerName: fullName,
-    customerPhone: phone,
-    customerAddress: address + (locationLink ? ' | لوكيشن: ' + locationLink : ''),
-    products: cartData.map(p => ({ name: p.name, price: p.price, quantity: p.quantity })),
-    total: total,
-    status: 'جديد',
-    timestamp: Date.now()
+    ts: Date.now(),
+    details: message,
+    status: 'قيد الانتظار'
   };
 
-  db.ref('orders').push(orderData)
-    .then(() => {
+  let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+  orders.push(order);
+  localStorage.setItem('mahfourOrders', JSON.stringify(orders));
+
+  try { sendNewOrderWhatsAppNotification(order); } catch (e) { console.warn('sendNewOrderWhatsAppNotification failed', e); }
+  try { updateStats(); } catch (e) { console.warn('updateStats failed', e); }
+  try { if (typeof renderNewOrders === 'function') renderNewOrders(); } catch (e) { console.warn('renderNewOrders failed', e); }
+
+  try {
+    const points = Math.round(itemTotal);
+    const phone = phoneNumber;
+    const customerName = fullName || '';
+    if (points > 0) {
+      const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
+      pending.push({ orderId: order.id, phone, name: customerName, points, amount: itemTotal.toFixed(2), date: order.date });
+      localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
+    }
+  } catch (e) {
+    console.warn('Failed to save pending points', e);
+  }
+
+  document.getElementById('order-now-modal').style.display = 'none';
+  document.getElementById('order-now-full-name').value = '';
+  document.getElementById('order-now-address').value = '';
+  document.getElementById('order-now-location-link').value = '';
+  document.getElementById('order-now-phone-number').value = '';
+  document.getElementById('order-product-name').textContent = '';
+
   Swal.fire({
     icon: 'success',
-        title: 'تم إرسال الطلب بنجاح!',
-        text: 'شكرًا لك، سيتم التواصل معك قريبًا',
-        timer: 3500,
-        timerProgressBar: true
-      });
-      cartData = [];
-      localStorage.setItem('mahfoor_cart', JSON.stringify(cartData));
-      updateCartCount();
-      document.getElementById('order-now-modal')?.remove();
-    })
-    .catch(err => {
-      console.error("Firebase Error:", err);
-      Swal.fire('خطأ', 'حدث خطأ مؤقت، حاول تاني بعد قليل', 'error');
+    title: 'تم حفظ الطلب بنجاح!',
+    text: 'تم حفظ طلبك في النظام. سنتواصل معك قريبًا.',
+    showConfirmButton: true,
+    confirmButtonText: 'حسناً'
   });
 }
 
 // Render new orders (pending orders)
 function renderNewOrders() {
-  const allOrders = getOrdersCache();
+  const allOrders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const newOrders = allOrders.filter(order => order.status === 'قيد الانتظار');
   const container = document.getElementById('new-orders-container');
   const countBadge = document.getElementById('new-orders-count');
@@ -1051,8 +1039,11 @@ function renderNewOrders() {
 
 // Confirm order
 function confirmOrder(orderId) {
-  updateOrderStatusInRealtime(orderId, 'مكتمل')
-    .then(() => {
+  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+  const orderIndex = orders.findIndex(o => o.id === orderId);
+  if (orderIndex !== -1) {
+    orders[orderIndex].status = 'مكتمل';
+    localStorage.setItem('mahfourOrders', JSON.stringify(orders));
   Swal.fire({
     icon: 'success',
       title: 'تم تأكيد الطلب',
@@ -1060,15 +1051,10 @@ function confirmOrder(orderId) {
       timer: 2000,
       showConfirmButton: false
     });
-    })
-    .catch((error) => {
-      console.error('Failed to confirm order:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'تعذر تأكيد الطلب',
-        text: 'حدث خطأ أثناء تحديث حالة الطلب. حاول مرة أخرى.'
-      });
-    });
+    renderNewOrders();
+    renderOrders();
+    try { updateStats(); } catch (e) { console.warn('updateStats failed', e); }
+  }
 }
 
 // Reject order
@@ -1084,8 +1070,11 @@ function rejectOrder(orderId) {
     cancelButtonText: 'إلغاء'
   }).then((result) => {
     if (result.isConfirmed) {
-      updateOrderStatusInRealtime(orderId, 'ملغي')
-        .then(() => {
+      const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+      const orderIndex = orders.findIndex(o => o.id === orderId);
+      if (orderIndex !== -1) {
+        orders[orderIndex].status = 'ملغي';
+        localStorage.setItem('mahfourOrders', JSON.stringify(orders));
         Swal.fire({
           icon: 'success',
           title: 'تم رفض الطلب',
@@ -1093,23 +1082,18 @@ function rejectOrder(orderId) {
           timer: 2000,
           showConfirmButton: false
         });
-        })
-        .catch((error) => {
-          console.error('Failed to reject order:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'تعذر رفض الطلب',
-            text: 'حدث خطأ أثناء تحديث حالة الطلب. حاول مرة أخرى.'
-          });
-        });
+        renderNewOrders();
+        renderOrders();
+        try { updateStats(); } catch (e) { console.warn('updateStats failed', e); }
+      }
     }
   });
 }
 
 // View order details
 function viewOrderDetails(orderId) {
-  const orders = getOrdersCache();
-  const order = orders.find(o => Number(o.id) === Number(orderId));
+  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+  const order = orders.find(o => o.id === orderId);
   if (!order) {
     Swal.fire({ icon: 'error', title: 'خطأ', text: 'لم يتم العثور على الطلب.' });
     return;
@@ -1140,7 +1124,7 @@ function viewOrderDetails(orderId) {
 
 // Render orders
 function renderOrders(ordersToRender) {
-  const allOrders = ordersToRender || getOrdersCache();
+  const allOrders = ordersToRender || JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const ordersList = document.getElementById('orders-list');
   if (!ordersList) return;
   ordersList.innerHTML = '';
@@ -1207,8 +1191,8 @@ function renderOrders(ordersToRender) {
   document.querySelectorAll('.print-invoice-btn').forEach(button => {
     button.addEventListener('click', (e) => {
       const orderId = parseInt(e.currentTarget.dataset.orderId);
-      const latestOrders = getOrdersCache();
-      const orderToPrint = latestOrders.find(order => Number(order.id) === Number(orderId));
+      const allOrders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+      const orderToPrint = allOrders.find(order => order.id === orderId);
       console.log('Print Invoice button clicked for order ID:', orderId);
       console.log('Order to print:', orderToPrint);
       if (orderToPrint) {
@@ -1247,22 +1231,15 @@ function clearOrders() {
     cancelButtonText: 'إلغاء'
   }).then((result) => {
     if (result.isConfirmed) {
-      removeAllOrdersFromRealtime()
-        .then(() => {
+      localStorage.setItem('mahfourOrders', JSON.stringify([]));
+      renderOrders();
+  updateStats();
+  try { renderAdminProducts(); } catch (e) { /* ignore if admin page not open */ }
       Swal.fire({
         icon: 'success',
         title: 'تم حذف الطلبات',
         showConfirmButton: false,
         timer: 1500
-          });
-        })
-        .catch((error) => {
-          console.error('Failed to clear orders:', error);
-          Swal.fire({
-            icon: 'error',
-            title: 'تعذر حذف الطلبات',
-            text: 'حدث خطأ أثناء حذف الطلبات. حاول مرة أخرى.'
-          });
       });
     }
   });
@@ -1270,22 +1247,15 @@ function clearOrders() {
 
 // Force-clear orders without asking a second confirmation (used after password check)
 function forceClearOrders() {
-  removeAllOrdersFromRealtime()
-    .then(() => {
+  localStorage.setItem('mahfourOrders', JSON.stringify([]));
+  renderOrders();
+  updateStats();
+  try { renderAdminProducts(); } catch (e) { /* ignore if admin page not open */ }
   Swal.fire({
     icon: 'success',
     title: 'تم حذف الطلبات',
     showConfirmButton: false,
     timer: 1500
-      });
-    })
-    .catch((error) => {
-      console.error('Failed to clear orders:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'تعذر حذف الطلبات',
-        text: 'حدث خطأ أثناء حذف الطلبات. حاول مرة أخرى.'
-      });
   });
 }
 
@@ -1592,7 +1562,7 @@ function setupProductDetails() {
     const submitOrderNowBtn = document.getElementById('submit-order-now');
     const closeOrderNowBtn = document.getElementById('close-order-now');
     submitOrderNowBtn.onclick = () => {
-      submitOrderNow();
+      orderNow(product.id, quantity);
       quantity = 1;
       quantitySpan.textContent = quantity;
     };
@@ -1610,7 +1580,7 @@ function setupProductDetails() {
     };
     document.getElementById('order-now-phone-number').addEventListener('keypress', (e) => {
       if (e.key === 'Enter') {
-        submitOrderNow();
+        orderNow(product.id, quantity);
         quantity = 1;
         quantitySpan.textContent = quantity;
       }
@@ -2291,7 +2261,7 @@ function exportStatsReport() {
     'year': 'هذه السنة'
   };
   
-  const allOrders = getOrdersCache();
+  const allOrders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const orders = filterOrdersByPeriod(allOrders, period);
   
   let totalSales = 0;
@@ -2437,14 +2407,10 @@ function filterOrdersByPeriod(orders, period) {
 
 // Update stats
 function updateStats(period = 'all') {
-  const totalOrdersEl = document.getElementById('total-orders');
-  const totalSalesEl = document.getElementById('total-sales');
-  if (!totalOrdersEl || !totalSalesEl) return;
-
-  const allOrders = getOrdersCache();
+  const allOrders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const orders = filterOrdersByPeriod(allOrders, period);
   
-  totalOrdersEl.textContent = orders.length;
+  document.getElementById('total-orders').textContent = orders.length;
   let totalSales = 0;
   const productCounts = {};
   const productRevenue = {}; // Track revenue per product
@@ -2499,7 +2465,7 @@ function updateStats(period = 'all') {
     });
   });
   
-  totalSalesEl.textContent = totalSales.toFixed(2) + ' جنيه';
+  document.getElementById('total-sales').textContent = totalSales.toFixed(2) + ' جنيه';
   
   // Calculate average order value
   const avgOrderValue = orders.length > 0 ? (totalSales / orders.length).toFixed(2) : 0;
@@ -2908,7 +2874,7 @@ function updateStats(period = 'all') {
 
 // Compute sales stats per product: returns map by product code with { totalQty, totalRevenue, monthlyQty, monthlyRevenue }
 function computeProductSalesStats() {
-  const orders = getOrdersCache();
+  const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const stats = {};
   const now = new Date();
   // helper: try to parse order date robustly (supports numeric timestamp `ts` or common date strings)
@@ -3503,7 +3469,6 @@ function showWelcomeMessage() {
 // Initialize
 function initialize() {
   initializeProducts();
-  initOrdersRealtimeListener();
   cartData = JSON.parse(localStorage.getItem('mahfoor_cart')) || []; // Ensure cart is loaded from new key
   refreshProductsView();
   updateCartCount();
@@ -3775,17 +3740,11 @@ function initialize() {
     if (searchOrders) {
       searchOrders.addEventListener('input', () => {
         const searchTerm = searchOrders.value.trim().toLowerCase();
-        const orders = getOrdersCache();
-        if (!searchTerm) {
-          renderOrders();
-          return;
-        }
-        const filteredOrders = orders.filter(order => {
-          const idMatch = order.id?.toString().includes(searchTerm);
-          const detailsMatch = (order.details || '').toLowerCase().includes(searchTerm);
-          const statusMatch = (order.status || '').toLowerCase().includes(searchTerm);
-          return idMatch || detailsMatch || statusMatch;
-        });
+        const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+        const filteredOrders = orders.filter(order =>
+          order.id.toString().includes(searchTerm) ||
+          order.details.toLowerCase().includes(searchTerm) || order.status.toLowerCase().includes(searchTerm)
+        );
         renderOrders(filteredOrders);
       });
     }
@@ -3849,7 +3808,7 @@ function initialize() {
       const submitOrderNowBtn = document.getElementById('submit-order-now');
       const closeOrderNowBtn = document.getElementById('close-order-now');
       submitOrderNowBtn.onclick = () => {
-        submitOrderNow();
+        orderNow(productId, quantity);
         quantitySpan.textContent = '1';
       };
       closeOrderNowBtn.onclick = () => {
@@ -3966,28 +3925,3 @@ function showAdminSection(sectionId) {
     renderPointsBalances();
   }
 }
-
-// جلب وعرض الطلبات في صفحة admin.html تلقائيًا
-if (window.location.pathname.includes('admin.html')) {
-  db.ref('orders').on('value', snapshot => {
-    const orders = [];
-    snapshot.forEach(child => {
-      orders.push({ id: child.key, ...child.val() });
-    });
-    ordersCache = orders.reverse();
-    try { renderNewOrders(); } catch(e) {}
-    try { renderOrders(ordersCache); } catch(e) {}
-  });
-}
-
-// ربط زر تأكيد الطلب
-document.getElementById('submit-order-now')?.addEventListener('click', submitOrderNow);
-
-function pushOrderToRealtime(order){
-    return firebase.database().ref("orders").push(order);
-}
-
-// submit checkout binding
-
-const _submitCheckoutBtn = document.getElementById('submit-checkout');
-if(_submitCheckoutBtn){ _submitCheckoutBtn.addEventListener('click', submitOrderNow); } else { console.warn('submit-checkout button not found in DOM'); }

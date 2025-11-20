@@ -17,10 +17,6 @@
             --shadow: rgba(107, 79, 75, 0.15);
             --accent-gold: #ff9800;
         }
-        .loading-spinner {
-            border: 5px solid #f3f3f3; border-top: 5px solid var(--wood-dark); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 40px auto;
-            display: none; /* Hidden by default */
-        }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
         body { background: linear-gradient(to bottom, #7c5e42, #d9c8a9); color: #444; min-height: 100vh; padding: 20px 10px; background-attachment: fixed; }
         .favorites-container { max-width: 900px; margin: 0 auto; background: var(--white); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px var(--shadow); position: relative; }
@@ -58,7 +54,7 @@
 
         <div class="favorites-content">
             <div class="favorites-items">
-                <div class="loading-spinner" id="favorites-loader"></div>
+                <!-- المنتجات المفضلة تُضاف ديناميكيًا -->
             </div>
 
             <div class="action-buttons">
@@ -69,97 +65,52 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    
-    
-    
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-init.js"></script>
-<script src="script.js" defer></script>
     <script>
-        // Global renderFavorites function (defined in script.js)
-        // This will be called by the Firebase listener in script.js
-        window.renderFavorites = function() {
-            const favoritesItemsContainer = document.querySelector('.favorites-items');
-            const favoritesLoader = document.getElementById('favorites-loader');
+        let favorites = JSON.parse(localStorage.getItem('mahfourFavorites')) || [];
 
-            if (favoritesLoader) favoritesLoader.style.display = 'block';
-            favoritesItemsContainer.innerHTML = ''; // Clear previous items
+        function renderFavorites() {
+            const favoritesItems = document.querySelector('.favorites-items');
+            favoritesItems.innerHTML = '';
 
-            if (favoritesData.length === 0) {
-                favoritesItemsContainer.innerHTML = `
+            if (favorites.length === 0) {
+                favoritesItems.innerHTML = `
                     <div class="empty-favorites">
                         <i class="fas fa-heart-broken"></i>
                         <p>قائمة المفضلة فارغة</p>
                         <p style="font-size: 0.9em; margin-top: 10px; color: #777;">
                             أضف المنتجات التي تعجبك لتبقى على اطلاع بها.
                         </p>
-                    </div>`; 
-                if (favoritesLoader) favoritesLoader.style.display = 'none';
+                    </div>`;
                 return;
             }
 
-            favoritesData.forEach((item, index) => {
+            favorites.forEach((item, index) => {
                 const animationDelay = `${index * 0.1}s`;
                 const price = parseFloat(item.price);
 
                 const div = document.createElement('div');
                 div.className = 'favorite-item';
                 div.style.animationDelay = animationDelay;
-                // Ensure item.id is passed to removeFavoriteItem
                 div.innerHTML = `
                     <img src="${item.img || 'https://via.placeholder.com/90?text=خشب'}" alt="${item.name}" class="item-image">
                     <div class="item-details">
                         <h3 onclick="location.href='product-details.html?id=${item.id}'">${item.name}</h3>
                         <p class="price">${price.toFixed(2)} جنيه</p>
                     </div>
-                    <button class="remove-btn" onclick="removeFavoriteItem(${item.id})" title="إزالة من المفضلة"><i class="fas fa-trash-alt"></i></button>
+                    <button class="remove-btn" onclick="removeItem(${index})" title="إزالة من المفضلة"><i class="fas fa-trash-alt"></i></button>
                 `;
-                favoritesItemsContainer.appendChild(div);
+                favoritesItems.appendChild(div);
             });
-            if (favoritesLoader) favoritesLoader.style.display = 'none';
-        };
+            localStorage.setItem('mahfourFavorites', JSON.stringify(favorites));
+        }
 
-        // Global clearFavorites function (defined in script.js)
-        window.clearFavorites = function() {
-            // Use favoritesData from Firebase listener
-            if (!window.favoritesData) {
-                window.favoritesData = []; // Ensure it's initialized
-            }
-            if (favoritesData.length === 0) return;
+        function removeItem(index) {
             Swal.fire({
                 title: 'هل أنت متأكد؟',
-                text: "سيتم حذف جميع المنتجات من المفضلة!",
+                text: "سيتم حذف هذا المنتج من المفضلة!",
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'نعم، امسح الكل!',
-                cancelButtonText: 'إلغاء'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    clearFavorites(); // Call the global clearFavorites function (Firebase integrated)
-                    // renderFavorites will be called by the Firebase listener
-                    Swal.fire(
-                        'تم المسح!',
-                        'أصبحت قائمة المفضلة فارغة الآن.',
-                        'success'
-                    )
-                }
-            })
-        };
-
-        // Initial render is handled by Firebase listener in script.js
-        // The `window.renderFavorites` function will be called by the listener.
-
-        // Ensure script.js is loaded and initialized
-        document.addEventListener('DOMContentLoaded', () => {
-            // No need to call renderFavorites here, Firebase listener in script.js will do it
-        });
-    </script>
-</body>
-</html>
+                confirmButtonColor: '#7c5e42',
                 cancelButtonColor: '#d33',
                 confirmButtonText: 'نعم، احذفه!',
                 cancelButtonText: 'إلغاء'
@@ -203,6 +154,12 @@
         }
 
         document.addEventListener('DOMContentLoaded', renderFavorites);
+
+        // This part is now handled by the main script.js file
+        // document.addEventListener('DOMContentLoaded', () => {
+        //     if (typeof updateCounts === 'function') updateCounts();
+        //     renderFavorites();
+        // });
     </script>
 </body>
 </html>

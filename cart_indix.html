@@ -395,14 +395,7 @@
         </div>
     </div>
 
-    
-    
-    
-    
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-<script src="firebase-init.js"></script>
-<script src="script.js"></script> <!-- تم إضافة ملف السكريبت الرئيسي -->
+    <script src="script.js"></script> <!-- تم إضافة ملف السكريبت الرئيسي -->
     <script>
         // تخزين السلة في localStorage
         let cart = JSON.parse(localStorage.getItem('mahfoor_cart')) || [];
@@ -572,16 +565,9 @@
                 details: message,
                 status: 'قيد الانتظار'
             };
-            if (typeof pushOrderToRealtime !== 'function') {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'تعذر حفظ الطلب',
-                    text: 'خدمة حفظ الطلبات غير متاحة حالياً.'
-                });
-                return;
-            }
-            pushOrderToRealtime(order)
-                .then(() => {
+            let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
+            orders.push(order);
+            localStorage.setItem('mahfourOrders', JSON.stringify(orders));
             // Send WhatsApp notification for new order
             try { 
                 if (typeof sendNewOrderWhatsAppNotification === 'function') {
@@ -608,28 +594,15 @@
             localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
             renderCart();
 
-                    // إغلاق النافذة
+            // إغلاق النافذة وإظهار رسالة نجاح
             document.getElementById('checkout-modal').style.display = 'none';
-
             Swal.fire({
                 icon: 'success',
-                        title: 'تم إرسال الطلب بنجاح!',
-                        text: 'شكراً لك، سيتم التواصل معك قريباً',
-                        timer: 3500,
-                        timerProgressBar: true
-                    });
-                    document.querySelector('#order-now-form, #order-form, form')?.reset();
-                    if (typeof closeOrderModal === 'function') closeOrderModal();
-                    const modal = document.getElementById('order-now-modal');
-                    if (modal) modal.remove();
-                })
-                .catch((error) => {
-                    console.error("Firebase Error:", error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'حدث خطأ مؤقت',
-                        text: 'الطلب اتحفظ فعلاً، حاول تاني بعد قليل',
-                    });
+                title: 'تم حفظ الطلب بنجاح!',
+                text: 'تم حفظ طلبك في النظام. سنتواصل معك قريبًا. شكرًا لك!',
+                timer: 3000,
+                showConfirmButton: true,
+                confirmButtonText: 'حسناً'
             });
         });
 
