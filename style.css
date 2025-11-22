@@ -41,6 +41,7 @@ header {
   z-index: 1000;
   display: flex;
   align-items: center;
+  transition: top 0.4s ease-in-out; /* لإخفاء الهيدر بسلاسة */
   justify-content: space-between;
   flex-wrap: wrap;
   animation: slideInFromTop 0.8s ease-out;
@@ -58,6 +59,11 @@ header {
   background: var(--color-whatsapp);
   box-shadow: 0 4px 12px rgba(0,0,0,0.12);
   overflow: hidden;
+}
+
+/* كلاس لإخفاء الهيدر عند التمرير لأسفل */
+.header-hidden {
+  top: -100px; /* إخفاء الهيدر خارج الشاشة */
 }
 
 .brand-logo img {
@@ -104,8 +110,8 @@ header .logo {
 }
 
 /* تصميم احترافي متطور لأيقونات السلة والمفضلة */
-header .logo #cart-btn,
-header .logo #favorites-btn {
+header #cart-btn,
+header #favorites-btn {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -130,8 +136,8 @@ header .logo #favorites-btn {
 }
 
 /* تأثير التمويج عند الهوفر */
-header .logo #cart-btn::before,
-header .logo #favorites-btn::before {
+header #cart-btn::before,
+header #favorites-btn::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -145,20 +151,20 @@ header .logo #favorites-btn::before {
   z-index: 0;
 }
 
-header .logo #cart-btn:hover::before {
+header #cart-btn:hover::before {
   width: 180px;
   height: 180px;
   background: radial-gradient(circle, rgba(255, 152, 0, 0.25) 0%, transparent 70%);
 }
 
-header .logo #favorites-btn:hover::before {
+header #favorites-btn:hover::before {
   width: 180px;
   height: 180px;
   background: radial-gradient(circle, rgba(255, 107, 107, 0.25) 0%, transparent 70%);
 }
 
 /* تأثيرات الهوفر */
-header .logo #cart-btn:hover {
+header #cart-btn:hover {
   transform: translateY(-8px) scale(1.15);
   box-shadow: 
     0 15px 40px rgba(255, 152, 0, 0.35),
@@ -167,7 +173,7 @@ header .logo #cart-btn:hover {
   background: linear-gradient(145deg, #fff8f0 0%, #ffeed4 100%);
 }
 
-header .logo #favorites-btn:hover {
+header #favorites-btn:hover {
   transform: translateY(-8px) scale(1.15);
   box-shadow: 
     0 15px 40px rgba(255, 107, 107, 0.35),
@@ -177,15 +183,15 @@ header .logo #favorites-btn:hover {
 }
 
 /* تأثير الضغط */
-header .logo #cart-btn:active,
-header .logo #favorites-btn:active {
+header #cart-btn:active,
+header #favorites-btn:active {
   transform: translateY(-4px) scale(1.08);
   transition: all 0.1s ease;
 }
 
 /* تنسيق الأيقونات */
-header .logo #cart-btn .fas,
-header .logo #favorites-btn .fas {
+header #cart-btn .fas,
+header #favorites-btn .fas {
   position: relative;
   z-index: 1;
   font-size: 26px;
@@ -194,14 +200,14 @@ header .logo #favorites-btn .fas {
 }
 
 /* تأثيرات الأيقونات عند الهوفر */
-header .logo #cart-btn:hover .fas.fa-shopping-bag {
+header #cart-btn:hover .fas.fa-shopping-bag {
   transform: scale(1.25) rotate(-12deg);
   color: #ff9800;
   animation: cartShakeAdvanced 0.7s ease;
   filter: drop-shadow(0 4px 8px rgba(255, 152, 0, 0.4));
 }
 
-header .logo #favorites-btn:hover .fas.fa-heart {
+header #favorites-btn:hover .fas.fa-heart {
   transform: scale(1.25);
   color: #ff6b6b;
   animation: heartBeatAdvanced 0.8s ease;
@@ -268,8 +274,8 @@ header .logo #favorites-btn:hover .fas.fa-heart {
 }
 
 /* تصميم عداد الأيتمات */
-header .logo #cart-count,
-header .logo #favorites-count {
+header #cart-count,
+header #favorites-count {
   position: absolute;
   top: -6px;
   right: -6px;
@@ -323,7 +329,7 @@ header .logo #favorites-count {
 }
 
 /* عداد المفضلة بلون مختلف */
-header .logo #favorites-count {
+header #favorites-count {
   background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
   box-shadow: 
     0 4px 12px rgba(255, 107, 107, 0.5),
@@ -332,15 +338,15 @@ header .logo #favorites-count {
 }
 
 /* تأثير عند الهوفر على العداد */
-header .logo #cart-btn:hover #cart-count,
-header .logo #favorites-btn:hover #favorites-count {
+header #cart-btn:hover #cart-count,
+header #favorites-btn:hover #favorites-count {
   transform: scale(1.2) rotate(15deg);
   animation: none;
 }
 
 /* تأثير توهج خفيف */
-header .logo #cart-btn:hover,
-header .logo #favorites-btn:hover {
+header #cart-btn:hover,
+header #favorites-btn:hover {
   animation: gentleGlow 1.5s ease-in-out infinite;
 }
 
@@ -360,7 +366,7 @@ header .logo #favorites-btn:hover {
   }
 }
 
-header .logo #favorites-btn:hover {
+header #favorites-btn:hover {
   animation: gentleGlowPink 1.5s ease-in-out infinite;
 }
 
@@ -483,6 +489,14 @@ header nav a:hover i {
   order: 3;
 }
 
+.header-icons { 
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto; /* يدفعها إلى اليسار */
+  order: 4;
+}
+
 .hero {
   position: relative;
   overflow: hidden;
@@ -496,7 +510,6 @@ header nav a:hover i {
   width: 100%;
   height: 100%;
   position: relative;
-  background: #b89b6e;
 }
 
 .hero-image {
@@ -610,8 +623,7 @@ header nav a:hover i {
 }
 
 .hero .whatsapp-btn {
-  background: linear-gradient(135deg, var(--color-whatsapp) 0%, var(--color-whatsapp-dark) 100%);
-  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+  display: none; /* تم إخفاء زر الواتساب في الهيرو بناءً على الطلب */
 }
 
 .hero .whatsapp-btn:hover {
@@ -636,8 +648,14 @@ header nav a:hover i {
 }
 
 @keyframes cardFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes slideInFromLeft {
@@ -940,6 +958,7 @@ header nav a:hover i {
   transition: transform 0.3s, box-shadow 0.3s;
   animation: cardFadeIn 0.5s ease-in-out forwards;
   opacity: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* تمت إضافة ظل خفيف */
 }
 
 .product-card:nth-child(1) { animation-delay: 0.1s; }
@@ -957,30 +976,28 @@ header nav a:hover i {
 
 .product-card img {
   width: 100%;
-  height: 100%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
+  height: auto; /* Allow image to take its natural height */
+  object-fit: contain;
   border-radius: 8px;
 }
 
 .product-card .image-wrapper {
   width: 100%;
-  aspect-ratio: 1/1;
   position: relative;
   overflow: hidden;
   border-radius: 8px;
-  max-height: 200px;
 }
 
 .product-card h3 {
   font-size: 18px;
   margin: 10px 0;
   color: #452808;
+  font-family: 'Dubai', sans-serif; /* تم تغيير الخط هنا */
 }
 
 .product-card p {
   font-size: 16px;
-  color: #555;
+  color: #452808; /* تم تغيير لون السعر */
 }
 
 .product-card .buttons {
@@ -1066,14 +1083,14 @@ header nav a:hover i {
 /* تصميم احترافي لجميع الأزرار */
 .btn {
   position: relative;
-  background: linear-gradient(135deg, var(--color-sidebar-bg) 0%, #6d4c41 100%);
+  background: linear-gradient(145deg, var(--color-sidebar-bg), #6d4c41);
   color: white;
   padding: 12px;
   border-radius: 8px;
-  border: none;
+  border: none; /* تم إزالة border-top */
   font-size: 16px;
   font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 0.25s ease-out;
   min-height: 45px;
   display: flex;
   align-items: center;
@@ -1081,7 +1098,10 @@ header nav a:hover i {
   gap: 8px;
   overflow: hidden;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(124, 94, 66, 0.3);
+  box-shadow: 
+    0 5px 15px rgba(0,0,0,0.15), /* ظل سفلي */
+    inset 0 1px 1px rgba(255,255,255,0.2), /* إضاءة داخلية علوية */
+    inset 0 -1px 1px rgba(0,0,0,0.2); /* ظل داخلي سفلي */
 }
 
 .btn::before {
@@ -1103,14 +1123,17 @@ header nav a:hover i {
 }
 
 .btn:hover {
-  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-hover) 100%);
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 8px 30px rgba(255, 152, 0, 0.5);
-  animation: glow 2s ease-in-out infinite;
+  background: linear-gradient(145deg, var(--color-accent), var(--color-accent-hover));
+  transform: translateY(-3px);
+  box-shadow: 
+    0 8px 25px rgba(255, 152, 0, 0.3),
+    inset 0 1px 1px rgba(255,255,255,0.3),
+    inset 0 -1px 1px rgba(0,0,0,0.3);
 }
 
 .btn:active {
-  transform: translateY(-1px) scale(0.98);
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(0,0,0,0.2);
 }
 
 .btn i {
@@ -1118,7 +1141,7 @@ header nav a:hover i {
 }
 
 .btn:hover i {
-  transform: scale(1.15) rotate(5deg);
+  transform: scale(1.1) rotate(-5deg);
 }
 
 .btn:disabled {
@@ -1136,17 +1159,17 @@ header nav a:hover i {
 
 /* زر إضافة للسلة بتصميم خاص */
 .add-to-cart {
-  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  background: linear-gradient(145deg, #4CAF50, #45a049);
   box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
 }
 
 .add-to-cart:hover {
-  background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+  background: linear-gradient(145deg, #56bf5b, #45a049);
   box-shadow: 0 6px 25px rgba(69, 160, 73, 0.4);
 }
 
 .add-to-cart:hover i {
-  animation: cartShake 0.5s ease;
+  animation: cartShake 0.4s ease;
 }
 
 @keyframes cartShake {
@@ -1158,13 +1181,13 @@ header nav a:hover i {
 
 /* زر اطلب الآن */
 .order-now-btn {
-  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  background: linear-gradient(145deg, #2196F3, #1976D2);
   box-shadow: 0 4px 15px rgba(33, 150, 243, 0.3);
 }
 
 .order-now-btn:hover {
-  background: linear-gradient(135deg, #1976D2 0%, #1565C0 100%);
-  box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4);
+  background: linear-gradient(145deg, #47a7f5, #1976D2);
+  box-shadow: 0 6px 25px rgba(25, 118, 210, 0.5);
 }
 
 /* تصميم احترافي لزر المفضلة */
@@ -1291,7 +1314,7 @@ header nav a:hover i {
   }
 }
 
-.cart, .favorites {
+.favorites {
   position: fixed;
   right: -100%;
   top: 0;
@@ -1308,25 +1331,26 @@ header nav a:hover i {
   border-radius: 15px 0 0 15px;
 }
 
-.cart.open, .favorites.open {
+.favorites.open {
   right: 0;
 }
 
-.cart h2, .favorites h2 {
+.favorites h2 {
   font-size: 24px;
   margin-bottom: 20px;
   color: #6d4c41;
   border-bottom: 2px solid #6d4c41;
   padding-bottom: 10px;
   font-family: var(--font-main);
+  font-family: 'Dubai', sans-serif; /* تم تغيير الخط هنا */
 }
 
-.cart ul, .favorites ul {
+.favorites ul {
   list-style: none;
   margin-bottom: 20px;
 }
 
-.cart li, .favorites li {
+.favorites li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1342,17 +1366,18 @@ header nav a:hover i {
   overflow: hidden;
 }
 
-.cart li:hover, .favorites li:hover {
+.favorites li:hover {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.cart .item-name, .favorites .item-name {
+.favorites .item-name {
   cursor: pointer;
   color: var(--color-primary);
   text-decoration: underline;
+  font-family: 'Dubai', sans-serif; /* تم تغيير الخط هنا */
 }
 
-.cart .qty-btn, .favorites .qty-btn {
+.favorites .qty-btn {
   background: var(--color-sidebar-bg);
   color: var(--color-primary-reverse);
   border: none;
@@ -1365,19 +1390,11 @@ header nav a:hover i {
   transition: background 0.3s;
 }
 
-.cart .qty-btn:hover, .favorites .qty-btn:hover {
+.favorites .qty-btn:hover {
   background: var(--color-accent);
 }
 
-.cart .total {
-  font-weight: bold;
-  margin: 20px 0;
-  font-size: 25px;
-  color: #6d4c41;
-  font-family: var(--font-main);
-}
-
-.cart button, .favorites button {
+.favorites button {
   width: 100%;
   padding: 14px;
   margin: 10px 0;
@@ -1391,19 +1408,19 @@ header nav a:hover i {
   font-family: var(--font-main);
 }
 
-.cart button:hover, .favorites button:hover {
+.favorites button:hover {
   background: var(--color-accent);
 }
 
-.cart #clear-cart, .favorites #clear-favorites {
+.favorites #clear-favorites {
   background: #ff4444;
 }
 
-.cart #clear-cart:hover, .favorites #clear-favorites:hover {
+.favorites #clear-favorites:hover {
   background: #e63939;
 }
 
-.cart li button.remove, .favorites li button.remove {
+.favorites li button.remove {
   background: none;
   color: #ff4444;
   font-weight: bold;
@@ -1411,21 +1428,7 @@ header nav a:hover i {
   font-size: 18px;
 }
 
-#order-form input {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--color-primary);
-  font-size: 16px;
-  font-family: var(--font-main);
-}
-
-#order-form button {
-  font-size: 18px;
-}
-
-.cart:empty::after, .favorites:empty::after {
+.favorites:empty::after {
   content: 'القائمة فارغة';
   display: flex;
   flex-direction: column;
@@ -1438,7 +1441,7 @@ header nav a:hover i {
   margin: 20px 0;
 }
 
-.cart:empty::before, .favorites:empty::before {
+.favorites:empty::before {
   content: '\e900';
   font-family: 'sallaicons';
   font-size: 40px;
@@ -1446,7 +1449,7 @@ header nav a:hover i {
   margin-bottom: 10px;
 }
 
-.cart:empty + .btn--outline-primary, .favorites:empty + .btn--outline-primary {
+.favorites:empty + .btn--outline-primary {
   border: 1px solid var(--color-primary);
   border-radius: 9999px;
   color: var(--color-primary);
@@ -1456,21 +1459,21 @@ header nav a:hover i {
   margin-top: 10px;
 }
 
-.cart:empty + .btn--outline-primary:hover, .favorites:empty + .btn--outline-primary:hover {
+.favorites:empty + .btn--outline-primary:hover {
   background: var(--color-primary-light);
   color: var(--color-primary-reverse);
 }
 
-.cart::-webkit-scrollbar, .favorites::-webkit-scrollbar {
+.favorites::-webkit-scrollbar {
   width: 6px;
 }
 
-.cart::-webkit-scrollbar-thumb, .favorites::-webkit-scrollbar-thumb {
+.favorites::-webkit-scrollbar-thumb {
   background: var(--color-primary);
   border-radius: 4px;
 }
 
-.cart::-webkit-scrollbar-thumb:hover, .favorites::-webkit-scrollbar-thumb:hover {
+.favorites::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary-light);
 }
 
@@ -1646,6 +1649,38 @@ header nav a:hover i {
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+/* --- تحسينات معرض الصور --- */
+
+/* حاوية الصورة الرئيسية لجعلها قابلة للتكبير */
+.product-gallery {
+  position: relative;
+}
+
+/* حاوية التكبير التي ستظهر بجانب الصورة */
+.img-zoom-result {
+  position: absolute;
+  left: 105%; /* تظهر على يسار الصورة الرئيسية */
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ddd;
+  background-repeat: no-repeat;
+  z-index: 100;
+  display: none; /* مخفية بشكل افتراضي */
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  border-radius: 8px;
+}
+
+/* العدسة التي تظهر فوق الصورة عند التمرير */
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  width: 80px; /* حجم العدسة */
+  height: 80px;
+  background-color: rgba(255,255,255,0.4);
+  cursor: crosshair;
+}
 
 .product-details-content {
   display: flex;
@@ -1656,6 +1691,7 @@ header nav a:hover i {
 .product-gallery {
   flex: 1;
   min-width: 300px;
+  position: relative; /* ضروري لتحديد موضع نافذة التكبير */
 }
 
 .main-image {
@@ -1682,12 +1718,15 @@ header nav a:hover i {
   object-fit: cover;
   border-radius: 5px;
   cursor: pointer;
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
+  border: 3px solid transparent; /* زيادة سمك الإطار */
+  transition: all 0.3s ease; /* حركة أكثر سلاسة */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .thumbnail:hover, .thumbnail.active {
   border-color: var(--color-accent);
+  transform: scale(1.05); /* تكبير بسيط عند التمرير أو الاختيار */
+  box-shadow: 0 4px 10px rgba(255, 152, 0, 0.3);
 }
 
 .video-container {
@@ -1714,6 +1753,7 @@ header nav a:hover i {
   font-size: 28px;
   margin-bottom: 15px;
   color: #452808;
+  font-family: 'Dubai', sans-serif; /* تم تغيير الخط هنا */
   border-bottom: 2px solid #6d4c41;
   padding-bottom: 10px;
 }
@@ -1843,13 +1883,38 @@ footer .social-links {
 
 footer .social-icon {
   font-size: 22px;
-  color: #ddd;
   transition: color 0.3s, transform 0.3s;
+  color: #ddd; /* لون افتراضي للأيقونات التي ليس لها لون محدد */
 }
 
 footer .social-icon:hover {
-  color: var(--color-accent);
   transform: scale(1.2);
+  filter: brightness(1.2); /* زيادة طفيفة في السطوع عند التمرير */
+}
+
+/* --- الألوان الحقيقية لوسائل التواصل الاجتماعي --- */
+footer .fa-facebook-f {
+  color: #1877F2; /* Facebook Blue */
+}
+
+footer .fa-twitter {
+  color: #1DA1F2; /* Twitter Blue */
+}
+
+footer .fa-instagram {
+  color: #C13584; /* Instagram - More accurate purple/pink */
+}
+
+footer .fa-whatsapp {
+  color: #25D366; /* WhatsApp Green */
+}
+
+footer .fa-youtube {
+  color: #FF0000; /* YouTube Red */
+}
+
+footer .fa-tiktok {
+  color: #000000; /* TikTok Black */
 }
 
 footer #admin-access-btn {
@@ -1962,7 +2027,7 @@ footer #admin-access-btn {
 }
 
 .discounted-price {
-  color: #4CAF50;
+  color: #452808; /* تم تغيير لون السعر بعد الخصم */
   font-weight: bold;
   font-size: 18px;
   display: block;
@@ -2089,7 +2154,7 @@ footer #admin-access-btn {
   font-size: 18px;
   margin-bottom: 10px;
   color: #452808;
-  font-family: 'Amiri', serif;
+  font-family: 'Dubai', sans-serif; /* تم تغيير الخط هنا */
 }
 
 .card-content p {
@@ -2121,322 +2186,100 @@ footer #admin-access-btn {
   font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  .products-container {
-    flex-direction: column;
-  }
+/* زر العودة للأعلى */
+#back-to-top-btn {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  left: 30px; /* تم وضعه على اليسار لعدم التداخل مع عناصر أخرى */
+  z-index: 999;
+  border: none;
+  outline: none;
+  background-color: var(--color-accent);
+  color: white;
+  cursor: pointer;
+  padding: 0;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  font-size: 22px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  animation: fadeInUp 0.3s ease;
+}
 
-  .filters {
-    width: 100%;
-    margin-bottom: 20px;
-    position: relative;
-    top: 0;
-    background: var(--color-sidebar-bg);
-    border-radius: 8px;
-    padding: 15px;
-  }
+#back-to-top-btn:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+}
 
-  .filters h3 {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* تعديل لصفحة الفاتورة لضمان عدم ظهور الزر عند الطباعة */
+@media print {
+  #back-to-top-btn {
+    display: none !important;
   }
+}
 
-  .filters h3::after {
-    content: '\f078';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    color: var(--color-sidebar-text);
-    transition: transform 0.3s;
-  }
-
-  .filters.collapsed h3::after {
-    transform: rotate(180deg);
-  }
-
-  .filters.collapsed .filter-group,
-  .filters.collapsed #reset-filters,
-  .filters.collapsed .filter-count {
-    display: none;
-  }
-
-  .products {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  }
-
-  .products-management-grid {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .card-actions {
-    flex-direction: column;
-  }
-
-  .card-actions .btn {
-    width: 100%;
-  }
-
-  header {
-    flex-direction: column;
-    align-items: center;
-    padding: 8px;
-    position: relative;
-  }
-
-  .contact-info {
-    align-items: center;
-    margin: 8px 0;
-    margin-right: 0;
-    font-size: 12px;
-  }
-
-  header .logo {
-    font-size: 32px;
-    text-align: center;
-    width: 100%;
-    margin-bottom: 10px;
-    direction: ltr;
-  }
-
-  header .phone, .vodafone-cash {
-    font-size: 14px;
-  }
-
-  header nav {
-    display: none;
-    width: 100%;
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
-  header nav a[aria-label] {
-    font-size: 26px;
-    padding: 6px 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    transition: transform 0.15s ease, opacity 0.15s ease;
-  }
-  header nav a[aria-label]:hover { transform: translateY(-3px); opacity: 0.95; }
-  header nav a[aria-label]:focus { outline: 2px dashed var(--color-accent); outline-offset: 2px; }
-
-  /* Icon button appearance */
-  header nav a i {
-    display: inline-block; /* ensure block layout */
-    width: 56px !important;
-    height: 56px !important;
-    line-height: 56px !important;
-    font-size: 20px !important;
-    text-align: center;
-    border-radius: 50% !important;
-    background: #ffffff !important; /* solid white by default */
-    color: var(--color-primary-dark) !important;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
-  }
-  header nav a:hover i { background: var(--color-accent); color: white; transform: scale(1.08); }
-  /* WhatsApp specific color */
-  /* Stronger WhatsApp styling (solid green, larger) */
-  header nav a[href*="wa.me"] i,
-  header nav a[title="واتساب"] i,
-  header nav a[aria-label*="واتساب"] i {
-    background: var(--color-whatsapp) !important;
-    color: #ffffff !important;
-    box-shadow: 0 4px 14px rgba(37, 211, 102, 0.18) !important;
-  }
-  header nav a[href*="wa.me"]:hover i,
-  header nav a[title="واتساب"]:hover i,
-  header nav a[aria-label*="واتساب"]:hover i {
-    background: var(--color-whatsapp-dark) !important; /* slightly darker on hover */
-    transform: scale(1.12) !important;
-  }
-
-  /* Clear, explicit selector for WhatsApp nav button to make it easy to adjust */
-  .nav-whatsapp i {
-    background: var(--color-whatsapp) !important; /* WhatsApp green */
-    color: #ffffff !important;
-    box-shadow: 0 6px 18px rgba(37, 211, 102, 0.18) !important;
-  }
-  .nav-whatsapp:hover i { background: var(--color-whatsapp-dark) !important; transform: scale(1.14) !important; }
-
-  /* Make header icons even larger (desktop) */
-  @media (min-width: 900px) {
-    header nav a i {
-      width: 68px !important;
-      height: 68px !important;
-      line-height: 68px !important;
-      font-size: 26px !important;
-    }
-  }
-  header nav a[title] { position: relative; }
-  header nav a[title]:hover::after {
-    content: attr(title);
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
-  }
-
-  header nav.open {
-    display: flex;
-  }
-
-  header nav a {
-    font-size: 14px;
-    padding: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .nav-toggle {
-    display: block;
-    position: absolute;
-    left: 15px;
-    top: 15px;
-  }
-
-  .hero {
-    height: 300px;
-  }
-
-  .hero .hero-text h1 {
-    font-size: 24px;
-    padding-bottom: 6px;
-  }
-
-  .hero .hero-text p {
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-
-  .hero .hero-btn {
-    font-size: 14px;
-    padding: 8px 16px;
-    min-width: 100px;
-  }
-
-  .product-card img {
-    width: 100%;
-    height: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 6px;
-  }
-
-  .product-card .image-wrapper {
-    width: 100%;
-    aspect-ratio: 1/1;
-    position: relative;
-    overflow: hidden;
-    border-radius: 6px;
-    max-height: 160px;
-  }
-
-  .product-card h3 {
-    font-size: 16px;
-  }
-
-  .product-card p {
-    font-size: 14px;
-  }
-
-  .btn {
-    font-size: 14px;
-    padding: 10px;
-  }
-
+/* --- تحسينات صفحة تفاصيل المنتج على الموبايل --- */
+@media (max-width: 768px) { /* للأجهزة اللوحية والهواتف الكبيرة */
   .product-details-container {
-    margin: 15px;
-    padding: 15px;
+    padding: 10px;
+    margin: 10px auto; /* تقليل الهامش الخارجي */
+  }
+
+  .product-details-content {
+    flex-direction: column; /* عرض العناصر فوق بعضها */
+    gap: 15px; /* تقليل المسافة بين العناصر */
   }
 
   .main-image {
-    height: 300px;
+    height: 250px; /* تقليل ارتفاع الصورة الرئيسية أكثر */
   }
 
-  .modal-content {
-    width: 100%;
+  .product-title {
+    font-size: 22px; /* تصغير حجم عنوان المنتج أكثر */
+    margin-bottom: 10px; /* تعديل الهامش السفلي */
   }
 
-  .product-video {
-    height: 150px;
+  .product-description {
+    font-size: 15px; /* تصغير حجم خط الوصف */
+    margin-bottom: 15px;
   }
 
-  .orders-section {
-    padding: 15px;
+  .product-price {
+    font-size: 20px; /* تصغير حجم خط السعر */
   }
 
-  .orders-table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
+  .product-discount {
+    font-size: 18px; /* تصغير حجم خط الخصم */
   }
 
-  .orders-controls {
-    flex-direction: column;
-    align-items: stretch;
+  .quantity-control {
+    margin-bottom: 15px; /* تعديل الهامش السفلي */
   }
 
-  .product-card .quantity-control button {
-    min-width: 25px;
-    min-height: 25px;
-    font-size: 12px;
+  .quantity-control span {
+    font-size: 18px; /* تصغير حجم خط الكمية */
   }
 
-  .product-card .quantity-control span {
-    font-size: 14px;
-    min-width: 25px;
+  .product-actions {
+    flex-direction: column; /* جعل الأزرار تتكدس عمودياً */
+    gap: 10px; /* مسافة بين الأزرار المتكدسة */
   }
-  /* تحسين أيقونات السلة والمفضلة في الهيدر */
-.logo a#cart-btn,
-.logo a#favorites-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  margin: 0 10px;
-  border-radius: 50%;
-  background: #f5f5f5;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: #5a3921;
-}
 
-.logo a#cart-btn:hover,
-.logo a#favorites-btn:hover {
-  background: #5a3921;
-  color: #fff;
-  transform: scale(1.1);
-}
+  .product-actions .btn {
+    width: 100%; /* جعل الأزرار تأخذ عرض كامل */
+    flex-grow: unset; /* إزالة flex-grow لتجنب التمدد غير المرغوب فيه */
+  }
 
-.logo a#cart-btn i,
-.logo a#favorites-btn i {
-  font-size: 20px;
-}
+  .thumbnail-container {
+    padding: 0; /* إزالة الهامش الداخلي إذا كان يسبب مشاكل */
+    justify-content: center; /* توسيط الصور المصغرة */
+  }
 
-#cart-count,
-#favorites-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background: #ff6b6b;
-  color: #fff;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: bold;
-}
+  /* إخفاء خاصية تكبير الصورة على الموبايل لأنها غير عملية */
+  .img-zoom-result, .img-zoom-lens {
+    display: none !important;
+  }
 }

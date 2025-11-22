@@ -440,7 +440,7 @@ async function exportOrdersToPDF() {
 // Version control for products data لازم اعدله للتحديث
 const DATA_VERSION = "1.4";
 let productsData;
-let cartData = JSON.parse(localStorage.getItem('mahfourCart')) || [];
+let cartData = JSON.parse(localStorage.getItem('mahfoor_cart')) || []; // Use the new cart's localStorage key
 let favoritesData = JSON.parse(localStorage.getItem('mahfourFavorites')) || [];
 
 // Initialize products data
@@ -577,33 +577,12 @@ function addToFavorites(productId) {
       timer: 1500
     });
   }
-  localStorage.setItem('mahfourFavorites', JSON.stringify(favoritesData));
-  renderFavorites();
+  localStorage.setItem('mahfourFavorites', JSON.stringify(favoritesData)); // This was already correct
   updateFavoritesCount();
   renderProducts();
   if (window.location.pathname.includes('product-details.html')) {
     setupProductDetails();
   }
-}
-
-// Render favorites
-function renderFavorites() {
-  const favoritesContainer = document.getElementById('favorites');
-  const favoritesItems = document.querySelector('.favorites-items');
-  if (!favoritesContainer || !favoritesItems) return;
-  favoritesItems.innerHTML = '';
-  favoritesData.forEach(item => {
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <img src="${item.img}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
-      <span class="item-name" data-id="${item.id}">${item.name} (${item.code})</span>
-      <span>${item.price} جنيه</span>
-      <button class="remove" data-id="${item.id}">×</button>
-    `;
-    favoritesItems.appendChild(li);
-  });
-  favoritesContainer.classList.toggle('empty', favoritesData.length === 0);
-  updateFavoritesCount();
 }
 
 // Update favorites count
@@ -627,7 +606,6 @@ function clearFavorites() {
     if (result.isConfirmed) {
       favoritesData = [];
       localStorage.setItem('mahfourFavorites', JSON.stringify(favoritesData));
-      renderFavorites();
       renderProducts();
       if (window.location.pathname.includes('product-details.html')) {
         setupProductDetails();
@@ -654,23 +632,23 @@ function addToCart(productId, quantity = 1) {
       timer: 2000
     });
     return;
-  }
+  } 
   const discountedPrice = product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price;
   const existingItem = cartData.find(item => item.id === productId);
   if (existingItem) {
-    existingItem.quantity += quantity;
+    existingItem.qty += quantity;
   } else {
     cartData.push({
       id: productId,
       name: product.name,
       code: product.code,
       price: discountedPrice,
-      quantity: quantity,
-      img: product.img
+      qty: quantity, // Use 'qty' to match the new cart
+      image: product.img // Use 'image' to match the new cart
     });
   }
-  localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-  updateCart();
+  localStorage.setItem('mahfoor_cart', JSON.stringify(cartData)); // Save to the new cart's key
+  updateCartCount(); // Only update the counter, no need to render the old sidebar
   Swal.fire({
     icon: 'success',
     title: 'تمت الإضافة',
@@ -680,45 +658,16 @@ function addToCart(productId, quantity = 1) {
   });
 }
 
-// Update cart
-function updateCart() {
-  const cart = document.getElementById('cart');
-  const cartItems = document.querySelector('.cart-items');
+// Update cart counter in the header
+function updateCartCount() {
   const cartCount = document.getElementById('cart-count');
-  const cartTotal = document.getElementById('cart-total');
-  if (!cart || !cartItems || !cartCount || !cartTotal) return;
-  cartItems.innerHTML = '';
-  let total = 0;
+  if (!cartCount) return;
+
   let count = 0;
   cartData.forEach(item => {
-    const product = productsData.find(p => p.id === item.id);
-    if (!product) return;
-    count += item.quantity;
-    total += item.price * item.quantity;
-    const li = document.createElement('li');
-    li.innerHTML = `
-      <img src="${item.img}" alt="${item.name}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;">
-      <span class="item-name" data-id="${item.id}">${item.name} (${item.code})</span>
-      <span>${item.price.toFixed(2)} جنيه × ${item.quantity}</span>
-      <div>
-        <button class="qty-btn minus" data-id="${item.id}">-</button>
-        <span class="cart-quantity">${item.quantity}</span>
-        <button class="qty-btn plus" data-id="${item.id}">+</button>
-        <button class="remove" data-id="${item.id}">×</button>
-      </div>
-    `;
-    cartItems.appendChild(li);
+    count += item.qty;
   });
   cartCount.textContent = count;
-  cartTotal.textContent = total.toFixed(2);
-  // update customer points display if phone input exists
-  const phoneInput = document.getElementById('phone-number');
-  if (phoneInput && phoneInput.value) showCustomerPoints(phoneInput.value.trim());
-}
-
-// Render cart
-function renderCart() {
-  updateCart();
 }
 
 // Display customer's points balance in the cart when they type their phone number
@@ -743,112 +692,6 @@ function showCustomerPoints(phone) {
       const approx = (Math.floor(pts/100)*3).toFixed(2);
       node.textContent = `رصيد النقاط: ${pts} نقطة — قيمة تقريبية: ${approx} جنيه`;
     }
-  });
-}
-
-// Clear cart
-function clearCart() {
-  Swal.fire({
-    title: 'هل أنت متأكد؟',
-    text: 'سيتم مسح جميع العناصر من السلة!',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonText: 'نعم، امسح السلة',
-    cancelButtonText: 'إلغاء'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      cartData = [];
-      localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-      updateCart();
-      Swal.fire({
-        icon: 'success',
-        title: 'تم مسح السلة',
-        showConfirmButton: false,
-        timer: 1500
-      });
-    }
-  });
-}
-
-// Order via WhatsApp
-function orderViaWhatsApp() {
-  const fullName = document.getElementById('full-name').value.trim();
-  const address = document.getElementById('address').value.trim();
-  const locationLink = document.getElementById('location-link').value.trim();
-  const phoneNumber = document.getElementById('phone-number').value.trim();
-  if (!fullName || !address || !phoneNumber) {
-    Swal.fire({
-      icon: 'error',
-      title: 'بيانات غير مكتملة',
-      text: 'يرجى ملء جميع الحقول المطلوبة.',
-      showConfirmButton: false,
-      timer: 2000
-    });
-    return;
-  }
-  if (!/^\d{11}$/.test(phoneNumber)) {
-    Swal.fire({
-      icon: 'error',
-      title: 'رقم هاتف غير صحيح',
-      text: 'يرجى إدخال رقم هاتف مكون من 11 رقمًا.',
-      showConfirmButton: false,
-      timer: 2000
-    });
-    return;
-  }
-  let message = `*طلب جديد من متجر MAHFOOR CNC*\n\n`;
-  message += `*الاسم:* ${fullName}\n`;
-  message += `*العنوان:* ${address}\n`;
-  if (locationLink) message += `* لوكيشن استلام الاوردر:* ${locationLink}\n`;
-  message += `*رقم الهاتف:* ${phoneNumber}\n\n`;
-  message += `*المنتجات:*\n`;
-  let total = 0;
-  cartData.forEach(item => {
-    const product = productsData.find(p => p.id === item.id);
-    if (product) {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-      message += `- ${item.name}\n كود المنتج: ${item.code}\n ${item.quantity} × ${item.price.toFixed(2)} جنيه = ${itemTotal.toFixed(2)} جنيه\n`;
-    }
-  });
-  message += `\n*الإجمالي:* ${total.toFixed(2)} جنيه`;
-  const encodedMessage = encodeURIComponent(message);
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-  const order = {
-    id: Date.now(),
-    date: new Date().toLocaleString('ar-EG'),
-    ts: Date.now(),
-    details: message,
-    status: 'قيد الانتظار'
-  };
-  let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
-  orders.push(order);
-  localStorage.setItem('mahfourOrders', JSON.stringify(orders));
-  // update admin stats immediately
-  try { updateStats(); } catch (e) { console.warn('updateStats failed', e); }
-  // Create pending points entry (1 point per 1 جنيه). Store phone and customer name with points but require admin confirmation.
-  try {
-    const points = Math.round(total);
-    const phone = phoneNumber;
-    const customerName = fullName || '';
-    if (points > 0) {
-      const pending = JSON.parse(localStorage.getItem('mahfourPendingPoints')) || [];
-      pending.push({ orderId: order.id, phone, name: customerName, points, amount: total.toFixed(2), date: order.date });
-      localStorage.setItem('mahfourPendingPoints', JSON.stringify(pending));
-    }
-  } catch (e) {
-    console.warn('Failed to save pending points', e);
-  }
-  cartData = [];
-  localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-  updateCart();
-  window.open(whatsappUrl, '_blank');
-  Swal.fire({
-    icon: 'success',
-    title: 'تم إرسال الطلب',
-    text: 'سيتم توجيهك إلى واتساب لتأكيد الطلب.',
-    showConfirmButton: false,
-    timer: 2000
   });
 }
 
@@ -944,25 +787,44 @@ function orderNowViaWhatsApp(productId, quantity) {
 }
 
 // Render orders
-function renderOrders(orders = JSON.parse(localStorage.getItem('mahfourOrders')) || []) {
+function renderOrders(ordersToRender) {
+  const allOrders = ordersToRender || JSON.parse(localStorage.getItem('mahfourOrders')) || [];
   const ordersList = document.getElementById('orders-list');
   if (!ordersList) return;
   ordersList.innerHTML = '';
 
-  if (!orders || orders.length === 0) {
-    ordersList.innerHTML = '<p>لا توجد طلبات حاليًا.</p>';
+  if (!allOrders || allOrders.length === 0) {
+    ordersList.innerHTML = '<tr><td colspan="5" style="text-align:center; padding:20px;">لا توجد طلبات حاليًا.</td></tr>';
     return;
   }
 
-  orders.forEach(order => {
+  // Helper to extract data from order details
+  const extractData = (details) => {
+    const nameMatch = details.match(/\*الاسم:\* (.+)/);
+    const totalMatch = details.match(/\*الإجمالي:\* ([\d.]+) جنيه/);
+    const productsMatch = details.match(/\*المنتجات:\*([\s\S]*?)\n\n\*الإجمالي:/) || details.match(/\*المنتج:\*([\s\S]*?)\n\n\*الإجمالي:/);
+
+    return {
+      customerName: nameMatch ? nameMatch[1].trim() : 'غير محدد',
+      total: totalMatch ? parseFloat(totalMatch[1]).toFixed(2) : '0.00',
+      products: productsMatch ? productsMatch[1].trim().replace(/\n/g, '<br>') : 'تفاصيل غير متوفرة'
+    };
+  };
+
+  allOrders.forEach(order => {
+    const { customerName, total, products } = extractData(order.details);
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td>${order.id}</td>
-      <td>${order.date}</td>
-      <td><pre>${order.details}</pre></td>
+      <td>${customerName}</td>
+      <td><div style="font-size:13px; max-height: 80px; overflow-y:auto;">${products}</div></td>
+      <td>${total} ج.م</td>
       <td>
-        <button class="action-btn delete-order" data-id="${order.id}">حذف</button>
+        <span class="availability-badge" style="background: ${order.status === 'قيد الانتظار' ? '#f39c12' : '#27ae60'};">
+          ${order.status}
+        </span>
       </td>
+      <!-- تم إزالة عمود الإجراءات وزر الحذف -->
     `;
     ordersList.appendChild(tr);
   });
@@ -1095,7 +957,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isCollapsed) {
           ordersWrap.classList.remove('collapsed');
           ordersWrap.style.maxHeight = ordersWrap.scrollHeight + 'px';
-          toggleOrdersBtn.innerHTML = '<i class="fas fa-chevron-up"></i> إخفاء السجل';
+          toggleOrdersBtn.innerHTML = '<i class="fas fa-chevron-up"></i> إخفاء السجل'; // Render orders when opening
         } else {
           ordersWrap.classList.add('collapsed');
           ordersWrap.style.maxHeight = '0px';
@@ -1124,6 +986,14 @@ function setupProductDetails() {
     ? `<span class="original-price">${product.price} جنيه</span><span class="discounted-price">${discountedPrice} جنيه</span>`
     : `<span>${product.price} جنيه</span>`;
   const isInFavorites = favoritesData.some(fav => fav.id === product.id);
+
+  // --- إضافة حاوية لنافذة التكبير ---
+  const gallery = document.querySelector('.product-gallery');
+  const zoomResult = document.createElement('div');
+  zoomResult.id = 'zoom-result';
+  zoomResult.className = 'img-zoom-result';
+  if (gallery) gallery.appendChild(zoomResult);
+
   document.getElementById('product-name').textContent = product.name;
   document.getElementById('product-description').textContent = product.details;
   document.getElementById('product-price').innerHTML = priceDisplay;
@@ -1251,6 +1121,9 @@ function setupProductDetails() {
   });
   setupImageGallery(product.images);
   setupRatingSystem(product.id);
+
+  // --- تفعيل خاصية التكبير ---
+  enableImageZoom('main-image', 'zoom-result');
 }
 
 // Setup image gallery
@@ -1741,17 +1614,22 @@ function renderAdminProducts() {
     const s = stats[code] || { totalQty: 0, totalRevenue: 0, monthlyQty: 0, monthlyRevenue: 0 };
     const card = document.createElement('div');
     card.className = 'admin-product-card';
+    const price = prod.discount > 0 ? (prod.price * (1 - prod.discount / 100)).toFixed(2) : prod.price;
+    const availabilityClass = prod.available ? 'available' : 'unavailable';
+    const availabilityText = prod.available ? 'متوفر' : 'غير متوفر';
+
     card.innerHTML = `
-      <img src="${prod.img}" alt="${prod.name}">
+      <div class="image-wrapper" style="height: 200px; overflow: hidden;"><img src="${prod.img}" alt="${prod.name}" style="width: 100%; height: 100%; object-fit: cover;"></div>
       <div class="admin-product-info">
-        <h4>${prod.name} <small style="color:#999; font-weight:600;">(${prod.code})</small></h4>
-        <div class="admin-product-meta">${prod.details || ''}</div>
-        <div class="admin-product-stats">
-          <div class="admin-stat">الموجود: ${prod.available ? 'متوفر' : 'غير متوفر'}</div>
-          <div class="admin-stat">سعر الوحدة: ${prod.price} جنيه</div>
-          <div class="admin-stat">خلال هذا الشهر: ${s.monthlyQty || 0} قطعة — ${s.monthlyRevenue ? s.monthlyRevenue.toFixed(2) : '0'} ج</div>
-          <div class="admin-stat">إجمالي المبيعات: ${s.totalQty || 0} قطعة — ${s.totalRevenue ? s.totalRevenue.toFixed(2) : '0'} ج</div>
+        <h4 style="padding: 15px 15px 0; margin: 0; color: var(--admin-primary);">${prod.name} <small style="color:#999; font-weight:600;">(${prod.code})</small></h4>
+        <div class="admin-product-meta" style="padding: 5px 15px 15px; color: var(--admin-text-light); font-size: 0.9em;">
+          <span class="availability-badge ${availabilityClass}" style="background: ${prod.available ? '#27ae60' : '#e74c3c'}; color: white; padding: 2px 8px; border-radius: 6px; font-size: 0.8em;">${availabilityText}</span>
+          - <strong>${price} جنيه</strong>
         </div>
+      </div>
+      <div class="admin-product-stats">
+        <div class="admin-stat"><strong>خلال هذا الشهر:</strong> ${s.monthlyQty || 0} قطعة — ${s.monthlyRevenue ? s.monthlyRevenue.toFixed(2) : '0'} ج</div>
+        <div class="admin-stat"><strong>إجمالي المبيعات:</strong> ${s.totalQty || 0} قطعة — ${s.totalRevenue ? s.totalRevenue.toFixed(2) : '0'} ج</div>
       </div>
     `;
     grid.appendChild(card);
@@ -1890,40 +1768,68 @@ function openPointsAdminPanel() {
   }
 }
 
+// --- وظيفة زر العودة للأعلى ---
+function setupBackToTopButton() {
+  const backToTopBtn = document.getElementById('back-to-top-btn');
+  if (!backToTopBtn) return;
+
+  window.onscroll = function() {
+    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+      backToTopBtn.style.display = "block";
+    } else {
+      backToTopBtn.style.display = "none";
+    }
+  };
+
+  backToTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+}
+
+// --- وظيفة إخفاء الهيدر عند التمرير ---
+function setupHeaderScroll() {
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  let lastScrollTop = 0;
+  const headerHeight = header.offsetHeight;
+
+  window.addEventListener('scroll', function() {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop && scrollTop > headerHeight) {
+      // Scroll Down
+      header.classList.add('header-hidden');
+    } else {
+      // Scroll Up
+      header.classList.remove('header-hidden');
+    }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  }, false);
+}
+
 // Initialize
 function initialize() {
   initializeProducts();
+  cartData = JSON.parse(localStorage.getItem('mahfoor_cart')) || []; // Ensure cart is loaded from new key
   renderProducts();
-  renderCart();
-  renderFavorites();
+  updateCartCount();
   updateFavoritesCount();
   setupFilters();
+  setupBackToTopButton(); // تفعيل زر العودة للأعلى
+  setupHeaderScroll(); // تفعيل إخفاء الهيدر
   const cartBtn = document.getElementById('cart-btn');
-  const cart = document.getElementById('cart');
-  const closeCart = document.getElementById('close-cart');
-  const clearCartBtn = document.getElementById('clear-cart');
-  const orderCartBtn = document.getElementById('order-cart');
   const favoritesBtn = document.getElementById('favorites-btn');
-  const favorites = document.getElementById('favorites');
-  const closeFavorites = document.getElementById('close-favorites');
-  const clearFavoritesBtn = document.getElementById('clear-favorites');
   const navToggle = document.querySelector('.nav-toggle');
   const navMenu = document.getElementById('nav-menu');
-  if (cartBtn && cart && closeCart) {
+  if (cartBtn) {
     cartBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      cart.classList.toggle('open');
-      favorites.classList.remove('open');
+      window.location.href = 'cart_indix.html';
     });
-    closeCart.addEventListener('click', () => {
-      cart.classList.remove('open');
-    });
-  }
-  if (clearCartBtn) {
-    clearCartBtn.addEventListener('click', clearCart);
-  }
-  if (orderCartBtn) {
-    orderCartBtn.addEventListener('click', orderViaWhatsApp);
   }
   const phoneInput = document.getElementById('phone-number');
   const orderNowPhone = document.getElementById('order-now-phone-number');
@@ -1937,18 +1843,11 @@ function initialize() {
     orderNowPhone.addEventListener('input', (e) => showCustomerPoints(e.target.value.trim()));
     orderNowPhone.addEventListener('blur', (e) => showCustomerPoints(e.target.value.trim()));
   }
-  if (favoritesBtn && favorites && closeFavorites) {
+  if (favoritesBtn) {
     favoritesBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      favorites.classList.toggle('open');
-      cart.classList.remove('open');
+      window.location.href = 'favorites.html'; // توجيه المستخدم لصفحة المفضلة الجديدة
     });
-    closeFavorites.addEventListener('click', () => {
-      favorites.classList.remove('open');
-    });
-  }
-  if (clearFavoritesBtn) {
-    clearFavoritesBtn.addEventListener('click', clearFavorites);
   }
   if (navToggle && navMenu) {
     navToggle.addEventListener('click', () => {
@@ -1994,6 +1893,14 @@ function initialize() {
       const exportPdfBtn = document.getElementById('export-pdf-btn');
       if (exportXlsxBtn) exportXlsxBtn.addEventListener('click', exportOrdersToXLSX);
       if (exportPdfBtn) exportPdfBtn.addEventListener('click', exportOrdersToPDF);
+
+      // --- إضافة جديدة لزر الفاتورة ---
+      const createInvoiceBtn = document.getElementById('create-invoice-btn');
+      if (createInvoiceBtn) {
+        createInvoiceBtn.addEventListener('click', () => {
+          window.open('invoice.html', '_blank');
+        });
+      }
     // Render admin products list
     renderAdminProducts();
     // Toggle products panel
@@ -2048,7 +1955,7 @@ function initialize() {
         if (ordersWrap.classList.contains('collapsed')) {
           ordersWrap.classList.remove('collapsed');
           ordersWrap.style.maxHeight = ordersWrap.scrollHeight + 'px';
-          toggleOrdersBtn.innerHTML = '<i class="fas fa-chevron-up"></i> إخفاء السجل';
+          toggleOrdersBtn.innerHTML = '<i class="fas fa-chevron-up"></i> إخفاء السجل'; // Render orders when opening
           renderOrders();
         } else {
           ordersWrap.classList.add('collapsed');
@@ -2063,7 +1970,7 @@ function initialize() {
         const orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
         const filteredOrders = orders.filter(order =>
           order.id.toString().includes(searchTerm) ||
-          order.details.toLowerCase().includes(searchTerm)
+          order.details.toLowerCase().includes(searchTerm) || order.status.toLowerCase().includes(searchTerm)
         );
         renderOrders(filteredOrders);
       });
@@ -2099,7 +2006,8 @@ function initialize() {
       const quantitySpan = quantityControl.querySelector('.product-quantity');
       const quantity = parseInt(quantitySpan.textContent);
       addToCart(productId, quantity);
-      quantitySpan.textContent = '1';
+      quantitySpan.textContent = '1'; // إعادة تعيين العداد إلى 1 بعد الإضافة
+      return; // تمت إضافة هذا السطر لمنع تنفيذ الكود التالي بالخطأ
     }
     if (orderNowBtn) {
       const productId = parseInt(orderNowBtn.dataset.id);
@@ -2151,24 +2059,6 @@ function initialize() {
         window.location.href = `product-details.html?id=${productId}`;
       }
     }
-    if (minusBtn) {
-      const productId = parseInt(minusBtn.dataset.id);
-      const parent = minusBtn.closest('.quantity-control') || minusBtn.closest('li');
-      const quantitySpan = parent.querySelector('.quantity, .cart-quantity');
-      let quantity = parseInt(quantitySpan.textContent);
-      if (quantity > 1) {
-        quantity--;
-        quantitySpan.textContent = quantity;
-      }
-      if (parent.classList.contains('cart-items')) {
-        const item = cartData.find(i => i.id === productId);
-        if (item) {
-          item.quantity = quantity;
-          localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-          updateCart();
-        }
-      }
-    }
     if (plusBtn) {
       const productId = parseInt(plusBtn.dataset.id);
       const product = productsData.find(p => p.id === productId);
@@ -2183,77 +2073,31 @@ function initialize() {
         return;
       }
       const parent = plusBtn.closest('.quantity-control') || plusBtn.closest('li');
-      const quantitySpan = parent.querySelector('.quantity, .cart-quantity');
+      const quantitySpan = parent.querySelector('.product-quantity');
       let quantity = parseInt(quantitySpan.textContent);
       quantity++;
       quantitySpan.textContent = quantity;
-      if (parent.classList.contains('cart-items')) {
-        const item = cartData.find(i => i.id === productId);
-        if (item) {
-          item.quantity = quantity;
-          localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-          updateCart();
-        }
+    }
+    if (minusBtn) {
+      const productId = parseInt(minusBtn.dataset.id);
+      const product = productsData.find(p => p.id === productId);
+      if (!product.available) {
+        // No need for alert here as it's handled by other buttons
+        return;
+      }
+      const parent = minusBtn.closest('.quantity-control') || minusBtn.closest('li');
+      const quantitySpan = parent.querySelector('.product-quantity');
+      let quantity = parseInt(quantitySpan.textContent);
+      if (quantity > 1) {
+        quantity--;
+        quantitySpan.textContent = quantity;
       }
     }
     if (removeBtn) {
-      const productId = parseInt(removeBtn.dataset.id);
-      if (removeBtn.closest('.cart-items')) {
-        cartData = cartData.filter(item => item.id !== productId);
-        localStorage.setItem('mahfourCart', JSON.stringify(cartData));
-        updateCart();
-        Swal.fire({
-          icon: 'success',
-          title: 'تم الإزالة',
-          text: 'تم إزالة المنتج من السلة!',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      } else if (removeBtn.closest('.favorites-items')) {
-        favoritesData = favoritesData.filter(item => item.id !== productId);
-        localStorage.setItem('mahfourFavorites', JSON.stringify(favoritesData));
-        renderFavorites();
-        renderProducts();
-        if (window.location.pathname.includes('product-details.html')) {
-          setupProductDetails();
-        }
-        Swal.fire({
-          icon: 'success',
-          title: 'تم الإزالة',
-          text: 'تم إزالة المنتج من المفضلة!',
-          showConfirmButton: false,
-          timer: 1500
-        });
-      }
     }
     if (itemName) {
       const productId = parseInt(itemName.dataset.id);
       window.location.href = `product-details.html?id=${productId}`;
-    }
-    if (deleteOrderBtn) {
-      const orderId = parseInt(deleteOrderBtn.dataset.id);
-      Swal.fire({
-        title: 'هل أنت متأكد؟',
-        text: 'سيتم حذف هذا الطلب نهائيًا!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'نعم، احذف',
-        cancelButtonText: 'إلغاء'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          let orders = JSON.parse(localStorage.getItem('mahfourOrders')) || [];
-          orders = orders.filter(order => order.id !== orderId);
-          localStorage.setItem('mahfourOrders', JSON.stringify(orders));
-          renderOrders();
-          updateStats();
-          Swal.fire({
-            icon: 'success',
-            title: 'تم حذف الطلب',
-            showConfirmButton: false,
-            timer: 1500
-          });
-        }
-      });
     }
     if (editProductBtn) {
       const productId = parseInt(editProductBtn.dataset.id);
@@ -2276,5 +2120,9 @@ window.addEventListener('storage', (e) => {
     const orderNowPhone = document.getElementById('order-now-phone-number');
     if (phoneInput && phoneInput.value) showCustomerPoints(phoneInput.value.trim());
     if (orderNowPhone && orderNowPhone.value) showCustomerPoints(orderNowPhone.value.trim());
+  }
+  if (e.key === 'mahfoor_cart') {
+    cartData = JSON.parse(e.newValue) || [];
+    updateCartCount();
   }
 });
