@@ -1848,6 +1848,96 @@ header nav a:hover i {
   gap: 15px;
   flex-wrap: wrap;
 }
+/* --- تصميم قسم المشاركة --- */
+.share-section {
+  position: relative;
+  flex-grow: 1; /* لجعل الزر يأخذ مساحة متاحة */
+}
+
+.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #4A90E2, #357ABD);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    width: 100%; /* للحفاظ على العرض الكامل داخل الحاوية */
+}
+
+.share-btn i {
+    font-size: 18px;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    background: linear-gradient(135deg, #5BA4F0, #3E88D6);
+}
+
+.social-share-links {
+  position: absolute;
+  bottom: 110%; /* تظهر فوق الزر */
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  background: #fff;
+  padding: 10px 15px;
+  border-radius: 50px; /* شكل كبسولة */
+  box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: bottom center;
+}
+
+.social-share-links.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.share-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.share-link:hover {
+  transform: scale(1.2);
+}
+
+.share-link.whatsapp { background-color: #25D366; }
+.share-link.facebook { background-color: #1877F2; }
+.share-link.twitter { background-color: #1DA1F2; }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.telegram { background-color: #24A1DE; }
+.share-link.instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); }
+.share-link.copy-link { background-color: #607d8b; }
 
 .rating-section {
   text-align: center;

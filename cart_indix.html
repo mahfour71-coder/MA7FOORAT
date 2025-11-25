@@ -180,6 +180,23 @@
             transform: scale(1.1);
         }
 
+        /* تصميم زر نقل المنتج إلى المفضلة */
+        .move-to-favorites-btn {
+            background: transparent;
+            color: #8e44ad; /* لون بنفسجي للمفضلة */
+            border: none;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.5em; /* تصغير الأيقونة قليلاً لتناسب الشكل */
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .move-to-favorites-btn:hover {
+            background: #f4e8f7;
+            transform: scale(1.1) rotate(15deg); /* حركة دورانية عند التمرير */
+        }
         /* الإجمالي */
         .cart-summary {
             background: var(--cream-bg);
@@ -444,6 +461,7 @@
                         </div>
                     </div>
                     <button class="remove-btn" onclick="removeItem(${index})" title="إزالة المنتج"><i class="fas fa-trash-alt"></i></button>
+                    <button class="move-to-favorites-btn" onclick="moveItemToFavorites(${index})" title="نقل إلى المفضلة"><i class="fas fa-heart"></i></button>
                 `;
                 cartItems.appendChild(div);
             });
@@ -497,6 +515,45 @@
                     )
                 }
             })
+        }
+
+        // نقل منتج من السلة إلى المفضلة
+        function moveItemToFavorites(index) {
+            const itemToMove = cart[index];
+            if (!itemToMove) return;
+
+            let favorites = JSON.parse(localStorage.getItem('mahfourFavorites')) || [];
+            const productData = productsData.find(p => p.id === itemToMove.id);
+
+            // التأكد من أن المنتج غير موجود بالفعل في المفضلة
+            if (!favorites.some(fav => fav.id === itemToMove.id) && productData) {
+                favorites.push({
+                    id: productData.id,
+                    name: productData.name,
+                    code: productData.code,
+                    img: productData.img,
+                    price: productData.discount > 0 ? (productData.price * (1 - productData.discount / 100)).toFixed(2) : productData.price
+                });
+                localStorage.setItem('mahfourFavorites', JSON.stringify(favorites));
+                favoritesData = favorites; // تحديث المتغير العام لضمان تحديث العداد
+            }
+
+            // إزالة المنتج من السلة
+            cart.splice(index, 1);
+            localStorage.setItem('mahfoor_cart', JSON.stringify(cart));
+
+            // إعادة رسم السلة وتحديث العدادات
+            renderCart();
+            updateCartCount();
+            updateFavoritesCount();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'تم النقل!',
+                text: `تم نقل "${itemToMove.name}" إلى المفضلة بنجاح.`,
+                timer: 2000,
+                showConfirmButton: false
+            });
         }
 
         // هذه الدالة لم تعد ضرورية هنا

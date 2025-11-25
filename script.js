@@ -12,40 +12,18 @@ const productsDataDefault = [
   { 
     id: 1, 
     code: "101",
-    name: " علب مناديل خشبية", 
-    price: 165, 
+    name: " أباجورة \"اللوتس الخشبية\" السحرية ✨,", 
+    price: 465, 
     discount: 0, 
-    img: "https://i.postimg.cc/W4nRLDKp/photo.jpg", 
+    img: "https://i.postimg.cc/vHN8GnX1/1.jpg", 
     category: "ادوات منزلية", 
-    details: "علب مناديل خشبية", 
+    details: " زهرة اللوتس الخشبية السحرية ✨ أباجورة مصنوعة يدويًا من شرائح خشب طبيعي تتفتح وتضيّ المكان بضوء دافئ وهادي. تحفة ديكور + إضاءة في نفس الوقت. من الكومود للصالون.. بتخطف كل العيون ", 
     images: [
-      "https://i.postimg.cc/ydgThtFH/photo.jpg",
-      "https://i.postimg.cc/pXGY7Pqb/photo.jpg",
-      "https://i.postimg.cc/WbW6KsSK/photo-2.jpg",
-      "https://i.postimg.cc/wj1cYnbr/photo.jpg",
-      "https://i.postimg.cc/jdgQ9RZr/photo-2.jpg",
-      "https://i.postimg.cc/SNT75mDb/photo-4.jpg",
-      "https://i.postimg.cc/bNCHMq3h/photo-5.jpg",
-      "https://i.postimg.cc/90FRcqJm/photo.jpg",
-      "https://i.postimg.cc/Zn79nKMb/photo.jpg",
-      "https://i.postimg.cc/tJS1JCMp/photo-2.jpg",
-      "https://i.postimg.cc/FzWfzsBh/photo-3.jpg",
-      "https://i.postimg.cc/WzWDzbH2/photo-4.jpg",
-      "https://i.postimg.cc/nrRsrcP7/photo.jpg",
-      "https://i.postimg.cc/mkXck25k/photo-2.jpg",
-      "https://i.postimg.cc/wMftMTG7/photo-3.jpg",
-      "https://i.postimg.cc/qqbtqM5t/photo-4.jpg",
-      "https://i.postimg.cc/66Y4YY5m/photo.jpg",
-      "https://i.postimg.cc/fy23yTr7/photo-2.jpg",
-      "https://i.postimg.cc/SRTXRNv7/photo-3.jpg",
-      "https://i.postimg.cc/j2gW2dF4/photo-4.jpg",
-      "https://i.postimg.cc/gcNLNNkt/photo-5.jpg",
-      "https://i.postimg.cc/sfwGwwDk/photo.jpg",
-      "https://i.postimg.cc/xjtNttT7/photo-2.jpg",
-      "https://i.postimg.cc/3rn0nnJz/photo-3.jpg",
-      "https://i.postimg.cc/bY3S33wX/photo.jpg",
-      "https://i.postimg.cc/h4pQpptW/photo.jpg",
-      "https://i.postimg.cc/W4nRLDKp/photo.jpg"
+      "https://i.postimg.cc/yW4DYSyd/2.jpg",
+      "https://i.postimg.cc/gkmw53jB/Generated-Image-November-25-2025-11-38PM.png",
+      "https://i.postimg.cc/26n695Dr/Generated-Image-November-25-2025-11-38PM-(1).png",
+      "https://i.postimg.cc/9MHX9j75/Generated-Image-November-25-2025-11-38PM-(2).png",
+      "https://i.postimg.cc/BQnSHpXZ/Generated-Image-November-25-2025-11-41PM.png",
     ],
     dimensions: "20 × 30 سم",
     video: null,
@@ -54,37 +32,19 @@ const productsDataDefault = [
   { 
     id: 2, 
     code: "202",
-    name: " حامل موبايل", 
-    price: 65, 
+    name: " علبة مناديل خشب", 
+    price: 185, 
     discount: 0, 
-    img: "https://i.postimg.cc/d1PvR7XP/photo-4.jpg", 
-    category: "اكسسورات", 
-    details: " حامل موبايل وتابلت  ", 
+    img: "https://i.postimg.cc/QN2Lxq1z/sqimg-83403726.jpg", 
+    category: "ادوات منزلية", 
+    details: " علبة مناديل خشب زان طبيعي فاخرة مكتوب عليها «القهوة بلاون الشاي» بالخط الديواني المحفور ليزر. وجه قماش كتان رمادي أنيق – غطاء منزلق – تشطيب زيت طبيعي. بتدي لمسة فخامة وضحكة في نفس الوقت على أي ترابيزة. تناسب كل أنواع المناديل المربعة والمستطيلة    ", 
     images: [
-      "https://i.postimg.cc/QM6xpxD9/photo.jpg",
-      "https://i.postimg.cc/N0rBr8db/photo.jpg", 
-      "https://i.postimg.cc/fb0D0783/photo-2.jpg",
-      "https://i.postimg.cc/1zNsN0vc/photo-3.jpg",
-      "https://i.postimg.cc/SsFqLXPr/photo.jpg",
-      "https://i.postimg.cc/CKfSfCcs/photo-2.jpg",
-      "https://i.postimg.cc/8CrNrdZ4/photo-3.jpg",
-      "https://i.postimg.cc/yd4BhJGT/photo-4.jpg",
-      "https://i.postimg.cc/j50K6W1c/photo-5.jpg",
-      "https://i.postimg.cc/xCDYGkZg/photo-6.jpg",
-      "https://i.postimg.cc/W3GV5NLc/photo.jpg",
-      "https://i.postimg.cc/JnVm3yF9/photo-2.jpg",
-      "https://i.postimg.cc/bJc80G57/photo-3.jpg",
-      "https://i.postimg.cc/d1PvR7XP/photo-4.jpg",
-      "https://i.postimg.cc/nzbZKs5t/photo-5.jpg",
-      "https://i.postimg.cc/Y967drKw/photo-6.jpg",
-      "https://i.postimg.cc/ydmKL14W/photo.jpg",
-      "https://i.postimg.cc/50d15HGN/photo-2.jpg",
-      "https://i.postimg.cc/FRyvTr5v/photo-3.jpg",
-      "https://i.postimg.cc/50BJs4d4/photo-4.jpg",
-      "https://i.postimg.cc/7634KH8Z/photo-5.jpg",
-      "https://i.postimg.cc/26QY0kR5/photo-6.jpg",
-      "https://i.postimg.cc/rm1TfVX5/photo.jpg",
-      "https://i.postimg.cc/W3GV5NLc/photo.jpg"
+      "https://i.postimg.cc/4NyKssvh/Generated-Image-November-25-2025-11-51PM.png ",
+      "https://i.postimg.cc/bvcdxn7F/Generated-Image-November-25-2025-11-52PM.png ", 
+      "https://i.postimg.cc/YSKj6F5X/Generated-Image-November-25-2025-11-52PM-(1).png ",
+      "https://i.postimg.cc/d1J1XYtJ/Generated-Image-November-25-2025-11-54PM.png",
+      "https://i.postimg.cc/7L8b3zFK/Generated-Image-November-25-2025-11-54PM-(1).png ",
+      "https://i.postimg.cc/zfZ3Chsc/Generated-Image-November-25-2025-11-54PM-(2).png ",
     ],
     dimensions: "15 × 10 سم",
     video: null,
@@ -96,15 +56,13 @@ const productsDataDefault = [
     name: "مقلمة", 
     price: 55, 
     discount: 0, 
-    img: "https://i.postimg.cc/NFV7zcwj/photo.jpg", 
+    img: "https://i.postimg.cc/8CSM1xzc/Generated-Image-November-26-2025-12-08AM.png", 
     category: "ادوات مكتبية", 
     details: "  مقلمة اطفال ", 
     images: [
-      "https://i.postimg.cc/FRLjkc4h/photo.jpg",
-      "https://i.postimg.cc/KcJZgYZt/photo.jpg",
-      "https://i.postimg.cc/QxCjgrtF/photo.jpg",
-      "https://i.postimg.cc/15Xy0Ztf/photo-3.jpg",
-      "https://i.postimg.cc/NFV7zcwj/photo.jpg"
+      "https://i.postimg.cc/NMhGX2nv/Generated-Image-November-26-2025-12-16AM.png ",
+      "https://i.postimg.cc/brpzCc8K/Generated-Image-November-26-2025-12-18AM.png ",
+      "https://i.postimg.cc/VvmYGQ12/Generated-Image-November-26-2025-12-20AM.png ",
     ],
     dimensions: "15 × 15 سم",
     video: null,
@@ -222,7 +180,7 @@ const productsDataDefault = [
     ],
     dimensions: "25 × 35 سم",
     video: null,
-    available: false
+    available: true
   },
    { 
     id: 11, 
@@ -438,7 +396,7 @@ async function exportOrdersToPDF() {
   html2pdf().set(opt).from(container).save();
 }
 // Version control for products data لازم اعدله للتحديث
-const DATA_VERSION = "1.4";
+const DATA_VERSION = "1.8";
 let productsData;
 let cartData = JSON.parse(localStorage.getItem('mahfoor_cart')) || []; // Use the new cart's localStorage key
 let favoritesData = JSON.parse(localStorage.getItem('mahfourFavorites')) || [];
@@ -1122,6 +1080,65 @@ function setupProductDetails() {
   setupImageGallery(product.images);
   setupRatingSystem(product.id);
 
+  // --- إضافة قسم المشاركة ---
+  const productActions = document.querySelector('.product-actions');
+  if (productActions) {
+    const shareSection = document.createElement('div');
+    shareSection.className = 'share-section';
+    shareSection.innerHTML = `
+      <button class="btn share-btn">
+
+        <i class="fas fa-share-alt"></i> مشاركة المنتج
+      </button>
+      <div class="social-share-links">
+        <a href="#" class="share-link whatsapp" target="_blank" title="مشاركة عبر واتساب"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="share-link facebook" target="_blank" title="مشاركة عبر فيسبوك"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="share-link twitter" target="_blank" title="مشاركة عبر تويتر"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="share-link telegram" target="_blank" title="مشاركة عبر تيليجرام"><i class="fab fa-telegram-plane"></i></a>
+        <button class="share-link instagram" title="مشاركة عبر انستغرام"><i class="fab fa-instagram"></i></button>
+        <button class="share-link copy-link" title="نسخ الرابط العام"><i class="fas fa-link"></i></button>
+      </div>
+    `;
+    // إضافة زر المشاركة بعد الأزرار الأخرى
+    productActions.appendChild(shareSection);
+
+    const shareBtn = shareSection.querySelector('.share-btn');
+    const socialLinks = shareSection.querySelector('.social-share-links');
+
+    shareBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // منع إغلاق القائمة فورًا
+      socialLinks.classList.toggle('active');
+    });
+
+    // إغلاق القائمة عند الضغط في أي مكان آخر
+    document.addEventListener('click', (e) => {
+      if (!shareSection.contains(e.target)) {
+        socialLinks.classList.remove('active');
+      }
+    });
+
+    const productUrl = window.location.href;
+    const shareText = `شاهد هذا المنتج الرائع: ${product.name}`;
+
+    shareSection.querySelector('.share-link.whatsapp').href = `https://wa.me/?text=${encodeURIComponent(shareText + '\n' + productUrl)}`;
+    shareSection.querySelector('.share-link.facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(productUrl)}`;
+    shareSection.querySelector('.share-link.twitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(productUrl)}`;
+    shareSection.querySelector('.share-link.telegram').href = `https://t.me/share/url?url=${encodeURIComponent(productUrl)}&text=${encodeURIComponent(shareText)}`;
+
+    shareSection.querySelector('.copy-link').addEventListener('click', () => {
+      navigator.clipboard.writeText(productUrl).then(() => {
+        Swal.fire({ icon: 'success', title: 'تم نسخ الرابط!', showConfirmButton: false, timer: 1500 });
+        socialLinks.classList.remove('active');
+      });
+    });
+    shareSection.querySelector('.instagram').addEventListener('click', () => {
+      navigator.clipboard.writeText(productUrl).then(() => {
+        Swal.fire({ icon: 'info', title: 'تم نسخ الرابط', text: 'افتح انستغرام وقم بلصق الرابط في قصتك أو سيرتك الذاتية.', showConfirmButton: true });
+        socialLinks.classList.remove('active');
+      });
+    });
+  }
+
   // --- تفعيل خاصية التكبير ---
   enableImageZoom('main-image', 'zoom-result');
 }
@@ -1178,12 +1195,16 @@ function setupRatingSystem(productId) {
   }
   let userRatings = JSON.parse(localStorage.getItem(`user_ratings_${productId}`)) || {};
   function updateAverageRating() {
-    const validRatings = Object.values(userRatings).filter(rating => typeof rating === 'number' && rating >= 1 && rating <= 5);
-    const average = validRatings.length ? (validRatings.reduce((a, b) => a + b, 0) / validRatings.length).toFixed(1) : 0;
-    averageRating.textContent = `متوسط التقييم: ${average} نجوم (${validRatings.length} تقييمات)`;
+    if (averageRating) {
+      averageRating.textContent = ''; // إخفاء النص
+    }
+    // عرض تقييم المستخدم الحالي فقط
+    const currentUserRating = userRatings[userId];
     stars.forEach(star => star.classList.remove('active'));
-    for (let i = 0; i < Math.round(average); i++) {
-      stars[i].classList.add('active');
+    if (currentUserRating) {
+      for (let i = 0; i < currentUserRating; i++) {
+        stars[i].classList.add('active');
+      }
     }
   }
   stars.forEach(star => {
