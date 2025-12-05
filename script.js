@@ -1,4 +1,4 @@
-const whatsappNumber = "+201033662370";
+﻿const whatsappNumber = "+201033662370";
 // Password to allow forced clearing of all orders (change here if needed)
 const CLEAR_ORDERS_PASSWORD = "123";
 const ADMIN_PASSWORD = "22/7/2009";
@@ -1048,7 +1048,7 @@ function setupProductDetails() {
     document.getElementById('order-now-modal').style.display = 'flex';
     const orderProductName = document.getElementById('order-product-name');
     if (orderProductName) {
-      orderProductName.textContent = `${product.name} (${product.code})`;
+      orderProductName.textContent = `${product.name}`;
     }
     const submitOrderNowBtn = document.getElementById('submit-order-now');
     const closeOrderNowBtn = document.getElementById('close-order-now');
@@ -2049,7 +2049,7 @@ function initialize() {
       document.getElementById('order-now-modal').style.display = 'flex';
       const orderProductName = document.getElementById('order-product-name');
       if (orderProductName) {
-        orderProductName.textContent = `${product.name} (${product.code})`;
+        orderProductName.textContent = `${product.name}`;
       }
       const submitOrderNowBtn = document.getElementById('submit-order-now');
       const closeOrderNowBtn = document.getElementById('close-order-now');
@@ -2147,3 +2147,38 @@ window.addEventListener('storage', (e) => {
     updateCartCount();
   }
 });
+
+// ����� ������� �� �������� (Mobile Filter Toggle)
+// ��� ����� ���� ����� ���� ������ ������� ��� ��������
+function initMobileFilterToggle() {
+  const filters = document.querySelector('.filters');
+  if (!filters) return; // ��� ���� ����� �� �����ɡ ����
+  
+  const filtersHeader = filters.querySelector('h3');
+  if (!filtersHeader) return; // ��� ���� ����� ����
+
+  // ���� ���� (collapsed) ��������� ��� �������� ���
+  // ����� ��� ��� ������ ������ (��� ��� �� 768px)
+  if (window.innerWidth <= 768) {
+    filters.classList.add('collapsed');
+  }
+
+  // ��� ����� ��� ������� ���� ��� ���� ������
+  filtersHeader.addEventListener('click', () => {
+    filters.classList.toggle('collapsed');
+  });
+
+  // ��� ���� ��� �����ɡ ����� �� ������� ������ ��� ���������
+  window.addEventListener('resize', () => {
+    if (window.innerWidth > 768) {
+      filters.classList.remove('collapsed');
+    }
+  });
+}
+
+// ������ ������ ��� ����� ������
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initMobileFilterToggle);
+} else {
+  initMobileFilterToggle();
+}

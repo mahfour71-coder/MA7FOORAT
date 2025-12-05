@@ -1,4 +1,4 @@
-@media (max-width: 768px) {
+﻿@media (max-width: 768px) {
   .products-container {
     flex-direction: column;
     padding: 10px;
@@ -7,6 +7,7 @@
     /* إزالة الهامش الخارجي لتجنب الخروج عن الشاشة */
   }
 
+  /* تنسيق الفلاتر للموبايل */
   .filters {
     width: 100%;
     margin-bottom: 20px;
@@ -15,6 +16,23 @@
     background: var(--color-sidebar-bg);
     border-radius: 8px;
     padding: 15px;
+    overflow: hidden;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
+    order: 1;
+    /* تأكد من ظهور الفلاتر أولاً */
+  }
+
+  .products {
+    order: 2;
+    /* المنتجات تظهر بعد الفلاتر */
+    grid-template-columns: repeat(2, 1fr);
+    /* عرض منتجين في كل صف */
+    gap: 8px;
+    /* تقليل المسافة بين المنتجات */
+    padding: 5px;
+    /* تقليل البادينج */
   }
 
   .filters h3 {
@@ -24,25 +42,33 @@
     align-items: center;
   }
 
+  /* إخفاء محتوى الفلاتر عند الطي */
+  .filters.collapsed {
+    max-height: 60px;
+    /* ارتفاع بس للعنوان، المحتوى يختفي */
+  }
+
+  .filters.collapsed .filter-group,
+  .filters.collapsed #reset-filters,
+  .filters.collapsed .filter-count {
+    display: none;
+  }
+
+  .filters:not(.collapsed) {
+    max-height: 1000px;
+    /* ارتفاع كبير عشان يظهر كل حاجة */
+  }
+
   .filters h3::after {
     content: '\f078';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     color: var(--color-sidebar-text);
-    transition: transform 0.3s;
+    transition: transform 0.3s ease;
   }
 
   .filters.collapsed h3::after {
     transform: rotate(180deg);
-  }
-
-  .products {
-    grid-template-columns: repeat(2, 1fr);
-    /* عرض منتجين في كل صف */
-    gap: 8px;
-    /* تقليل المسافة بين المنتجات */
-    padding: 5px;
-    /* تقليل البادينج */
   }
 
   .product-card {
@@ -314,6 +340,10 @@
 
   .orders-section {
     padding: 15px;
+    overflow: hidden;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
   }
 
   .orders-table {
@@ -510,201 +540,10 @@
     width: 95%;
     max-width: 95%;
     padding: 15px;
-  }
-
-  .password-modal-content h2 {
-    font-size: 18px;
-    margin-bottom: 15px;
-    word-wrap: break-word;
-  }
-
-  #order-now-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    box-sizing: border-box;
-  }
-
-  #order-now-form .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-    margin: 5px 0;
-  }
-
-  /* تحسين أيقونات السلة والمفضلة في الهيدر */
-  header #cart-btn,
-  header #favorites-btn {
-    width: 45px;
-    /* تصغير حجم الأيقونات */
-    height: 45px;
-    margin-right: 0;
-  }
-
-  header #cart-btn .fas,
-  header #favorites-btn .fas {
-    font-size: 18px;
-    /* تصغير حجم الرمز داخل الزر */
-  }
-
-  #cart-count,
-  #favorites-count {
-    top: -4px;
-    right: -4px;
-    width: 18px;
-    /* تصغير حجم عداد العناصر */
-    height: 18px;
-    font-size: 10px;
-    border-width: 2px;
-  }
-
-  /* --- تلوين أيقونات التواصل الاجتماعي في الفوتر --- */
-  footer .social-icon .fa-facebook-f {
-    color: #1877F2;
-    /* لون فيسبوك الأزرق */
-  }
-
-  footer .social-icon .fa-instagram {
-    color: #E4405F;
-    /* لون إنستغرام الوردي */
-  }
-
-  footer .social-icon .fa-tiktok {
-    color: #000000;
-    /* لون تيك توك الأسود */
-  }
-
-  footer .social-icon .fa-whatsapp {
-    color: #25D366;
-    /* لون واتساب الأخضر */
-  }
-
-  /* تأثير بسيط عند مرور الماوس فوق الأيقونات */
-  footer .social-icon:hover i {
-    transform: scale(1.2);
-    opacity: 0.85;
-  }
-
-  /* ===== تصميم صفحة تفاصيل المنتج للموبايل ===== */
-
-  .product-details-container {
-    margin: 10px;
-    padding: 15px;
-    width: calc(100% - 20px);
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-
-  .product-details-content {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .product-gallery {
-    width: 100%;
-    min-width: unset;
-    margin-bottom: 20px;
-  }
-
-  .main-image {
-    height: 250px;
-    width: 100%;
-    object-fit: contain;
-    padding: 8px;
-  }
-
-  .thumbnail-container {
-    display: flex;
-    gap: 8px;
-    overflow-x: auto;
-    padding: 5px 0;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .thumbnail {
-    width: 60px;
-    height: 60px;
-    flex-shrink: 0;
-  }
-
-  .video-container {
-    margin-top: 10px;
-  }
-
-  .product-video {
-    height: 180px;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .product-info {
-    width: 100%;
-    min-width: unset;
-  }
-
-  .product-title {
-    font-size: 22px;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .product-description {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 15px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-  }
-
-  .product-specs {
-    margin-bottom: 15px;
-  }
-
-  .specs-title {
-    font-size: 16px;
-  }
-
-  .product-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-  }
-
-  .product-actions .btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 15px;
-    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    box-sizing: border-box;
-  }
-
-  .product-actions .btn i {
-    font-size: 14px;
-    margin-left: 5px;
-  }
-
-  .back-btn {
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 0;
-  }
-
-  .modal-content {
-    width: 95%;
-    max-width: 95%;
-  }
-
-  /* تحسين نافذة الطلب الآن للموبايل */
-  .password-modal-content {
-    width: 95%;
-    max-width: 95%;
-    padding: 15px;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
   }
 
   .password-modal-content h2 {
@@ -733,7 +572,6 @@
     display: none !important;
   }
 
-
   /* تعديل مكان قائمة المشاركة على الموبايل */
   .social-share-links {
     bottom: auto;
@@ -760,6 +598,10 @@
   .cart-content,
   .favorites-content {
     padding: 15px;
+    overflow: hidden;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
   }
 
   .cart-item,
@@ -815,9 +657,17 @@
 
   .checkout-header {
     padding: 15px;
+    overflow: hidden;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
   }
 
   #checkout-form {
     padding: 15px;
+    overflow: hidden;
+    /* عشان المحتوى يختفي لما مطوي */
+    transition: max-height 0.3s ease;
+    /* تأثير سلس للطي */
   }
 }
